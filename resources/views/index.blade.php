@@ -12,13 +12,15 @@
     <div>
         <a href="login/">Login</a>
         @auth()
+            @if (Auth::user()->is_admin)
+                <a href="register/">Register</a>
 
-        <a href="register/">Register</a>
+            @endif
 
-        <form method="POST" action="/logout">
-            @csrf
-            <button type="submit" class="font-normal font-semibold text-blue-500">Logout</button>
-        </form>
+            <form method="POST" action="/logout">
+                @csrf
+                <button type="submit" class="font-normal font-semibold text-blue-500">Logout</button>
+            </form>
         @endauth
     </div>
 
