@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Car;
-use App\Models\Driver;
 use Illuminate\Http\Request;
 
 class CarsController extends Controller
@@ -12,7 +11,7 @@ class CarsController extends Controller
     public function view()
     {
 
-        return view('add.cars', [
+        return view('show.cars', [
             'cars' => Car::all()
         ]);
     }
@@ -49,7 +48,7 @@ class CarsController extends Controller
 
         $car->update($attributes);
 
-        return redirect(route('view'));
+        return redirect(route('viewCars'));
     }
 
     public function destroy(Car $car)
@@ -57,7 +56,7 @@ class CarsController extends Controller
 
         $car->delete();
 
-        return redirect(route('viewCar'));
+        return redirect(route('viewCars'));
     }
 
     public function assignDriver(Request $request, Car $car)

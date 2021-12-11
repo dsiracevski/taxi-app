@@ -10,7 +10,7 @@ class DriversController extends Controller
     public function view()
     {
 
-        return view('add.drivers', [
+        return view('show.drivers', [
             'drivers' => Driver::all()
         ]);
     }
@@ -47,7 +47,7 @@ class DriversController extends Controller
 
         $driver->update($attributes);
 
-        return redirect(route('view'));
+        return redirect(route('viewDrivers'));
     }
 
     public function destroy(Driver $driver)
@@ -55,6 +55,6 @@ class DriversController extends Controller
 
         $driver->delete();
 
-        return redirect(route('view'));
+        return redirect(route('viewDrivers'));
     }
 }

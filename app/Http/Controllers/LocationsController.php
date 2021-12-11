@@ -10,7 +10,7 @@ class LocationsController extends Controller
     public function view()
     {
 
-        return view('add.locations', [
+        return view('show.locations', [
             'locations' => Location::all()
         ]);
     }
@@ -49,7 +49,7 @@ class LocationsController extends Controller
 
         $location->update($attributes);
 
-        return redirect(route('view'));
+        return redirect(route('viewLocations'));
     }
 
     public function destroy(Location $location)
@@ -57,6 +57,6 @@ class LocationsController extends Controller
 
         $location->delete();
 
-        return redirect(route('view'));
+        return redirect(route('viewLocations'));
     }
 }
