@@ -13,7 +13,7 @@ class CreateTableLocations extends Migration
      */
     public function up()
     {
-        Schema::create('table_locations', function (Blueprint $table) {
+        Schema::create('locations', function (Blueprint $table) {
             $table->id();
             $table->string('street_name')->nullable();
             $table->string('city');

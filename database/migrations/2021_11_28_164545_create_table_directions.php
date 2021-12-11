@@ -13,7 +13,7 @@ class CreateTableDirections extends Migration
      */
     public function up()
     {
-        Schema::create('table_directions', function (Blueprint $table) {
+        Schema::create('directions', function (Blueprint $table) {
             $table->id();
             $table->integer("driver_id");
             $table->integer("location_from_id");

@@ -10,17 +10,19 @@
 <body>
 
     <div>
-        <a href="login/">Login</a>
+        @guest()
+            <a href="login/">Login</a>
+        @endguest
         @auth()
             @if (Auth::user()->is_admin)
-                <a href="register/">Register</a>
-
+                <a href="administration/">Admin Panel</a>
             @endif
 
             <form method="POST" action="/logout">
                 @csrf
                 <button type="submit" class="font-normal font-semibold text-blue-500">Logout</button>
             </form>
+
         @endauth
     </div>
 

@@ -13,7 +13,7 @@ class CreateTableCars extends Migration
      */
     public function up()
     {
-        Schema::create('table_cars', function (Blueprint $table) {
+        Schema::create('cars', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('registration_number')->nullable();

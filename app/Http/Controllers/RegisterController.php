@@ -17,7 +17,8 @@ class RegisterController extends Controller
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => 'required',
-            'password' => 'required'
+            'password' => 'required',
+            'is_admin' => 'required'
         ]);
 
             User::create($attributes);

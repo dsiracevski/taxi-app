@@ -13,10 +13,11 @@ class CreateTableDrivers extends Migration
      */
     public function up()
     {
-        Schema::create('table_drivers', function (Blueprint $table) {
+        Schema::create('drivers', function (Blueprint $table) {
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
     }

@@ -13,10 +13,10 @@ class CreateTableDriverCars extends Migration
      */
     public function up()
     {
-        Schema::create('table_driver_cars', function (Blueprint $table) {
+        Schema::create('driver_cars', function (Blueprint $table) {
             $table->id();
-            $table->integer('driver_id');
-            $table->integer('car_id');
+            $table->foreignId('driver_id')->constrained();
+            $table->foreignId('car_id')->constrained();
             $table->string('note')->nullable();
             $table->string('km')->nullable();
             $table->timestamps();

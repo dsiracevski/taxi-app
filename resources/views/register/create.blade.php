@@ -40,7 +40,8 @@
 
             <div>
                 <label for="is_admin">Admin User?</label>
-                <input type="checkbox" name="is_admin" id="is_admin">
+                <input type="hidden" name="is_admin" value="0">
+                <input type="checkbox" name="is_admin" id="is_admin" value="1">
             </div>
 
             <div>
