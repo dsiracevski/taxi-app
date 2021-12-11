@@ -15,15 +15,15 @@
         </div>
 
         <div>
-            <a href="add/drivers">Drivers</a>
+            <a href="drivers/">Drivers</a>
         </div>
 
         <div>
-            <a href="add/cars">Cars</a>
+            <a href="cars/">Cars</a>
         </div>
 
         <div>
-            <a href="add/locations">Locations</a>
+            <a href="locations/">Locations</a>
         </div>
 
         <div>

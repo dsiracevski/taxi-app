@@ -20,7 +20,7 @@ class CarsController extends Controller
     public function show(Car $car)
     {
         return view('show.car', [
-            'car' => request($car)
+            'car' => $car
         ]);
     }
 

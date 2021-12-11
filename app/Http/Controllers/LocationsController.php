@@ -18,7 +18,7 @@ class LocationsController extends Controller
     public function show(Location $location)
     {
         return view('show.location', [
-            'location' => request($location)
+            'location' => $location
         ]);
     }
 
