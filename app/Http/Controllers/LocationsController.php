@@ -34,7 +34,7 @@ class LocationsController extends Controller
 
         Location::create($attributes);
 
-        return redirect('/')->with('success', 'Driver added successfully!');
+        return redirect('locations/')->with('success', 'Driver added successfully!');
 
     }
 

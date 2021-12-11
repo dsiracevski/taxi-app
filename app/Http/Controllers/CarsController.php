@@ -34,7 +34,7 @@ class CarsController extends Controller
 
         Car::create($attributes);
 
-        return redirect('/')->with('success', 'Car added successfully!');
+        return redirect('cars/')->with('success', 'Car added successfully!');
 
     }
 

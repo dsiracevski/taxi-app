@@ -46,26 +46,29 @@ Route::get('administration/', function () {
 
 
 Route::get('cars/', [CarsController::class, 'view'])->name('viewCars');
+Route::post('cars/', [CarsController::class, 'create']);
 Route::get('cars/{car}', [CarsController::class, 'show'])->name('viewCar');
-Route::put('cars/{car}', [CarsController::class, 'update']);
-Route::delete('cars/{car}', [CarsController::class, 'destroy']);
+Route::patch('cars/{car}', [CarsController::class, 'update']);
+Route::delete('cars/{car}', [CarsController::class, 'destroy'])->name('deleteCar');
 
 Route::post('assign/{car}', [CarsController::class, 'assignDriver']);
 
 
 Route::get('users/', [UsersController::class, 'view'])->name('viewUsers');
 Route::get('users/{user}', [UsersController::class, 'show'])->name('viewUser');
-Route::put('users/{user}', [UsersController::class, 'update']);
-Route::delete('users/{user}', [UsersController::class, 'destroy']);
+Route::patch('users/{user}', [UsersController::class, 'update']);
+Route::delete('users/{user}', [UsersController::class, 'destroy'])->name('deleteUser');
 
 
 Route::get('locations/', [LocationsController::class, 'view'])->name('viewLocations');
+Route::post('locations/', [LocationsController::class, 'create']);
 Route::get('locations/{location}', [LocationsController::class, 'show'])->name('viewLocation');
-Route::put('locations/{location}', [LocationsController::class, 'update']);
+Route::patch('locations/{location}', [LocationsController::class, 'update']);
 Route::delete('locations/{location}', [LocationsController::class, 'destroy']);
 
 Route::get('drivers/', [DriversController::class, 'view'])->name('viewDrivers');
+Route::post('drivers/', [DriversController::class, 'create']);
 Route::get('drivers/{driver}', [DriversController::class, 'show'])->name('viewDriver');
-Route::put('drivers/{driver}', [DriversController::class, 'update']);
+Route::patch('drivers/{driver}', [DriversController::class, 'update']);
 Route::delete('drivers/{driver}', [DriversController::class, 'destroy']);
 

@@ -10,6 +10,7 @@
 <body>
 
     <main>
+
         <div>
             <a href="register/">Add a New User</a>
         </div>
@@ -27,8 +28,17 @@
         </div>
 
         <div>
+            <a href="users/">Users</a>
+        </div>
+
+        <div>
             <a href="assign/">Assign Cars</a>
         </div>
+
+        <div>
+            <a href="/">Home</a>
+        </div>
+
     </main>
 
 </body>

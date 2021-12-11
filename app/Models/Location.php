@@ -9,6 +9,8 @@ class Location extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function directionFrom()
     {
         return $this->hasMany(Direction::class, "location_from_id");

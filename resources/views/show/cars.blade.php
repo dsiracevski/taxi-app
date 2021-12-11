@@ -10,16 +10,43 @@
 <body>
 
     <table>
+        <thead>
+        <tr>
+            <th>Car Name</th>
+            <th>Registration Number</th>
+        </tr>
+        </thead>
+
+        <tbody>
 
         @foreach($cars as $car)
-
-            <div>{{$car->name}}</div>
-
-            <div>{{$car->registration_number}}</div>
-
+            <tr>
+                <td><a href="cars/{{$car->id}}">{{$car->name}}</a></td>
+                <td>{{$car->registration_number}}</td>
+            </tr>
         @endforeach
+
+        <form method="POST">
+            <tr>
+
+                @csrf
+                <div>
+                    <td><input placeholder="Car Name" name="name"></td>
+                    <td><input placeholder="Registration Number" name="registration_number"></td>
+                </div>
+
+                <div>
+                    <button type="submit">Add</button>
+                </div>
+            </tr>
+        </form>
+
+        </tbody>
     </table>
 
+    <div>
+        <a href="/administration/">Go Back</a>
+    </div>
 
 </body>
 </html>

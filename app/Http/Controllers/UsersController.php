@@ -34,7 +34,6 @@ class UsersController extends Controller
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => 'required',
-            'password' => 'required',
             'is_admin' => 'required'
         ]);
 

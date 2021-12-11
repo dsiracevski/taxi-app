@@ -33,7 +33,7 @@ class DriversController extends Controller
 
         Driver::create($attributes);
 
-        return redirect('/')->with('success', 'Driver added successfully!');
+        return redirect('drivers/')->with('success', 'Driver added successfully!');
 
     }
 
