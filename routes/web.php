@@ -2,6 +2,8 @@
 
 
 use App\Http\Controllers\CarsController;
+use App\Http\Controllers\DriversController;
+use App\Http\Controllers\LocationsController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -57,13 +59,13 @@ Route::put('users/{user}', [UsersController::class, 'update']);
 Route::delete('users/{user}', [UsersController::class, 'destroy']);
 
 
-Route::get('locations/', [CarsController::class, 'view'])->name('viewLocations');
-Route::get('locations/{location}', [CarsController::class, 'show'])->name('viewLocation');
-Route::put('locations/{location}', [CarsController::class, 'update']);
-Route::delete('locations/{location}', [CarsController::class, 'destroy']);
+Route::get('locations/', [LocationsController::class, 'view'])->name('viewLocations');
+Route::get('locations/{location}', [LocationsController::class, 'show'])->name('viewLocation');
+Route::put('locations/{location}', [LocationsController::class, 'update']);
+Route::delete('locations/{location}', [LocationsController::class, 'destroy']);
 
-Route::get('drivers/', [CarsController::class, 'view'])->name('viewDrivers');
-Route::get('drivers/{driver}', [CarsController::class, 'show'])->name('viewDriver');
-Route::put('drivers/{driver}', [CarsController::class, 'update']);
-Route::delete('drivers/{driver}', [CarsController::class, 'destroy']);
+Route::get('drivers/', [DriversController::class, 'view'])->name('viewDrivers');
+Route::get('drivers/{driver}', [DriversController::class, 'show'])->name('viewDriver');
+Route::put('drivers/{driver}', [DriversController::class, 'update']);
+Route::delete('drivers/{driver}', [DriversController::class, 'destroy']);
 
