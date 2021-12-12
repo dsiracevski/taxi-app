@@ -11,6 +11,7 @@ class Location extends Model
 
     protected $guarded = [];
 
+
     public function directionFrom()
     {
         return $this->hasMany(Direction::class, "location_from_id");

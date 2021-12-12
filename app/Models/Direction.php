@@ -9,6 +9,8 @@ class Direction extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function drivers()
     {
         return $this->belongsTo(Driver::class, "driver_id");

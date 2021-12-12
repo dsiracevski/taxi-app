@@ -36,6 +36,10 @@
         </div>
 
         <div>
+            <a href="{{ route('viewDirections') }}/">Directions</a>
+        </div>
+
+        <div>
             <a href="/">Home</a>
         </div>
 
