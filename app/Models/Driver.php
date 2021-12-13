@@ -18,7 +18,7 @@ class Driver extends Model
     {
         return $this->belongsToMany(Car::class, "driver_cars", "driver_id", "car_id")
             ->withPivot('note', 'km')
-            ->withTimestamps();;
+            ->withTimestamps();
     }
 
     /**

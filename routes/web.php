@@ -31,9 +31,8 @@ Route::get('login/', [AuthController::class, 'create'])->name('login');
 Route::post('login/', [AuthController::class, 'store']);
 
 
-Route::group(['namespace' => 'Admin', 'middleware' => 'auth'], function () {
+Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'admin']], function () {
 
-//    abort_if(!auth()->user()->is_admin, 403, 'No touchy, touchy... :)');
 
     Route::get('register/', function () {
         return view('register.create');

@@ -11,7 +11,7 @@ class Direction extends Model
 
     protected $guarded = [];
 
-    public function drivers()
+    public function driver()
     {
         return $this->belongsTo(Driver::class, "driver_id");
     }

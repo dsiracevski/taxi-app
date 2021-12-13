@@ -8,6 +8,34 @@
     <title>Document</title>
 </head>
 <body>
+{{--@dd($directions)--}}
+    <main>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Driver</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Price</th>
+                <th>Time</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            @foreach($directions as $direction)
+                <tr>
+                    <td><a href="drivers/{{$direction->driver->id}}">{{$direction->driver->first_name}}</a></td>
+                    <td>{{$direction->locationFrom->street_name}}</td>
+                    <td>{{$direction->locationTo->street_name}}</td>
+                    <td>{{$direction->price}}</td>
+                    <td>{{$direction->created_at}}</td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+    </main>
 
     <form method="POST" action="directions/{{auth()->user()->id}}">
         @csrf
