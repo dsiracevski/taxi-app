@@ -13,6 +13,9 @@
                 <a class="nav-link" href="#">Возачи/Возила</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="#">Крај на смена</a>
+            </li>
+            <li class="nav-item">
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
                     <button type="submit" class="nav-link border-0 bg-light">Излез</button>

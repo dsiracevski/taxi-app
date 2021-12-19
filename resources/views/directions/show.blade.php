@@ -188,7 +188,7 @@
                                 <textarea placeholder="Note" class="w-100" name="note"></textarea>
                             </div>
                             <div class="form-group col-6">
-                                <input type="text" placeholder="km" class="w-100" name="km">
+                                <input type="number" placeholder="km" class="w-100" name="km" required>
                             </div>
                         </div>
                         <div class="row">
