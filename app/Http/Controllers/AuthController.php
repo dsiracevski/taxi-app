@@ -11,6 +11,9 @@ class AuthController extends Controller
 {
     public function create()
     {
+        if(!auth()->user()->is_admin){
+            return redirect(route('viewDirections'));
+        }
         return view('auth.login');
     }
 
