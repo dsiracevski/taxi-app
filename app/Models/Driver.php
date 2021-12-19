@@ -9,7 +9,7 @@ class Driver extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $guarded = ['id'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -17,7 +17,7 @@ class Driver extends Model
     public function cars()
     {
         return $this->belongsToMany(Car::class, "driver_cars", "driver_id", "car_id")
-            ->withPivot('note', 'km')
+            //->withPivot('note', 'km','on_work')
             ->withTimestamps();
     }
 
@@ -27,5 +27,9 @@ class Driver extends Model
     public function directions()
     {
         return $this->hasMany(Direction::class, "driver_id", "id");
+    }
+
+    public function onWorkCars() {
+        return $this->cars()->wherePivot('on_work', 1);
     }
 }

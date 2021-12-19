@@ -2,7 +2,7 @@
 
 
 use App\Http\Controllers\CarsController;
-use App\Http\Controllers\DirectionsConstroller;
+use App\Http\Controllers\DirectionsController;
 use App\Http\Controllers\DriversController;
 use App\Http\Controllers\LocationsController;
 use App\Http\Controllers\UsersController;
@@ -23,13 +23,22 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', function () {
-    return view('index');
-});
-
+//Route::get('/', function () {
+//    return view('index');
+//});
+/**
+ * login routes
+ */
+Route::get('/', [AuthController::class, 'create'])->name('login');
 Route::get('login/', [AuthController::class, 'create'])->name('login');
-Route::post('login/', [AuthController::class, 'store']);
+Route::post('login/', [AuthController::class, 'store'])->name('loginStore');
 
+Route::get('directions/', [DirectionsController::class, 'show'])->name('viewDirections')->middleware('auth');
+Route::post('directions', [DirectionsController::class, 'store'])->name('storeDirections')->middleware('auth');
+
+Route::post('logout/', [AuthController::class, 'destroy'])->name('logout');
+
+Route::post('assign', [CarsController::class, 'assignDriver'])->name('assignDriver')->middleware('auth');
 
 Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'admin']], function () {
 
@@ -39,7 +48,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'admin']], functi
     });
 
 
-    Route::post('logout/', [AuthController::class, 'destroy']);
+
     Route::post('register/', [RegisterController::class, 'create']);
 
     Route::get('administration/', function () {
@@ -77,10 +86,9 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'admin']], functi
 });
 
 
-Route::get('directions/', [DirectionsConstroller::class, 'show'])->name('viewDirections')->middleware('auth');
-Route::post('directions/{user}', [DirectionsConstroller::class, 'store'])->name('storeDirections')->middleware('auth');
 
-Route::post('assign/{car}', [CarsController::class, 'assignDriver'])->middleware('auth');
+
+
 
 
 

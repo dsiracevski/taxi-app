@@ -11,24 +11,31 @@ class AuthController extends Controller
 {
     public function create()
     {
-
-        return view('session.login');
+        return view('auth.login');
     }
 
     public function store(Request $request)
     {
 
         $attributes = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required']
+            'email' => [
+                'required',
+                'email'
+            ],
+            'password' => [
+                'required'
+            ]
         ]);
 
         if (Auth::attempt($attributes)) {
-            return redirect('/')->with('success', 'Welcome back!');
+            if(!auth()->user()->is_admin){
+                return redirect(route('viewDirections'));
+            }
+
         }
 
         throw ValidationException::withMessages([
-            'email' => 'Provided information can not be verified!'
+            'error' => 'Provided information can not be verified!'
         ]);
     }
 
