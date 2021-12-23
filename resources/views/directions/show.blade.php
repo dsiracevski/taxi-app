@@ -27,7 +27,7 @@
         </div>
         <div class="row">
             @foreach($directions as $direction)
-                <div class="col-4">
+                <div class="col-6">
                     <div class="card rounded-lg col-12">
                         <div class="text-center">
                             <a href="javascript:;" class="driver_name" data-toggle="modal" data-target="#addRoute"
@@ -46,11 +46,9 @@
                         </div>
                         <div class="row card-header">
                             <div class="col-2">Час</div>
-                            <div class="col-4">Од</div>
-                            <div class="col-4">До</div>
+                            <div class="col-3">Од - До</div>
                             <div class="col-2">Цена</div>
-                            <div class="col-2">Цена - чекање</div>
-                            <div class="col-2">Цена - порачка</div>
+                            <div class="col-3">Ч - П</div>
                             <div class="col-2">Вкупно</div>
                         </div>
                         @php
@@ -59,13 +57,14 @@
                         @foreach($direction['directions'] as $d)
                             <div class="row pb-2 pt-2">
                                 <div class="col-2">{{$d->created_at->format('H:i')}}</div>
-                                <div class="col-4">{{$d->from_street_name . ' ' . $d->street_number_from}}</div>
-                                <div class="col-4">{{$d->to_street_name . ' ' . $d->street_number_to}}</div>
+                                <div class="col-3">{{$d->from_street_name . ' ' . $d->street_number_from}}
+                                    - {{$d->to_street_name . ' ' . $d->street_number_to}}</div>
                                 <div class="col-2 text-right">{{$d->price}} ден</div>
-                                <div class="col-2 text-right">{{$d->price_idle}} ден</div>
-                                <div class="col-2 text-right">{{$d->price_order}} ден</div>
+                                <div class="col-3 text-right"><a href="directions/{{$d->id}}/idle/">{{$d->price_idle}}
+                                        ден</a> - {{$d->price_order}} ден
+                                </div>
                                 @php
-                                    $totalSum = $sum + $d->price + $d->price_idle + $d->price_order;
+                                    $totalSum = $d->price + $d->price_idle + $d->price_order;
                                     $sum = $sum + $totalSum;
                                 @endphp
                                 <div class="col-2 text-right">{{$totalSum}} ден</div>
@@ -80,7 +79,7 @@
             @endforeach
             @if(!empty($cars))
                 <div class="col-4">
-                    <div class=" p-5">
+                    <div class="p-5">
                         @foreach($cars as $car)
                             <div>{{$car->name}}
                                 <a href="#" class="shift_driver"
@@ -98,6 +97,8 @@
             @endif
         </div>
     </div>
+
+
     <!-- The Modal -->
     <div class="modal" id="addRoute">
         <div class="modal-dialog modal-lg">
@@ -146,11 +147,11 @@
                             </div>
 
                             <div class="col-4">
-                                <input type="number" placeholder="Cekanje"  name="price_idle">
+                                <input type="number" placeholder="Cekanje" name="price_idle">
                             </div>
 
                             <div class="col-4">
-                                <input type="number" placeholder="Porachka"  name="price_order">
+                                <input type="number" placeholder="Porachka" name="price_order">
                             </div>
 
                             <div class="col-7">
@@ -159,7 +160,7 @@
 
                             <div class="col-1">
                                 <label for="invoice">Invoice?</label>
-                                <input type="hidden"  value="0" name="invoice">
+                                <input type="hidden" value="0" name="invoice">
                                 <input type="checkbox" value="1" name="invoice">
                             </div>
                         </div>

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -41,6 +42,11 @@ class User extends Authenticatable
     public function directions()
     {
         return $this->hasMany(Direction::class, "user_id", "id");
+    }
+
+    public function currentDirections()
+    {
+        return $this->hasMany(Direction::class, 'user_id', 'id')->whereDate('created_at', Carbon::today());
     }
 
     public function setPasswordAttribute($password)
