@@ -11,7 +11,7 @@ class AuthController extends Controller
 {
     public function create()
     {
-        if(!auth()->user()->is_admin){
+        if (isset(auth()->user()->is_admin) && !auth()->user()->is_admin) {
             return redirect(route('viewDirections'));
         }
         return view('auth.login');
@@ -19,6 +19,8 @@ class AuthController extends Controller
 
     public function store(Request $request)
     {
+
+//        dd($request);
 
         $attributes = $request->validate([
             'email' => [
@@ -30,8 +32,10 @@ class AuthController extends Controller
             ]
         ]);
 
+
+
         if (Auth::attempt($attributes)) {
-            if(!auth()->user()->is_admin){
+            if (!auth()->user()->is_admin) {
                 return redirect(route('viewDirections'));
             }
 

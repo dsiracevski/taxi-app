@@ -67,7 +67,7 @@ class DirectionsController extends Controller
 
     public function store(Request $request)
     {
-        $user = \auth()->user();
+        $user = auth()->user();
         if(!$user){
             redirect(route('login'));
         }
@@ -76,14 +76,19 @@ class DirectionsController extends Controller
             'location_from_id' => 'required',
             'location_to_id' => 'required',
             'price' => 'required',
-            'scheduled' => ''
+            'scheduled' => '',
+            'street_number_to' => '',
+            'street_number_from ' => '',
+            'price_idle' => '',
+            'price_order' => '',
+            'invoice' => ''
         ]);
 
         try {
             $user->directions()->create($attributes);
         }
         catch (\Exception $e) {
-            return redirect(route('viewDirections'))->with('message', ['text'=>'Error occurred!','type'=>'danger']);
+            return redirect(route('viewDirections'))->with('message', ['text'=> $e->getMessage(),'type'=>'danger']);
         }
         return redirect(route('viewDirections'))->with('message', ['text'=>'Route is added','type'=>'success']);
     }
