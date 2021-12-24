@@ -17,11 +17,7 @@
                             </div>
 
                             @foreach($driverInvoices as $invoice)
-                                @if ($invoice->invoice)
-                                <div class="row pb-2 pt-2 bg-info">
-                                    @else
-                                        <div class="row pb-2 pt-2">
-                                        @endif
+                                        <div class="row pb-2 pt-2 ">
                                     @php
                                     $total = $invoice->priceBase + $invoice->priceIdle + $invoice->priceOrder;
                                     @endphp

@@ -25,7 +25,7 @@ class RegisterController extends Controller
 
 
 
-        return redirect('/')->with('success', 'User created successfully!');
+        return redirect(route('adminView'))->with('success', 'User created successfully!');
 
     }
 }

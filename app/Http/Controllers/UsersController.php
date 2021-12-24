@@ -59,7 +59,7 @@ class UsersController extends Controller
     {
         $driverInvoices = DB::table('drivers')
             ->leftJoin('directions', 'directions.driver_id', '=', 'drivers.id')
-            ->select('drivers.*', DB::raw('SUM(directions.price_order) as priceOrder'), DB::raw('SUM(directions.price) as priceBase'), DB::raw('SUM(directions.price_idle) as priceIdle'),)
+            ->select('drivers.*', 'directions.invoice', DB::raw('SUM(directions.price_order) as priceOrder'), DB::raw('SUM(directions.price) as priceBase'), DB::raw('SUM(directions.price_idle) as priceIdle'),)
             ->whereDate('directions.created_at', '=', Carbon::today()->toDateString())
             ->where('invoice', '=', false)
             ->groupBy('drivers.id')
