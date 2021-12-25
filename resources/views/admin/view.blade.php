@@ -36,7 +36,7 @@
         </div>
 
         <div>
-            <a href="{{ route('viewDirections') }}/">Directions</a>
+            <a href="{{ route('adminView') }}/">Directions</a>
         </div>
 
         <div>

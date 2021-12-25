@@ -22,6 +22,6 @@
                 </form>
             </li>
         </ul>
-        <span>{{$user->first_name}} {{$user->last_name}}</span>
+        <span>{{auth()->user()->first_name}} {{auth()->user()->last_name}}</span>
     </div>
 </nav>

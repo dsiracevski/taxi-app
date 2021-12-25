@@ -63,6 +63,37 @@ class DirectionsController extends Controller
             'directions' => $directions,
             'cars' => $allCars
         ]);
+
+    }
+
+    public function adminView(Request $request)
+    {
+
+        if (!request('dateFrom')) {
+            $startDate = Carbon::today()->toDateString();
+        } else
+            $startDate = request()->dateFrom;
+
+
+        if (!request('dateTo')) {
+            $endDate = Carbon::tomorrow()->startOfDay()->toDateString();
+        } else
+            $endDate = request()->dateTo;
+
+        $directions = DB::table('directions')
+            ->leftJoin('drivers', 'drivers.id', '=', 'directions.driver_id')
+            ->leftJoin('users as u', 'u.id', '=', 'directions.user_id')
+            ->join('locations as l', 'l.id', '=', 'directions.location_from_id')
+            ->join('locations as lo', 'lo.id', '=', 'directions.location_to_id')
+            ->select('directions.*', 'drivers.*', 'u.first_name as userFirst', 'u.last_name as userLast', 'l.street_name as from_street_name', 'lo.street_name as to_street_name')
+            ->whereBetween('directions.created_at', [$startDate, $endDate])
+            ->orderBy('directions.driver_id')
+            ->get();
+
+        return view('admin.directions', [
+            'user' => auth()->user(),
+            'directions' => $directions
+        ]);
     }
 
     public function store(Request $request)

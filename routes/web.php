@@ -61,6 +61,10 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'admin']], functi
     })->name('adminView');
 
 
+    Route::get('administration/directions/', [DirectionsController::class, 'adminView'])->name('adminView');
+    Route::post('administration/directions/', [DirectionsController::class, 'adminView'])->name('adminView');
+
+
     Route::get('cars/', [CarsController::class, 'view'])->name('viewCars');
     Route::post('cars/', [CarsController::class, 'create']);
     Route::get('cars/{car}', [CarsController::class, 'show'])->name('viewCar');

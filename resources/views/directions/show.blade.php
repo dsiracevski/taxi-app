@@ -56,7 +56,7 @@
                         @endphp
                         @foreach($direction['directions'] as $d)
                             @if ($d->invoice)
-                                <div class="row pb-2 pt-2" style="background-color: darkorange">
+                                <div class="row pb-2 pt-2" style="background-color: orange">
                                     @else
                                         <div class="row pb-2 pt-2" >
                                             @endif
@@ -204,7 +204,7 @@
                             <p>Shift driver for car: <span id="carNameToAssign"></span></p>
                             <input type="hidden" value="" name="car" id="carToAssign">
                             <div class="row">
-                                <div class="form-group col-8"   >
+                                <div class="form-group col-8">
                                     <select class="from_location location form-control" name="driver_id" required>
                                         <option value=""></option>
                                         @foreach($allDrivers as $driver)
