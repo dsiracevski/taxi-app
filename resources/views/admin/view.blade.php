@@ -20,23 +20,23 @@
         </div>
 
         <div>
-            <a href="cars/">Cars</a>
+            <a href="cars/" class="nav-link">Cars</a>
         </div>
 
         <div>
-            <a href="locations/">Locations</a>
+            <a href="locations/" class="nav-link">Locations</a>
         </div>
 
         <div>
-            <a href="users/">Users</a>
+            <a href="users/" class="nav-link">Users</a>
         </div>
 
         <div>
-            <a href="assign/">Assign Cars</a>
+            <a href="assign/" class="nav-link">Assign Cars</a>
         </div>
 
         <div>
-            <a href="{{ route('adminView') }}/">Directions</a>
+            <a href="{{ route('adminView') }}/" class="nav-link">Directions</a>
         </div>
 
         <div>
