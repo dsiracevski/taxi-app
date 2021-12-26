@@ -1,1 +1,13 @@
-
+.currency-symbol{
+    border: 1px solid #ced4da;
+    padding: 6px;
+    border-left: none;
+    border-radius: 0 5px 5px 0;
+    margin-left: -5px;
+    z-index: 11;
+    background: #fff;
+}
+.directions{
+    cursor: pointer;
+    opacity: 0.8;
+}

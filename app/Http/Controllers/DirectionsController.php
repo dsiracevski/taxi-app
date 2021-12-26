@@ -105,26 +105,22 @@ class DirectionsController extends Controller
         if (!$user) {
             redirect(route('login'));
         }
-        $attributes = request()->validate([
+       $request->validate([
             'driver_id' => 'required',
             'location_from_id' => 'required',
             'location_to_id' => 'required',
             'price' => 'required',
-            'scheduled' => '',
-            'street_number_to' => '',
-            'street_number_from ' => '',
-            'price_idle' => '',
-            'price_order' => '',
-            'invoice' => ''
         ]);
 
         try {
-            $user->directions()->create($attributes);
+            $user->directions()->create($request->all());
         } catch (\Exception $e) {
             return redirect(route('viewDirections'))->with('message', ['text' => $e->getMessage(), 'type' => 'danger']);
         }
-        return redirect(route('viewDirections'))->with('message', ['text' => 'Route is added', 'type' => 'success']);
+        return redirect(route('viewDirections'))->with('message', ['text' => 'Рутата е додадена', 'type' => 'success']);
     }
+
+
 
     public function updateIdle(Request $request)
     {

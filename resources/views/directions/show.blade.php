@@ -27,8 +27,8 @@
         </div>
         <div class="row">
             @foreach($directions as $direction)
-                <div class="col-6">
-                    <div class="card rounded-lg col-12">
+                <div class="col-4">
+                    <div class="card rounded-lg">
                         <div class="text-center">
                             <a href="javascript:;" class="driver_name" data-toggle="modal" data-target="#addRoute"
                                data-driver-id="{{$direction['driver_id']}}">
@@ -44,44 +44,46 @@
                                 Zamena</a>
                             <p>{{$direction['car_name']}}</p>
                         </div>
-                        <div class="row card-header">
-                            <div class="col-2">Час</div>
-                            <div class="col-3">Од - До</div>
-                            <div class="col-2">Цена</div>
-                            <div class="col-3">Ч - П</div>
-                            <div class="col-2">Вкупно</div>
-                        </div>
+                        <table class="table table-striped ">
+                            <thead>
+                                <tr>
+                                    <td width="70">Час</td>
+                                    <td width="165">Од - До</td>
+                                    <td width="100">Цена</td>
+                                    <td>Чек.</td>
+                                    <td>Пор.</td>
+                                    <td>Фактура</td>
+                                    <td>Вкупно</td>
+                                </tr>
+                            </thead>
+                            <tbody>
                         @php
                             $sum = 0;
                         @endphp
                         @foreach($direction['directions'] as $d)
-                            @if ($d->invoice)
-                                <div class="row pb-2 pt-2" style="background-color: orange">
-                                    @else
-                                        <div class="row pb-2 pt-2" >
-                                            @endif
-                                            <div class="col-2">{{$d->created_at->format('H:i')}}</div>
-                                            <div class="col-3">{{$d->from_street_name . ' ' . $d->street_number_from}}
-                                                - {{$d->to_street_name . ' ' . $d->street_number_to}}</div>
-                                            <div class="col-2 text-right">{{$d->price}} ден</div>
-                                            <div class="col-3 text-right"><a
-                                                    href="directions/{{$d->id}}/idle/">{{$d->price_idle}}
-                                                    ден</a> - {{$d->price_order}} ден
-                                            </div>
-                                            @php
-                                                $totalSum = $d->price + $d->price_idle + $d->price_order;
-                                                $sum = $sum + $totalSum;
-                                            @endphp
-                                            <div class="col-2 text-right">{{$totalSum}} ден</div>
-                                        </div>
-                                        @endforeach
-                                        <div class="row card-footer">
-                                            <div class="col-10">Vkupno</div>
-                                            <div class="col-2 text-right">{{$sum}} ден</div>
-                                        </div>
-                                </div>
+                            <tr class="directions" data-id="{{$d->id}}">
+                                <td>{{$d->created_at->format('H:i')}}</td>
+                                <td>{{$d->from_street_name . ' ' . $d->street_number_from}}
+                                    - {{$d->to_street_name . ' ' . $d->street_number_to}}</td>
+                                <td>{{$d->price}} </td>
+                                <td>{{$d->price_idle}} </td>
+                                <td>{{$d->price_order}} </td>
+                                <td>{{($d->invoice) ? "Да" : "Не"}} </td>
+                                @php
+                                    $totalSum = $d->price + $d->price_idle + $d->price_order;
+                                    if(!$d->invoice){
+                                        $sum = $sum + $totalSum;
+                                    }
+                                @endphp
+                                <td>{{$totalSum}}</td>
+                            </tr>
+                        @endforeach
+                            </tbody>
+                        </table>
+                        <div class="text-right p-2 border-top">
+                            <p><strong>Вкупно: {{$sum}} ден.</strong></p>
+                        </div>
                     </div>
-                    @endforeach
                     @if(!empty($cars))
                         <div class="col-4">
                             <div class="p-5">
@@ -101,6 +103,7 @@
                         </div>
                     @endif
                 </div>
+            @endforeach
         </div>
 
 
@@ -111,7 +114,7 @@
 
                     <!-- Modal Header -->
                     <div class="modal-header">
-                        <h4 class="modal-title">Modal Heading</h4>
+                        <h4 class="modal-title">Додади рута</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
 
@@ -131,7 +134,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-4">
-                                    <input type="text" placeholder="Broj na ulica" name="street_number_from">
+                                    <input type="text" placeholder="Број" name="street_number_from" class="form-control">
                                 </div>
                             </div>
                             <div class="row">
@@ -144,38 +147,40 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-4">
-                                    <input type="text" placeholder="Broj na ulica" name="street_number_to">
+                                    <input type="text" placeholder="Број" name="street_number_to" class="form-control">
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-4">
-                                    <input type="number" placeholder="Cena" required name="price">
+                                <div class="col-3 d-flex">
+                                    <input type="number" placeholder="Цена" required name="price" class="form-control"><div class="currency-symbol my-auto"> Ден</div>
                                 </div>
 
-                                <div class="col-4">
-                                    <input type="number" placeholder="Cekanje" name="price_idle">
+                                <div class="col-3 d-flex">
+                                    <input type="number" placeholder="Чекање" name="price_idle" class="form-control" ><div class="currency-symbol my-auto"> Ден</div>
                                 </div>
 
-                                <div class="col-4">
-                                    <input type="number" placeholder="Porachka" name="price_order">
+                                <div class="col-3 d-flex">
+                                    <input type="number" placeholder="Порачка" name="price_order" class="form-control"><div class="currency-symbol my-auto"> Ден</div>
                                 </div>
+                                <div class="col-3">
+                                    <label for="invoice"><input type="checkbox" name="invoice" id="invoice" value="1"> Фактура?</label>
+                                    {{--                                    <input type="hidden" value="0" name="invoice">--}}
 
+                                </div>
+                            </div>
+                            <div class="row mt-3">
                                 <div class="col-7">
-                                    <textarea placeholder="Note" class="w-100"></textarea>
+                                    <textarea placeholder="Забелешка" class="w-100 form-control"></textarea>
                                 </div>
 
-                                <div class="col-1">
-                                    <label for="invoice">Invoice?</label>
-                                    <input type="hidden" value="0" name="invoice">
-                                    <input type="checkbox" value="1" name="invoice">
-                                </div>
+
                             </div>
-                            <div class="row">
+                            <div class="row mt-3">
                                 <div class="col-6 text-center">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Откажи</button>
                                 </div>
                                 <div class="col-6 text-center">
-                                    <button type="submit" class="btn btn-primary">Save</button>
+                                    <button type="submit" class="btn btn-primary">Додади</button>
                                 </div>
                             </div>
 
@@ -251,12 +256,12 @@
 
 
                     $('.from_location').select2({
-                        placeholder: 'Select from location',
+                        placeholder: 'Локација од',
                         theme: "bootstrap"
                     });
 
                     $('.to_location').select2({
-                        placeholder: 'Select to location',
+                        placeholder: 'Локација до',
                         theme: "bootstrap"
                     });
                     /**
@@ -274,6 +279,11 @@
                         let driver_id = $(this).attr('data-driver-id');
                         $('#carToAssign').val(car_id);
                         $('#carNameToAssign').html(car_name);
+                    });
+
+                    $(".directions tr").on("click", function(){
+                        //get id
+                        let id = $(this).data('id');
                     })
                 });
             </script>
