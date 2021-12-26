@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Driver;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UsersController extends Controller
 {
@@ -49,6 +53,23 @@ class UsersController extends Controller
         $user->delete();
 
         return redirect(route('viewUsers'));
+    }
+
+    public function endShift()
+    {
+        $driverInvoices = DB::table('drivers')
+            ->leftJoin('directions', 'directions.driver_id', '=', 'drivers.id')
+            ->select('drivers.*', 'directions.invoice', DB::raw('SUM(directions.price_order) as priceOrder'), DB::raw('SUM(directions.price) as priceBase'), DB::raw('SUM(directions.price_idle) as priceIdle'),)
+            ->whereDate('directions.created_at', '=', Carbon::today()->toDateString())
+            ->where('invoice', '=', false)
+            ->groupBy('drivers.id')
+            ->get();
+
+
+        return view('users.shift', [
+            'user' => auth()->user(),
+            'driverInvoices' => $driverInvoices
+        ]);
     }
 
 

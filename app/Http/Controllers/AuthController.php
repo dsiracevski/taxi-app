@@ -33,17 +33,18 @@ class AuthController extends Controller
         ]);
 
 
-
         if (Auth::attempt($attributes)) {
             if (!auth()->user()->is_admin) {
                 return redirect(route('viewDirections'));
             }
 
+            return redirect(route('adminView'));
         }
 
         throw ValidationException::withMessages([
             'error' => 'Provided information can not be verified!'
         ]);
+
     }
 
     public function destroy()

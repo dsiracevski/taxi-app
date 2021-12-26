@@ -13,7 +13,7 @@
                 <a class="nav-link" href="#">Возачи/Возила</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Крај на смена</a>
+                <a class="nav-link" href="{{route('endShift')}}">Крај на смена</a>
             </li>
             <li class="nav-item">
                 <form action="{{ route('logout') }}" method="POST">
@@ -22,6 +22,6 @@
                 </form>
             </li>
         </ul>
-        <span>{{$user->first_name}} {{$user->last_name}}</span>
+        <span>{{auth()->user()->first_name}} {{auth()->user()->last_name}}</span>
     </div>
 </nav>

@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Driver extends Model
 {
@@ -29,7 +31,9 @@ class Driver extends Model
         return $this->hasMany(Direction::class, "driver_id", "id");
     }
 
-    public function onWorkCars() {
+    public function onWorkCars()
+    {
         return $this->cars()->wherePivot('on_work', 1);
     }
+
 }

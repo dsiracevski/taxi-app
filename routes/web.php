@@ -35,10 +35,15 @@ Route::post('login/', [AuthController::class, 'store'])->name('loginStore');
 
 Route::get('directions/', [DirectionsController::class, 'show'])->name('viewDirections')->middleware('auth');
 Route::post('directions', [DirectionsController::class, 'store'])->name('storeDirections')->middleware('auth');
+Route::post('directions/update', [DirectionsController::class, 'updateIdle'])->name('updateIdle')->middleware('auth');
+
 
 Route::post('logout/', [AuthController::class, 'destroy'])->name('logout');
 
+Route::get('assign/', [CarsController::class, 'assignView'])->middleware('auth');
 Route::post('assign', [CarsController::class, 'assignDriver'])->name('assignDriver')->middleware('auth');
+
+Route::get('shift/', [UsersController::class, 'endShift'])->name('endShift')->middleware('auth');
 
 Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'admin']], function () {
 
@@ -53,7 +58,11 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'admin']], functi
 
     Route::get('administration/', function () {
         return view('admin.view');
-    });
+    })->name('adminView');
+
+
+    Route::get('administration/directions/', [DirectionsController::class, 'adminView'])->name('adminView');
+    Route::post('administration/directions/', [DirectionsController::class, 'adminView'])->name('adminView');
 
 
     Route::get('cars/', [CarsController::class, 'view'])->name('viewCars');
