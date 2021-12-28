@@ -8,25 +8,28 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav m-auto">
             <li class="nav-item">
-                <a href="/register/" class="nav-link">Додади корисни</a>
+                <a class="nav-link" href="{{route('registerUser')}}" class="nav-link">Додади корисниk</a>
             </li>
             <li class="nav-item">
-                <a href="{{route('viewDrivers')}}" class="nav-link">Возачи</a>
+                <a class="nav-link" href="{{route('viewDrivers')}}" class="nav-link">Возачи</a>
             </li>
             <li class="nav-item">
-                <a href="{{route('viewCars')}}" class="nav-link">Возила</a>
+                <a class="nav-link" href="{{route('viewCars')}}" class="nav-link">Возила</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('viewServices')}}">Гориво/Уље</a>
             </li>
             <li>
-                <a href="{{route('viewLocations')}}" class="nav-link">Локации</a>
+                <a class="nav-link" href="{{route('viewLocations')}}" class="nav-link">Локации</a>
             </li>
             <li>
-                <a href="{{route('viewUsers')}}" class="nav-link">Корисници</a>
+                <a class="nav-link" href="{{route('viewUsers')}}" class="nav-link">Корисници</a>
             </li>
             <li>
-                <a href="{{route('assignDriver')}}" class="nav-link">Кола/Возач</a>
+                <a class="nav-link" href="{{route('assignDriver')}}" class="nav-link">Кола/Возач</a>
             </li>
             <li>
-                <a href="{{ route('adminView') }}/" class="nav-link">Рути</a>
+                <a class="nav-link" href="{{ route('adminView') }}/" class="nav-link">Рути</a>
             </li>
 
             <li class="nav-item">
