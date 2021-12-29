@@ -10,7 +10,7 @@
                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Возачи/Возила</a>
+                <a class="nav-link" href="{{route('viewServices')}}">Дополни гориво</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{route('endShift')}}">Крај на смена</a>

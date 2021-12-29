@@ -164,8 +164,6 @@
                                 </div>
                                 <div class="col-3">
                                     <label for="invoice"><input type="checkbox" name="invoice" id="invoice" value="1"> Фактура?</label>
-                                    {{--                                    <input type="hidden" value="0" name="invoice">--}}
-
                                 </div>
                             </div>
                             <div class="row mt-3">

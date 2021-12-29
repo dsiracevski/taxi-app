@@ -47,6 +47,9 @@
                 </thead>
 
                 <tbody>
+                @php
+                    $sum = 0;
+                @endphp
                 @foreach($directions as $d)
 
                     <tr class="row pb-2 pt-2 text-left">
@@ -58,9 +61,7 @@
                         <td class="col-1">{{$d->price}} ден</td>
                         <td class="col-1">{{$d->price_idle}} ден</td>
                         <td class="col-1">{{$d->price_order}} ден</td>
-                        @php
-                            $sum = 0;
-                        @endphp
+
                         @php
                             $totalSum = $d->price + $d->price_idle + $d->price_order;
                              if (!$d->invoice) $sum += $totalSum;

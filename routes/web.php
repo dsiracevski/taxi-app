@@ -5,6 +5,7 @@ use App\Http\Controllers\CarsController;
 use App\Http\Controllers\DirectionsController;
 use App\Http\Controllers\DriversController;
 use App\Http\Controllers\LocationsController;
+use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RegisterController;
@@ -45,6 +46,9 @@ Route::post('assign', [CarsController::class, 'assignDriver'])->name('assignDriv
 
 Route::get('shift/', [UsersController::class, 'endShift'])->name('endShift')->middleware('auth');
 
+Route::get('services/', [ServicesController::class, 'view'])->name('viewServices')->middleware('auth');
+Route::post('service/fuel/', [ServicesController::class, 'addFuel'])->name('addFuel')->middleware('auth');
+
 Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'admin']], function () {
 
 
@@ -54,11 +58,14 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'admin']], functi
 
 
 
-    Route::post('register/', [RegisterController::class, 'create']);
+    Route::post('register/', [RegisterController::class, 'create'])->name('registerUser');
 
     Route::get('administration/', function () {
         return view('admin.view');
     })->name('adminView');
+
+
+    Route::post('/service/oil/', [ServicesController::class, 'changeOil'])->name('changeOil')->middleware('auth');
 
 
     Route::get('administration/directions/', [DirectionsController::class, 'adminView'])->name('adminView');
