@@ -25,8 +25,8 @@ class AddDriverIdToCarServices extends Migration
      */
     public function down()
     {
-        Schema::table('car_services', function (Blueprint $table) {
-            //
+        Schema::table('driver_cars', function($table) {
+            $table->dropColumn('driver_id');
         });
     }
 }

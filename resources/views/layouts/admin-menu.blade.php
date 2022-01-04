@@ -23,6 +23,9 @@
                 <a class="nav-link" href="{{route('viewLocations')}}" class="nav-link">Локации</a>
             </li>
             <li>
+                <a class="nav-link" href="{{route('viewCompanies')}}" class="nav-link">Компании</a>
+            </li>
+            <li>
                 <a class="nav-link" href="{{route('viewUsers')}}" class="nav-link">Корисници</a>
             </li>
             <li>

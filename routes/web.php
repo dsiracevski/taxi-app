@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\CarsController;
+use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\DirectionsController;
 use App\Http\Controllers\DriversController;
 use App\Http\Controllers\LocationsController;
@@ -97,6 +98,12 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'admin']], functi
     Route::get('drivers/{driver}', [DriversController::class, 'show'])->name('viewDriver');
     Route::patch('drivers/{driver}', [DriversController::class, 'update']);
     Route::delete('drivers/{driver}', [DriversController::class, 'destroy']);
+
+    Route::get('companies/', [CompaniesController::class, 'view'])->name('viewCompanies');
+    Route::post('companies/', [CompaniesController::class, 'create']);
+    Route::get('companies/{company}', [CompaniesController::class, 'show'])->name('viewCompany');
+    Route::patch('companies/{company}', [CompaniesController::class, 'update'])->name('updateCompany');
+    Route::delete('companies/{company}', [CompaniesController::class, 'destroy'])->name('deleteCompany');
 
 
 });

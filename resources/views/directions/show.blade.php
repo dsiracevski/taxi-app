@@ -46,38 +46,38 @@
                         </div>
                         <table class="table table-striped ">
                             <thead>
-                                <tr>
-                                    <td width="70">Час</td>
-                                    <td width="165">Од - До</td>
-                                    <td width="100">Цена</td>
-                                    <td>Чек.</td>
-                                    <td>Пор.</td>
-                                    <td>Фактура</td>
-                                    <td>Вкупно</td>
-                                </tr>
+                            <tr>
+                                <td width="70">Час</td>
+                                <td width="165">Од - До</td>
+                                <td width="100">Цена</td>
+                                <td>Чек.</td>
+                                <td>Пор.</td>
+                                <td>Фактура</td>
+                                <td>Вкупно</td>
+                            </tr>
                             </thead>
                             <tbody>
-                        @php
-                            $sum = 0;
-                        @endphp
-                        @foreach($direction['directions'] as $d)
-                            <tr class="directions" data-id="{{$d->id}}">
-                                <td>{{$d->created_at->format('H:i')}}</td>
-                                <td>{{$d->from_street_name . ' ' . $d->street_number_from}}
-                                    - {{$d->to_street_name . ' ' . $d->street_number_to}}</td>
-                                <td>{{$d->price}} </td>
-                                <td>{{$d->price_idle}} </td>
-                                <td>{{$d->price_order}} </td>
-                                <td>{{($d->invoice) ? "Да" : "Не"}} </td>
-                                @php
-                                    $totalSum = $d->price + $d->price_idle + $d->price_order;
-                                    if(!$d->invoice){
-                                        $sum = $sum + $totalSum;
-                                    }
-                                @endphp
-                                <td>{{$totalSum}}</td>
-                            </tr>
-                        @endforeach
+                            @php
+                                $sum = 0;
+                            @endphp
+                            @foreach($direction['directions'] as $d)
+                                <tr class="directions" data-id="{{$d->id}}">
+                                    <td>{{$d->created_at->format('H:i')}}</td>
+                                    <td>{{$d->from_street_name . ' ' . $d->street_number_from}}
+                                        - {{$d->to_street_name . ' ' . $d->street_number_to}}</td>
+                                    <td>{{$d->price}} </td>
+                                    <td>{{$d->price_idle}} </td>
+                                    <td>{{$d->price_order}} </td>
+                                    <td>{{($d->invoice) ? "Да" : "Не"}} </td>
+                                    @php
+                                        $totalSum = $d->price + $d->price_idle + $d->price_order;
+                                        if(!$d->invoice){
+                                            $sum = $sum + $totalSum;
+                                        }
+                                    @endphp
+                                    <td>{{$totalSum}}</td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                         <div class="text-right p-2 border-top">
@@ -134,7 +134,8 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-4">
-                                    <input type="text" placeholder="Број" name="street_number_from" class="form-control">
+                                    <input type="text" placeholder="Број" name="street_number_from"
+                                           class="form-control">
                                 </div>
                             </div>
                             <div class="row">
@@ -152,25 +153,35 @@
                             </div>
                             <div class="row">
                                 <div class="col-3 d-flex">
-                                    <input type="number" placeholder="Цена" required name="price" class="form-control"><div class="currency-symbol my-auto"> Ден</div>
+                                    <input type="number" placeholder="Цена" required name="price" class="form-control">
+                                    <div class="currency-symbol my-auto"> Ден</div>
                                 </div>
 
                                 <div class="col-3 d-flex">
-                                    <input type="number" placeholder="Чекање" name="price_idle" class="form-control" ><div class="currency-symbol my-auto"> Ден</div>
+                                    <input type="number" placeholder="Чекање" name="price_idle" class="form-control">
+                                    <div class="currency-symbol my-auto"> Ден</div>
                                 </div>
 
                                 <div class="col-3 d-flex">
-                                    <input type="number" placeholder="Порачка" name="price_order" class="form-control"><div class="currency-symbol my-auto"> Ден</div>
+                                    <input type="number" placeholder="Порачка" name="price_order" class="form-control">
+                                    <div class="currency-symbol my-auto"> Ден</div>
                                 </div>
-                                <div class="col-3">
-                                    <label for="invoice"><input type="checkbox" name="invoice" id="invoice" value="1"> Фактура?</label>
+                                <div class="col-3 d-flex">
+                                    <select class="company_id company form-control" name="company_id">
+                                        <option value="">Компанија</option>
+                                        @foreach($companies as $company)
+                                            <option value="{{$company->id}}">{{$company->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
+                                {{--                                <div class="col-3">--}}
+                                {{--                                    <label for="invoice"><input type="checkbox" name="invoice" id="invoice" value="1"> Фактура?</label>--}}
+                                {{--                                </div>--}}
                             </div>
                             <div class="row mt-3">
                                 <div class="col-7">
                                     <textarea placeholder="Забелешка" class="w-100 form-control"></textarea>
                                 </div>
-
 
                             </div>
                             <div class="row mt-3">
@@ -279,7 +290,7 @@
                         $('#carNameToAssign').html(car_name);
                     });
 
-                    $(".directions tr").on("click", function(){
+                    $(".directions tr").on("click", function () {
                         //get id
                         let id = $(this).data('id');
                     })

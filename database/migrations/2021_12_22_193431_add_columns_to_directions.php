@@ -29,8 +29,12 @@ class AddColumnsToDirections extends Migration
      */
     public function down()
     {
-        Schema::table('directions', function (Blueprint $table) {
-            //
+        Schema::table('driver_cars', function($table) {
+            $table->dropColumn('price_idle');
+            $table->dropColumn('price_order');
+            $table->dropColumn('street_number_from');
+            $table->dropColumn('street_number_to');
+            $table->dropColumn('invoice');
         });
     }
 }

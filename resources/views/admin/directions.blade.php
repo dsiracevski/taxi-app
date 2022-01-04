@@ -34,15 +34,15 @@
             <table id="myTable" class="display card rounded-lg col-12">
                 <thead>
                 <tr class="row text-left">
-                    <th class="col-2">Дата и час</th>
-                    <th class="col-2">Диспечер</th>
-                    <th class="col-2">Возач</th>
-                    <th class="col-1">Од - До</th>
-                    <th class="col-1">Цена</th>
-                    <th class="col-1">Чекање</th>
-                    <th class="col-1">Порачка</th>
-                    <th class="col-1">Вкупно</th>
-                    <th class="col-1">Фактура?</th>
+                    <th>Дата и час</th>
+                    <th>Диспечер</th>
+                    <th>Возач</th>
+                    <th>Од - До</th>
+                    <th>Цена</th>
+                    <th>Чекање</th>
+                    <th>Порачка</th>
+                    <th>Вкупно</th>
+                    <th>Фактура?</th>
                 </tr>
                 </thead>
 
@@ -52,23 +52,23 @@
                 @endphp
                 @foreach($directions as $d)
 
-                    <tr class="row pb-2 pt-2 text-left">
-                        <td class="col-2">{{$d->created_at}}</td>
-                        <td class="col-2">{{$d->userFirst . ' ' . $d->userLast}}</td>
-                        <td class="col-2">{{$d->first_name . ' ' . $d->last_name}}</td>
+                    <tr>
+                        <td>{{$d->created_at}}</td>
+                        <td>{{$d->userFirst . ' ' . $d->userLast}}</td>
+                        <td>{{$d->first_name . ' ' . $d->last_name}}</td>
                         <td
-                            class="col-1">{{$d->from_street_name . ' ' . $d->street_number_from}} {{$d->to_street_name . ' ' . $d->street_number_to}}</td>
-                        <td class="col-1">{{$d->price}} ден</td>
-                        <td class="col-1">{{$d->price_idle}} ден</td>
-                        <td class="col-1">{{$d->price_order}} ден</td>
+                        >{{$d->from_street_name . ' ' . $d->street_number_from}} {{$d->to_street_name . ' ' . $d->street_number_to}}</td>
+                        <td>{{$d->price}} ден</td>
+                        <td>{{$d->price_idle}} ден</td>
+                        <td>{{$d->price_order}} ден</td>
 
                         @php
                             $totalSum = $d->price + $d->price_idle + $d->price_order;
                              if (!$d->invoice) $sum += $totalSum;
                         @endphp
 
-                        <td class="col-1">{{$totalSum}} ден</td>
-                        <td class="col-1">@if ($d->invoice) Да @else Не @endif</td>
+                        <td>{{$totalSum}} ден</td>
+                        <td>@if ($d->invoice) Да @else Не @endif</td>
                     </tr>
                 @endforeach
 

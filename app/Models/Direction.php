@@ -11,6 +11,11 @@ class Direction extends Model
 
     protected $guarded = [];
 
+    public function company()
+    {
+        return $this->belongsTo(Companies::class, 'company_id');
+    }
+
     public function driver()
     {
         return $this->belongsTo(Driver::class, "driver_id");

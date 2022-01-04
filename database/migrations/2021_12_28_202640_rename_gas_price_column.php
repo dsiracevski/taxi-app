@@ -25,8 +25,8 @@ class RenameGasPriceColumn extends Migration
      */
     public function down()
     {
-        Schema::table('car_services', function (Blueprint $table) {
-            $table->integer('driver_id');
+        Schema::table('driver_cars', function($table) {
+            $table->dropColumn('price');
         });
     }
 }

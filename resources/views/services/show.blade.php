@@ -28,7 +28,7 @@
                                 @endforeach
                             </select>
                         </label>
-                        <label for=driver_id"" class="col-1 d-inline">
+                        <label for="driver_id" class="col-1 d-inline">
                             <p class="d-inline">Возач</p>
                             <select name="driver_id" id="driver_id" required>
                                 <option value=""></option>
@@ -77,7 +77,7 @@
                                     @endforeach
                                 </select>
                             </label>
-                            <label for=driver_id"" class="col-1 d-inline">
+                            <label for="driver_id" class="col-1 d-inline">
                                 <p class="d-inline">Возач</p>
                                 <select name="driver_id" id="driver_id" required>
                                     <option value=""></option>

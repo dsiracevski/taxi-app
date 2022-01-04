@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Car;
 use App\Models\Driver;
 use App\Models\User;
 use Carbon\Carbon;
@@ -65,10 +66,13 @@ class UsersController extends Controller
             ->groupBy('drivers.id')
             ->get();
 
+        $drivers = Driver::has('directions')->with('tDirections', 'cars')->get();
+
+
 
         return view('users.shift', [
             'user' => auth()->user(),
-            'driverInvoices' => $driverInvoices
+            'drivers' => $drivers
         ]);
     }
 

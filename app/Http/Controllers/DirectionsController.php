@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Car;
+use App\Models\Companies;
 use App\Models\Direction;
 use App\Models\Driver;
 use App\Models\Location;
@@ -61,7 +62,8 @@ class DirectionsController extends Controller
             'allDrivers' => $allDrivers,
             'user' => $user,
             'directions' => $directions,
-            'cars' => $allCars
+            'cars' => $allCars,
+            'companies' => Companies::all()
         ]);
 
     }
@@ -95,7 +97,8 @@ class DirectionsController extends Controller
 
         return view('admin.directions', [
             'user' => auth()->user(),
-            'directions' => $directions
+            'directions' => $directions,
+            'companies' => Companies::all()
         ]);
     }
 
@@ -105,11 +108,12 @@ class DirectionsController extends Controller
         if (!$user) {
             redirect(route('login'));
         }
-       $request->validate([
+        $request->validate([
             'driver_id' => 'required',
             'location_from_id' => 'required',
             'location_to_id' => 'required',
             'price' => 'required',
+            'company_id' => ''
         ]);
 
         try {
@@ -119,7 +123,6 @@ class DirectionsController extends Controller
         }
         return redirect(route('viewDirections'))->with('message', ['text' => 'Рутата е додадена', 'type' => 'success']);
     }
-
 
 
     public function updateIdle(Request $request)
