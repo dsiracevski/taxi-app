@@ -93,8 +93,7 @@ class DirectionsController extends Controller
 //            ->orderBy('directions.driver_id')
 //            ->get();
 
-        $directions = Direction::with('driver', 'users', 'locationFrom', 'locationTo', 'company')
-            ->whereDate('created_at', today())
+        $directions = Direction::with('driver.cars', 'users', 'locationFrom', 'locationTo', 'company')
             ->whereBetween('created_at', [$startDate, $endDate])
             ->get();
 

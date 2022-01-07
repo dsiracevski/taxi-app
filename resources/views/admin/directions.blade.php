@@ -41,6 +41,7 @@
                     <th>Порачка</th>
                     <th>Вкупно</th>
                     <th>Фактура?</th>
+                    <th>Возило</th>
                 </tr>
                 </thead>
 
@@ -49,13 +50,13 @@
                     $sum = 0;
                 @endphp
                 @foreach($directions as $direction)
-{{--@dd($direction)--}}
                     <tr>
                         <td>{{$direction->created_at}}</td>
                         <td>{{$direction->users->full_name}}</td>
                         <td>{{$direction->driver->full_name}}</td>
                         <td
-                        >{{$direction->locationFrom->street_name . ' ' . $direction->locationFrom->street_number}} - {{$direction->locationTo->street_name . ' ' . $direction->locationTo->street_number}}</td>
+                        >{{$direction->locationFrom->street_name . ' ' . $direction->locationFrom->street_number}}
+                            - {{$direction->locationTo->street_name . ' ' . $direction->locationTo->street_number}}</td>
                         <td>{{$direction->price}} ден</td>
                         <td>{{$direction->price_idle}} ден</td>
                         <td>{{$direction->price_order}} ден</td>
@@ -67,6 +68,9 @@
 
                         <td>{{$totalSum}} ден</td>
                         <td>@if ($direction->company_id) {{$direction->company->name}} @else Не @endif</td>
+                        @foreach($direction->driver->cars as $car)
+                            <td>{{$car->name}}</td>
+                        @endforeach
                     </tr>
                 @endforeach
 
@@ -77,27 +81,7 @@
                 <div>Вкупно</div>
                 <div>{{$sum}} ден</div>
             </div>
-            {{--                @endforeach--}}
-
         </div>
-        @if(!empty($cars))
-            <div >
-                <div>
-                    @foreach($cars as $car)
-                        <div>{{$car->name}}
-                            <a href="#" class="shift_driver"
-                               data-toggle="modal"
-                               data-target="#shiftDriver"
-                               data-driver-id=""
-                               data-car-name="{{$car->name}}"
-                               data-car-id="{{$car->id}}">
-                                Add
-                            </a>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        @endif
     </div>
 
 @stop
