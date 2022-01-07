@@ -35,7 +35,12 @@ class Driver extends Model
 
     public function tDirections()
     {
-        return $this->directions()->whereDate('created_at', today()->toDateString());
+        return $this->directions()->whereDate('created_at', today()->toDateString())->whereNull('company_id');
+    }
+
+    public function iDirections()
+    {
+        return $this->directions()->whereDate('created_at', today()->toDateString())->whereNotNull('company_id');
     }
 
     public function onWorkCars()
@@ -43,4 +48,8 @@ class Driver extends Model
         return $this->cars()->wherePivot('on_work', 1);
     }
 
+    public function getFullNameAttribute()
+    {
+        return $this->first_name . " " . $this->last_name;
+    }
 }
