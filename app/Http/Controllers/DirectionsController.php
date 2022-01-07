@@ -82,23 +82,26 @@ class DirectionsController extends Controller
         } else
             $endDate = request()->dateTo;
 
-//dd($endDate);
+//        $directions = DB::table('directions')
+//            ->leftJoin('drivers', 'drivers.id', '=', 'directions.driver_id')
+//            ->leftJoin('users as u', 'u.id', '=', 'directions.user_id')
+//            ->join('locations as l', 'l.id', '=', 'directions.location_from_id')
+//            ->join('locations as lo', 'lo.id', '=', 'directions.location_to_id')
+////            ->join('cars', 'cars.id', )
+//            ->select('directions.*', 'drivers.*', 'u.first_name as userFirst', 'u.last_name as userLast', 'l.street_name as from_street_name', 'lo.street_name as to_street_name')
+//            ->whereBetween('directions.created_at', [$startDate, $endDate])
+//            ->orderBy('directions.driver_id')
+//            ->get();
 
-        $directions = DB::table('directions')
-            ->leftJoin('drivers', 'drivers.id', '=', 'directions.driver_id')
-            ->leftJoin('users as u', 'u.id', '=', 'directions.user_id')
-            ->join('locations as l', 'l.id', '=', 'directions.location_from_id')
-            ->join('locations as lo', 'lo.id', '=', 'directions.location_to_id')
-//            ->join('cars', 'cars.id', )
-            ->select('directions.*', 'drivers.*', 'u.first_name as userFirst', 'u.last_name as userLast', 'l.street_name as from_street_name', 'lo.street_name as to_street_name')
-            ->whereBetween('directions.created_at', [$startDate, $endDate])
-            ->orderBy('directions.driver_id')
+        $directions = Direction::with('driver', 'users', 'locationFrom', 'locationTo', 'company')
+            ->whereDate('created_at', today())
+            ->whereBetween('created_at', [$startDate, $endDate])
             ->get();
 
         return view('admin.directions', [
             'user' => auth()->user(),
-            'directions' => $directions,
-            'companies' => Companies::all()
+            'companies' => Companies::all(),
+            'directions' => $directions
         ]);
     }
 

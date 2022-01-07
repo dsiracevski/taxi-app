@@ -26,14 +26,12 @@
 
     </div>
 
+    <div>
 
-
-    <div class="row">
-
-        <div class="col-12">
-            <table id="myTable" class="display card rounded-lg col-12">
+        <div>
+            <table id="myTable">
                 <thead>
-                <tr class="row text-left">
+                <tr>
                     <th>Дата и час</th>
                     <th>Диспечер</th>
                     <th>Возач</th>
@@ -50,41 +48,41 @@
                 @php
                     $sum = 0;
                 @endphp
-                @foreach($directions as $d)
-
+                @foreach($directions as $direction)
+{{--@dd($direction)--}}
                     <tr>
-                        <td>{{$d->created_at}}</td>
-                        <td>{{$d->userFirst . ' ' . $d->userLast}}</td>
-                        <td>{{$d->first_name . ' ' . $d->last_name}}</td>
+                        <td>{{$direction->created_at}}</td>
+                        <td>{{$direction->users->full_name}}</td>
+                        <td>{{$direction->driver->full_name}}</td>
                         <td
-                        >{{$d->from_street_name . ' ' . $d->street_number_from}} {{$d->to_street_name . ' ' . $d->street_number_to}}</td>
-                        <td>{{$d->price}} ден</td>
-                        <td>{{$d->price_idle}} ден</td>
-                        <td>{{$d->price_order}} ден</td>
+                        >{{$direction->locationFrom->street_name . ' ' . $direction->locationFrom->street_number}} - {{$direction->locationTo->street_name . ' ' . $direction->locationTo->street_number}}</td>
+                        <td>{{$direction->price}} ден</td>
+                        <td>{{$direction->price_idle}} ден</td>
+                        <td>{{$direction->price_order}} ден</td>
 
                         @php
-                            $totalSum = $d->price + $d->price_idle + $d->price_order;
-                             if (!$d->invoice) $sum += $totalSum;
+                            $totalSum = $direction->price + $direction->price_idle + $direction->price_order;
+                             if (!$direction->invoice) $sum += $totalSum;
                         @endphp
 
                         <td>{{$totalSum}} ден</td>
-                        <td>@if ($d->invoice) Да @else Не @endif</td>
+                        <td>@if ($direction->company_id) {{$direction->company->name}} @else Не @endif</td>
                     </tr>
                 @endforeach
 
                 </tbody>
             </table>
 
-            <div class="row card-footer">
-                <div class="col-11">Вкупно</div>
-                <div class="col-1 text-left">{{$sum}} ден</div>
+            <div>
+                <div>Вкупно</div>
+                <div>{{$sum}} ден</div>
             </div>
             {{--                @endforeach--}}
 
         </div>
         @if(!empty($cars))
-            <div class="col-4">
-                <div class="p-5">
+            <div >
+                <div>
                     @foreach($cars as $car)
                         <div>{{$car->name}}
                             <a href="#" class="shift_driver"
