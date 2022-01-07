@@ -67,7 +67,7 @@
                         @endphp
 
                         <td>{{$totalSum}} ден</td>
-                        <td>@if ($direction->company_id) {{$direction->company->name}} @else Не @endif</td>
+                        <td>@if ($direction->company_id) {{$direction->company->name}} @else Во Готово @endif</td>
                         @foreach($direction->driver->cars as $car)
                             <td>{{$car->name}}</td>
                         @endforeach

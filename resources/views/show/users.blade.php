@@ -1,22 +1,18 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Users</title>
-</head>
-<body>
+@extends('layouts.master')
 
-    <table>
+@section('content')
+    @if (Auth::user()->is_admin)
+        @include('layouts.admin-menu')
+    @else
+        @include('layouts.user-menu')
+    @endif
+
+    <table id="myTable">
         <thead>
         <tr>
-            <th>Name:</th>
-            <th>First name</th>
-            <th>Last Name</th>
+            <th>Име</th>
             <th>Email</th>
-            <th>Admin?</th>
+            <th>Администратор?</th>
 
         </tr>
         </thead>
@@ -25,14 +21,13 @@
 
         @foreach($users as $user)
             <tr>
-                <td><a href="users/{{$user->id}}">{{$user->name}}</a></td>
-                <td>{{$user->first_name}}</td>
-                <td>{{$user->last_name}}</td>
+                <td><a href="users/{{$user->id}}">{{$user->full_name}}</a></td>
+
                 <td>{{$user->email}}</td>
                 @if($user->is_admin)
-                    <td>Yes</td>
+                    <td>Da</td>
                 @elseif(!$user->is_admin)
-                    <td>No</td>
+                    <td>Ne</td>
                 @endif
             </tr>
         @endforeach
@@ -43,5 +38,12 @@
         <a href="/administration/">Go Back</a>
     </div>
 
-</body>
-</html>
+@stop
+
+@section('script')
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+@stop

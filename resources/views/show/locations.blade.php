@@ -1,54 +1,61 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Locations</title>
-</head>
-<body>
+@extends('layouts.master')
 
-    <table>
-        <thead>
-        <tr>
-            <th>Street</th>
-            <th>City</th>
-            <th>Country</th>
-        </tr>
-        </thead>
-
-        <tbody>
-
-        @foreach($locations as $location)
+@section('content')
+    @if (Auth::user()->is_admin)
+        @include('layouts.admin-menu')
+    @else
+        @include('layouts.user-menu')
+    @endif
+    <form method="POST">
+        @csrf
+        <table id="myTable">
+            <thead>
             <tr>
-                <td><a href="locations/{{$location->id}}">{{$location->street_name}}</a></td>
-                <td>{{$location->city}}</td>
-                <td>{{$location->country}}</td>
+                <th>Улица</th>
+                <th>Град</th>
+                <th>Држава</th>
             </tr>
-        @endforeach
+            </thead>
 
-        <form method="POST">
+            <tbody>
+
+            @foreach($locations as $location)
+                <tr>
+                    <td><a href="locations/{{$location->id}}">{{$location->street_name}}</a></td>
+                    <td>{{$location->city}}</td>
+                    <td>{{$location->country}}</td>
+                </tr>
+            @endforeach
+
+
             <tr>
 
                 @csrf
                 <div>
-                    <td><input placeholder="Add a Street Name" name="street_name"></td>
-                    <td><input placeholder="Add City" name="city"></td>
-                    <td><input placeholder="Add Country" name="country"></td>
+                    <td><input placeholder="Внесете име на улица" name="street_name"></td>
+                    <td><input placeholder="Внесете град" name="city"></td>
+                    <td><input placeholder="Внесете држава" name="country"></td>
                 </div>
 
-                <div>
-                    <button type="submit">Add</button>
-                </div>
             </tr>
-        </form>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary">Додади</button>
+        </div>
+    </form>
 
     <div>
-        <a href="/administration/">Go Back</a>
+        <a href="/administration/">Назад</a>
     </div>
 
-</body>
-</html>
+@stop
+
+@section('script')
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+@stop
