@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Car;
+use App\Models\Companies;
 use App\Models\Direction;
 use App\Models\Driver;
 use App\Models\Location;
@@ -61,7 +62,8 @@ class DirectionsController extends Controller
             'allDrivers' => $allDrivers,
             'user' => $user,
             'directions' => $directions,
-            'cars' => $allCars
+            'cars' => $allCars,
+            'companies' => Companies::all()
         ]);
 
     }
@@ -80,21 +82,24 @@ class DirectionsController extends Controller
         } else
             $endDate = request()->dateTo;
 
-//dd($endDate);
+//        $directions = DB::table('directions')
+//            ->leftJoin('drivers', 'drivers.id', '=', 'directions.driver_id')
+//            ->leftJoin('users as u', 'u.id', '=', 'directions.user_id')
+//            ->join('locations as l', 'l.id', '=', 'directions.location_from_id')
+//            ->join('locations as lo', 'lo.id', '=', 'directions.location_to_id')
+////            ->join('cars', 'cars.id', )
+//            ->select('directions.*', 'drivers.*', 'u.first_name as userFirst', 'u.last_name as userLast', 'l.street_name as from_street_name', 'lo.street_name as to_street_name')
+//            ->whereBetween('directions.created_at', [$startDate, $endDate])
+//            ->orderBy('directions.driver_id')
+//            ->get();
 
-        $directions = DB::table('directions')
-            ->leftJoin('drivers', 'drivers.id', '=', 'directions.driver_id')
-            ->leftJoin('users as u', 'u.id', '=', 'directions.user_id')
-            ->join('locations as l', 'l.id', '=', 'directions.location_from_id')
-            ->join('locations as lo', 'lo.id', '=', 'directions.location_to_id')
-//            ->join('cars', 'cars.id', )
-            ->select('directions.*', 'drivers.*', 'u.first_name as userFirst', 'u.last_name as userLast', 'l.street_name as from_street_name', 'lo.street_name as to_street_name')
-            ->whereBetween('directions.created_at', [$startDate, $endDate])
-            ->orderBy('directions.driver_id')
+        $directions = Direction::with('driver.cars', 'users', 'locationFrom', 'locationTo', 'company')
+            ->whereBetween('created_at', [$startDate, $endDate])
             ->get();
 
         return view('admin.directions', [
             'user' => auth()->user(),
+            'companies' => Companies::all(),
             'directions' => $directions
         ]);
     }
@@ -105,11 +110,12 @@ class DirectionsController extends Controller
         if (!$user) {
             redirect(route('login'));
         }
-       $request->validate([
+        $request->validate([
             'driver_id' => 'required',
             'location_from_id' => 'required',
             'location_to_id' => 'required',
             'price' => 'required',
+            'company_id' => ''
         ]);
 
         try {
@@ -119,7 +125,6 @@ class DirectionsController extends Controller
         }
         return redirect(route('viewDirections'))->with('message', ['text' => 'Рутата е додадена', 'type' => 'success']);
     }
-
 
 
     public function updateIdle(Request $request)

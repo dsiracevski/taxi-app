@@ -25,7 +25,7 @@ class AddIsActiveOnCarsTable extends Migration
      */
     public function down()
     {
-        Schema::table('cars', function($table) {
+        Schema::table('driver_cars', function($table) {
             $table->dropColumn('is_active');
         });
     }

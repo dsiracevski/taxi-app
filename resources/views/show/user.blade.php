@@ -1,58 +1,58 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{$user->name}}</title>
-</head>
-<body>
+@extends('layouts.master')
 
-    <table>
-        <thead>
-        <tr>
-            <th>Name:</th>
-            <th>First name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Admin?</th>
-
-        </tr>
-        </thead>
-
-        <tbody>
-
-        <tr>
-
-            <form method="POST">
-                @csrf
-                @method('PATCH')
-                <div>
-                    <td><input value="{{ $user->name }}" name="name"></td>
-                    <td><input value="{{ $user->first_name }}" name="first_name"></td>
-                    <td><input value="{{ $user->last_name }}" name="last_name"></td>
-                    <td><input value="{{ $user->email }}" name="email"></td>
-                    <input type="hidden" name="is_admin" value="0">
-                    <td><input name="is_admin" type="checkbox" {{$user->is_admin ? 'checked' : ''}} value="1"></td>
-                </div>
-
-                <div>
-                    <button type="submit">Edit</button>
-                </div>
-            </form>
-        </tr>
-        </tbody>
-    </table>
-
+@section('content')
+    @if (Auth::user()->is_admin)
+        @include('layouts.admin-menu')
+    @else
+        @include('layouts.user-menu')
+    @endif
     <div>
-        <a href="/administration/">Go Back</a>
         <form method="POST">
             @csrf
-            @method('DELETE')
-            <button>Delete User</button>
-        </form>
-    </div>
+            @method('PATCH')
+            <table id="myTable">
+                <thead>
+                <tr>
+                    <th>Име</th>
+                    <th>Презиме</th>
+                    <th>Email</th>
+                    <th>Админстратор?</th>
 
-</body>
-</html>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                    <div>
+                        <td><input value="{{ $user->first_name }}" name="first_name"></td>
+                        <td><input value="{{ $user->last_name }}" name="last_name"></td>
+                        <td><input value="{{ $user->email }}" name="email"></td>
+                        <input type="hidden" name="is_admin" value="0">
+                        <td><input name="is_admin" type="checkbox" {{$user->is_admin ? 'checked' : ''}} value="1"></td>
+                    </div>
+                </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary d-inline">Промени</button>
+            </div>
+        </form>
+
+        <div class="d-inline">
+            <a href="/administration/" class="d-inline">Назад</a>
+            <form method="POST" class="d-inline">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger d-inline">Избриши</button>
+            </form>
+        </div>
+    </div>
+@stop
+
+@section('script')
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+@stop

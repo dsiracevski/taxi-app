@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateServicesTable extends Migration
+class AddCompanyIdOnDirections extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateServicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('services', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->timestamps();
+        Schema::table('directions', function (Blueprint $table) {
+            $table->integer("company_id")->default(0);
+
         });
     }
 
@@ -28,7 +27,7 @@ class CreateServicesTable extends Migration
     public function down()
     {
         Schema::table('driver_cars', function($table) {
-            $table->dropColumn('name');
+            $table->dropColumn('company_id');
         });
     }
 }
