@@ -101,23 +101,18 @@
         $(document).ready(function () {
             $('#myTable').DataTable({
                 dom: 'Bfrtip',
-                columnDefs: [
-                    {
-                        targets: 0,
-                        className: 'noVis'
-                    }
-                ],
                 buttons: [
+                        'columnsToggle',
+
                     {
                         extend: 'excelHtml5',
-                        title: 'Рути од {{$startDate}} до {{$endDate}}'
-                    },
-                    {
-
-                        extend: 'colvis',
-                        columns: ':not(.noVis)'
+                        text: 'Export во Excel',
+                        className: 'btn btn-primary',
+                        title: 'Рути од {{$startDate}} до {{$endDate}}',
+                        init: function(api, node, config) {
+                            $(node).removeClass('dt-button buttons-excel buttons-html5')
+                        }
                     }
-
                 ]
             });
 
