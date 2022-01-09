@@ -8,37 +8,38 @@
             <div class="col-12">
                 <div class="row">
                     <div class="col-12">
-                        <div class="card rounded-lg col-12">
-                            <div class="row card-header">
-                                <div class="col-2">Возач</div>
-                                <div class="col-2">Поминати километри</div>
-                                <div class="col-2">Основно</div>
-                                <div class="col-2">Чекање</div>
-                                <div class="col-2">Порачка</div>
-                                <div class="col-2">Вкупно</div>
-                            </div>
+                        <table id="myTable">
+                            <thead>
+                            <tr>
+                                <th>Возач</th>
+                                <th>Поминати километри</th>
+                                <th>Основно</th>
+                                <th>Чекање</th>
+                                <th>Порачка</th>
+                                <th>Вкупно</th>
+                            </tr>
 
-
-                            @foreach($drivers as $driver)
-                                <div class="row pb-2 pt-2 ">
-                                    <div class="col-2">{{$driver->full_name}}</div>
+                            <tbody>
+                            <tr>
+                                @foreach($drivers as $driver)
+                                    <td>{{$driver->full_name}}</td>
                                     @foreach($driver->cars as $car)
-                                        <div class="col-2">{{$car->pivot->km}}</div>
+                                        <td>{{$car->pivot->km}}</td>
                                     @endforeach
-                                    <div class="col-2">{{$driver->tDirections->sum('price')}}</div>
-                                    <div class="col-2">{{$driver->tDirections->sum('price_idle')}}</div>
-                                    <div class="col-2">{{$driver->tDirections->sum('price_order')}}</div>
+                                    <td>{{$driver->tDirections->sum('price')}}</td>
+                                    <td>{{$driver->tDirections->sum('price_idle')}}</td>
+                                    <td>{{$driver->tDirections->sum('price_order')}}</td>
 
 
                                     @php
                                         $total = $driver->tDirections->sum('price') + $driver->tDirections->sum('price_idle') + $driver->tDirections->sum('price_order');
                                     @endphp
 
-                                    <div class="col-2">{{$total}}</div>
-
-                                </div>
+                                    <td>{{$total}}</td>
+                            </tr>
                             @endforeach
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -50,38 +51,41 @@
             <div class="col-12">
                 <div class="row">
                     <div class="col-12">
-                        <div class="card rounded-lg col-12">
-                                <div class="row card-header text-center bg-warning">
-                                    <div class="col-12">Фактури</div>
-                                </div>
-                                <div class="row card-header">
-                                    <div class="col-2">Возач</div>
-                                    <div class="col-2">Основно</div>
-                                    <div class="col-2">Чекање</div>
-                                    <div class="col-2">Порачка</div>
-                                    <div class="col-2">Вкупно</div>
-                                    <div class="col-2">Компанија</div>
-                                </div>
-                                {{--@dd($invoices)--}}
-
-                                @foreach($invoices as $invoice)
-                                    {{--                                @dd($invoice)--}}
-                                    <div class="row pb-2 pt-2 ">
-                                        <div class="col-2">{{$invoice->driver->full_name}}</div>
-                                        <div class="col-2">{{$invoice->price}}</div>
-                                        <div class="col-2">{{$invoice->price_idle}}</div>
-                                        <div class="col-2">{{$invoice->price_order}}</div>
-
-                                        @php
-                                            $total = $invoice->price + $invoice->price_idle + $invoice->price_order;
-                                        @endphp
-
-                                        <div class="col-2">{{$total}}</div>
-                                        <div class="col-2">{{$invoice->company->name}}</div>
-                                    </div>
-                                @endforeach
-                            </div>
+                        <div class="row card-header text-center bg-warning">
+                            <div class="col-12">Фактури</div>
                         </div>
+                        <table id="myTable2">
+                            <thead>
+                            <tr>
+                                <th>Возач</th>
+                                <th>Основно</th>
+                                <th>Чекање</th>
+                                <th>Порачка</th>
+                                <th>Вкупно</th>
+                                <th>Компанија</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($invoices as $invoice)
+                                <tr>
+
+                                    <td>{{$invoice->driver->full_name}}</td>
+                                    <td>{{$invoice->price}}</td>
+                                    <td>{{$invoice->price_idle}}</td>
+                                    <td>{{$invoice->price_order}}</td>
+
+                                    @php
+                                        $total = $invoice->price + $invoice->price_idle + $invoice->price_order;
+                                    @endphp
+
+                                    <td>{{$total}}</td>
+                                    <td>{{$invoice->company->name}}</td>
+                                </tr>
+
+                            @endforeach
+                            </tbody>
+                        </table>
+
                     </div>
                 </div>
             </div>
@@ -89,3 +93,54 @@
     </div>
 
 @endsection
+
+@section('script')
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                dom: 'Bfrtip',
+                columnDefs: [
+                    {
+                        targets: 0,
+                        className: 'noVis'
+                    }
+                ],
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        title: 'Такси Шлифка - Крај на Смена ({{auth()->user()->getFullNameAttribute() . " - " . today()->toDateString()}})'
+                    },
+                    {
+
+                        extend: 'colvis',
+                        columns: ':not(.noVis)'
+                    }
+
+                ]
+            });
+
+            $('#myTable2').DataTable({
+                dom: 'Bfrtip',
+                columnDefs: [
+                    {
+                        targets: 0,
+                        className: 'noVis'
+                    }
+                ],
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        title: 'Такси Шлифка - Фактури ({{auth()->user()->getFullNameAttribute() . " - " . today()->toDateString()}})'
+                    },
+                    {
+
+                        extend: 'colvis',
+                        columns: ':not(.noVis)'
+                    }
+
+                ]
+            });
+
+        });
+    </script>
+@stop

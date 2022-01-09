@@ -23,11 +23,10 @@
             </form>
         </div>
 
-
     </div>
 
     <div>
-
+{{--@dd(request())--}}
         <div>
             <table id="myTable">
                 <thead>
@@ -83,6 +82,12 @@
             </div>
         </div>
     </div>
+    @php
+        if (!request('dateTo')) {
+                $endDate = now()->format("Y-m-d");
+            } else
+                $endDate = request()->dateTo;
+    @endphp
 
 @stop
 
@@ -93,12 +98,15 @@
                 dom: 'Bfrtip',
                 columnDefs: [
                     {
-                        targets: 1,
+                        targets: 0,
                         className: 'noVis'
                     }
                 ],
                 buttons: [
-                    'excelHtml5',
+                    {
+                        extend: 'excelHtml5',
+                        title: 'Рути од {{request()->dateFrom}} до {{$endDate}}'
+                    },
                     {
 
                         extend: 'colvis',
