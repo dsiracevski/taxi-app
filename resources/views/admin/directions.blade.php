@@ -107,8 +107,8 @@
                     {
                         extend: 'excelHtml5',
                         text: 'Export во Excel',
-                        className: 'btn btn-primary',
                         title: 'Рути од {{$startDate}} до {{$endDate}}',
+                        className: 'btn btn-primary',
                         init: function(api, node, config) {
                             $(node).removeClass('dt-button buttons-excel buttons-html5')
                         }

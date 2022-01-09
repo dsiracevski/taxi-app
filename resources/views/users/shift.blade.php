@@ -99,21 +99,17 @@
         $(document).ready(function () {
             $('#myTable').DataTable({
                 dom: 'Bfrtip',
-                columnDefs: [
-                    {
-                        targets: 0,
-                        className: 'noVis'
-                    }
-                ],
                 buttons: [
+
+                    'columnsToggle',
                     {
                         extend: 'excelHtml5',
-                        title: 'Такси Шлифка - Крај на Смена ({{auth()->user()->getFullNameAttribute() . " - " . today()->toDateString()}})'
-                    },
-                    {
+                        title: 'Такси Шлифка - Фактури ({{auth()->user()->getFullNameAttribute() . " - " . today()->toDateString()}})',
+                        className: 'btn btn-primary',
+                        init: function (api, node, config) {
+                            $(node).removeClass('dt-button buttons-excel buttons-html5')
+                        }
 
-                        extend: 'colvis',
-                        columns: ':not(.noVis)'
                     }
 
                 ]
@@ -121,26 +117,23 @@
 
             $('#myTable2').DataTable({
                 dom: 'Bfrtip',
-                columnDefs: [
-                    {
-                        targets: 0,
-                        className: 'noVis'
-                    }
-                ],
                 buttons: [
+
+                    'columnsToggle',
                     {
                         extend: 'excelHtml5',
-                        title: 'Такси Шлифка - Фактури ({{auth()->user()->getFullNameAttribute() . " - " . today()->toDateString()}})'
-                    },
-                    {
+                        title: 'Такси Шлифка - Фактури ({{auth()->user()->getFullNameAttribute() . " - " . today()->toDateString()}})',
+                        className: 'btn btn-primary',
+                        init: function (api, node, config) {
+                            $(node).removeClass('dt-button buttons-excel buttons-html5')
+                        }
 
-                        extend: 'colvis',
-                        columns: ':not(.noVis)'
                     }
 
                 ]
             });
 
-        });
+        })
+        ;
     </script>
 @stop
