@@ -83,10 +83,15 @@
         </div>
     </div>
     @php
-        if (!request('dateTo')) {
-                $endDate = now()->format("Y-m-d");
+        if (!request('dateFrom')) {
+                $startDate = today()->startOfDay()->format("Y-m-d H:i:s");
             } else
-                $endDate = request()->dateTo;
+                $startDate = request()->dateFrom;
+
+            if (!request('dateTo')) {
+                    $endDate = now()->format("Y-m-d");
+                } else
+                    $endDate = request()->dateTo;
     @endphp
 
 @stop
@@ -105,7 +110,7 @@
                 buttons: [
                     {
                         extend: 'excelHtml5',
-                        title: 'Рути од {{request()->dateFrom}} до {{$endDate}}'
+                        title: 'Рути од {{$startDate}} до {{$endDate}}'
                     },
                     {
 
