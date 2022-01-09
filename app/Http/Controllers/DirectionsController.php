@@ -82,17 +82,6 @@ class DirectionsController extends Controller
         } else
             $endDate = request()->dateTo;
 
-//        $directions = DB::table('directions')
-//            ->leftJoin('drivers', 'drivers.id', '=', 'directions.driver_id')
-//            ->leftJoin('users as u', 'u.id', '=', 'directions.user_id')
-//            ->join('locations as l', 'l.id', '=', 'directions.location_from_id')
-//            ->join('locations as lo', 'lo.id', '=', 'directions.location_to_id')
-////            ->join('cars', 'cars.id', )
-//            ->select('directions.*', 'drivers.*', 'u.first_name as userFirst', 'u.last_name as userLast', 'l.street_name as from_street_name', 'lo.street_name as to_street_name')
-//            ->whereBetween('directions.created_at', [$startDate, $endDate])
-//            ->orderBy('directions.driver_id')
-//            ->get();
-
         $directions = Direction::with('driver.cars', 'users', 'locationFrom', 'locationTo', 'company')
             ->whereBetween('created_at', [$startDate, $endDate])
             ->get();

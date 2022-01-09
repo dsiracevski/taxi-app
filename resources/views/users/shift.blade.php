@@ -56,12 +56,11 @@
                                 </div>
                                 <div class="row card-header">
                                     <div class="col-2">Возач</div>
-                                    <div class="col-2">Поминати километри</div>
                                     <div class="col-2">Основно</div>
                                     <div class="col-2">Чекање</div>
                                     <div class="col-2">Порачка</div>
-                                    <div class="col-1">Вкупно</div>
-                                    <div class="col-1">Компанија</div>
+                                    <div class="col-2">Вкупно</div>
+                                    <div class="col-2">Компанија</div>
                                 </div>
                                 {{--@dd($invoices)--}}
 
@@ -69,7 +68,6 @@
                                     {{--                                @dd($invoice)--}}
                                     <div class="row pb-2 pt-2 ">
                                         <div class="col-2">{{$invoice->driver->full_name}}</div>
-                                        <div class="col-2"></div>
                                         <div class="col-2">{{$invoice->price}}</div>
                                         <div class="col-2">{{$invoice->price_idle}}</div>
                                         <div class="col-2">{{$invoice->price_order}}</div>
@@ -78,8 +76,8 @@
                                             $total = $invoice->price + $invoice->price_idle + $invoice->price_order;
                                         @endphp
 
-                                        <div class="col-1">{{$total}}</div>
-                                        <div class="col-1">{{$invoice->company->name}}</div>
+                                        <div class="col-2">{{$total}}</div>
+                                        <div class="col-2">{{$invoice->company->name}}</div>
                                     </div>
                                 @endforeach
                             </div>

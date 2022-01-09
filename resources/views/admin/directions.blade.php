@@ -89,7 +89,25 @@
 @section('script')
     <script>
         $(document).ready(function () {
-            $('#myTable').DataTable();
+            $('#myTable').DataTable({
+                dom: 'Bfrtip',
+                columnDefs: [
+                    {
+                        targets: 1,
+                        className: 'noVis'
+                    }
+                ],
+                buttons: [
+                    'excelHtml5',
+                    {
+
+                        extend: 'colvis',
+                        columns: ':not(.noVis)'
+                    }
+
+                ]
+            });
+
         });
     </script>
 @stop
