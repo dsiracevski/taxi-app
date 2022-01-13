@@ -23,11 +23,10 @@
             </form>
         </div>
 
-
     </div>
 
     <div>
-
+{{--@dd(request())--}}
         <div>
             <table id="myTable">
                 <thead>
@@ -83,13 +82,40 @@
             </div>
         </div>
     </div>
+    @php
+        if (!request('dateFrom')) {
+                $startDate = today()->startOfDay()->format("Y-m-d H:i:s");
+            } else
+                $startDate = request()->dateFrom;
+
+            if (!request('dateTo')) {
+                    $endDate = now()->format("Y-m-d");
+                } else
+                    $endDate = request()->dateTo;
+    @endphp
 
 @stop
 
 @section('script')
     <script>
         $(document).ready(function () {
-            $('#myTable').DataTable();
+            $('#myTable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                        'columnsToggle',
+
+                    {
+                        extend: 'excelHtml5',
+                        text: 'Export во Excel',
+                        title: 'Рути од {{$startDate}} до {{$endDate}}',
+                        className: 'btn btn-primary',
+                        init: function(api, node, config) {
+                            $(node).removeClass('dt-button buttons-excel buttons-html5')
+                        }
+                    }
+                ]
+            });
+
         });
     </script>
 @stop
