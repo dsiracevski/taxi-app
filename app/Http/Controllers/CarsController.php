@@ -79,15 +79,15 @@ class CarsController extends Controller
         }
         $car = Car::where('id', $request->car)->with('drivers')->first();
 
-        DB::table('driver_cars')
-            ->where('car_id', $request->car)  // find your user by their email
-            ->update(array('on_work' => 0));  // update the record in the DB.
-        DB::table('driver_cars')
-            ->where('driver_id', $request->driver_id)  // find your user by their email
-            ->update(array('on_work' => 0));  // update the record in the DB.
+//        DB::table('driver_cars')
+//            ->where('car_id', $request->car)  // find your user by their email
+//            ->update(array('on_work' => 0));  // update the record in the DB.
+//        DB::table('driver_cars')
+//            ->where('driver_id', $request->driver_id)  // find your user by their email
+//            ->update(array('on_work' => 0));  // update the record in the DB.
 
         try{
-            $car->drivers()->attach($request->driver_id, ['note'=>$request->note, 'km'=>$request->km, 'on_work'=>1, 'user_id' => $user->id]);
+            $car->drivers()->attach($request->driver_id, ['note'=>$request->note, 'km'=>$request->km, 'on_work'=>1, 'user_id' => $user->id, 'shift' => $request->shift]);
             return redirect(route('viewDirections'))->with('message', ['text'=>'Driver is assign to car','type'=>'success']);
         }
         catch (\Exception $e){

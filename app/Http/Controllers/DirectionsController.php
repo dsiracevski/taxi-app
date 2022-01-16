@@ -188,14 +188,20 @@ class DirectionsController extends Controller
             ->select('directions.*', 'l.street_name as from_street_name', 'lo.street_name as to_street_name')
             ->orderBy('id', 'desc')
             ->get();
-
+//        $driver = Driver::where('id', $driverID)->with('cars')->where('driver_cars.on_work', 1)->first();
+        $driver = Driver::where('id',$driverID)->whereHas('cars', function($q) {
+            $q->where('driver_cars.on_work', 1);
+        })->with('onWorkCars')->first();
+//        dd($driverID);
         return view('directions.driver', [
             'locations' => Location::all(),
             'user' => $user,
             'directions' => $directions,
             'companies' => Companies::all(),
             'allDrivers' => $allDrivers,
-            'driverID' => $driverID
+            'driverID' => $driverID,
+            'driver' => $driver,
+
         ]);
     }
 

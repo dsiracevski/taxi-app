@@ -49,6 +49,8 @@ Route::get('assign/', [CarsController::class, 'assignView'])->middleware('auth')
 Route::post('assign', [CarsController::class, 'assignDriver'])->name('assignDriver')->middleware('auth');
 
 Route::get('shift/', [UsersController::class, 'endShift'])->name('endShift')->middleware('auth');
+Route::get('shift/driver/end', [UsersController::class, 'endShiftDriver'])->name('endShiftDriver')->middleware('auth');
+Route::post('shift/driver/end', [UsersController::class, 'endShiftForDriver'])->name('endShiftForDriver')->middleware('auth');
 
 Route::get('services/', [ServicesController::class, 'view'])->name('viewServices')->middleware('auth');
 Route::post('service/fuel/', [ServicesController::class, 'addFuel'])->name('addFuel')->middleware('auth');
@@ -59,7 +61,6 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'admin']], functi
     Route::get('register/', function () {
         return view('register.create');
     });
-
 
 
     Route::post('register/', [RegisterController::class, 'create'])->name('registerUser');

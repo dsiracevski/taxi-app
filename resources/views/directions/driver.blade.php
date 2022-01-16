@@ -4,85 +4,101 @@
 @section('content')
 
     @include('layouts.user-menu')
-    <div class="row mb-3 mt-3">
-        <div class="col-12">
-            <a href="javascript:;" data-toggle="modal" data-target="#addRoute"
-               data-driver-id="{{$driverID}}" class="btn btn-primary driver_name">Додади Рута</a>
-        </div>
-    </div>
     <div class="row">
-        <div class="col-12">
-            @if ($errors->any())
-                <div class="alert alert-danger fade in alert-dismissible show">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
+        <div class="col-3"><x-menu ></x-menu></div>
+        <div class="col-9">
+            <div class="row mb-3 mt-3">
+                <div class="col-3">
+                    <a href="javascript:;" data-toggle="modal" data-target="#addRoute"
+                       data-driver-id="{{$driverID}}" class="btn btn-primary driver_name">Додади Рута</a>
                 </div>
-            @endif
-            @if(Session::has('message'))
-                <div class="alert alert-{{session('message')['type']}} fade in alert-dismissible show">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true" style="font-size:20px">×</span>
-                    </button>
-                    {{session('message')['text']}}
+                <div class="col-3">
+                    {{$driver->first_name}} {{$driver->last_name}}, смена {{$driver->onWorkCars[0]->pivot->shift}}
                 </div>
-            @endif
-        </div>
-    </div>
-    <div class="row">
-            <div class="col-12">
-                <div class="card rounded-lg">
-                    <table class="table table-striped directions">
-                        <thead>
-                        <tr>
-                            <td>Час</td>
-                            <td>Од - До</td>
-                            <td>Цена</td>
-                            <td>Чекање</td>
-                            <td>Порачка</td>
-                            <td>Фактура</td>
-                            <td>Вкупно</td>
-                            <td>Забелешка</td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @php
-                            $sum = 0;
-                        @endphp
-                        @foreach($directions as $d)
-                            <tr class="directions" data-id="{{$d->id}}">
-                                <td>{{$d->created_at->format('H:i')}} - {{isset($d->updated_at) ? $d->updated_at->format('H:i') : ''}}</td>
-                                <td>{{$d->from_street_name . ' ' . $d->street_number_from}}
-                                    - {{$d->to_street_name . ' ' . $d->street_number_to}}
-                                    @if($d->return == 1)
-                                        <i>Повратна</i>
-                                    @endif
-                                </td>
-                                <td>{{$d->price}} </td>
-                                <td>{{$d->price_idle}} </td>
-                                <td>{{$d->price_order}} </td>
-                                <td>{{($d->company_id) ? "Да" : "Не"}} </td>
-                                @php
-                                    $totalSum = $d->price + $d->price_idle + $d->price_order;
-                                    if(!$d->company_id){
-                                        $sum = $sum + $totalSum;
-                                    }
-                                @endphp
-                                <td>{{$totalSum}}</td>
-                                <td>{{$d->note}}</td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                    <div class="text-right p-2 border-top">
-                        <p><strong>Вкупно: {{$sum}} ден.</strong></p>
-                    </div>
+                <div class="col-3">
+                    {{$driver->onWorkCars[0]->name}}, {{$driver->onWorkCars[0]->registration_number}}, {{$driver->onWorkCars[0]->pivot->km}} km
+                </div>
+                <div class="col-3">
+                    {!! $driver->onWorkCars[0]->pivot->note !!}
                 </div>
             </div>
+            <div class="row">
+                <div class="col-12">
+                    @if ($errors->any())
+                        <div class="alert alert-danger fade in alert-dismissible show">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    @if(Session::has('message'))
+                        <div class="alert alert-{{session('message')['type']}} fade in alert-dismissible show">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true" style="font-size:20px">×</span>
+                            </button>
+                            {{session('message')['text']}}
+                        </div>
+                    @endif
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card rounded-lg">
+                        <table class="table table-striped directions">
+                            <thead>
+                            <tr>
+                                <td>Час</td>
+                                <td>Од - До</td>
+                                <td>Цена</td>
+                                <td>Чекање</td>
+                                <td>Порачка</td>
+                                <td>Фактура</td>
+                                <td>Вкупно</td>
+                                <td>Забелешка</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @php
+                                $sum = 0;
+                            @endphp
+                            @foreach($directions as $d)
+                                <tr class="directions" data-id="{{$d->id}}">
+                                    <td>{{$d->created_at->format('H:i')}} - {{isset($d->updated_at) ? $d->updated_at->format('H:i') : ''}}</td>
+                                    <td>{{$d->from_street_name . ' ' . $d->street_number_from}}
+                                        - {{$d->to_street_name . ' ' . $d->street_number_to}}
+                                        @if($d->return == 1)
+                                            <i>Повратна</i>
+                                        @endif
+                                    </td>
+                                    <td>{{$d->price}} </td>
+                                    <td>{{$d->price_idle}} </td>
+                                    <td>{{$d->price_order}} </td>
+                                    <td>{{($d->company_id) ? "Да" : "Не"}} </td>
+                                    @php
+                                        $totalSum = $d->price + $d->price_idle + $d->price_order;
+                                        if(!$d->company_id){
+                                            $sum = $sum + $totalSum;
+                                        }
+                                    @endphp
+                                    <td>{{$totalSum}}</td>
+                                    <td>{{$d->note}}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                        <div class="text-right p-2 border-top">
+                            <p><strong>Вкупно: {{$sum}} ден.</strong></p>
+                        </div>
+                    </div>
+                </div>
 
+            </div>
+        </div>
     </div>
+
+
     <!-- The Modal -->
     <div class="modal" id="addRoute">
         <div class="modal-dialog modal-lg">
@@ -90,7 +106,18 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Додади рута</h4>
+                    <div class="row">
+                        <div class="col-12">
+                            <h4 class="modal-title">Додади рута</h4>
+                        </div>
+                        <div class="col-6">
+                            {{$driver->first_name}} {{$driver->last_name}}, смена {{$driver->onWorkCars[0]->pivot->shift}}
+                        </div>
+                        <div class="col-6">
+                            {{$driver->onWorkCars[0]->name}}
+                        </div>
+                    </div>
+
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
