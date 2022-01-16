@@ -136,7 +136,7 @@ class UsersController extends Controller
         $driver_id = $request->driver_id;
         $id = $request->id;
         $km = $request->km;
-        $result =  DB::statement("UPDATE `driver_cars` SET `on_work` = 0,  `km_end` = {$km} WHERE `id` = {$id} AND `driver_id` = {$driver_id} AND `user_id` = {$user_id}");
+        $result =  DB::statement("UPDATE `driver_cars` SET `on_work` = 0,  `km_end` = {$km} WHERE `id` = {$id} AND `driver_id` = {$driver_id} ");
         return redirect()->back();
     }
 

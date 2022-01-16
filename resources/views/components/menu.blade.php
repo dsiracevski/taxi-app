@@ -28,7 +28,8 @@
 
                 </a>
                 <?php endforeach;?>
-                <a href="{{route('endShiftDriver')}}" class="list-group-item list-group-item-action">Крај на смена за возач</a>
+                <a href="{{route('endShiftDriver')}}" class="list-group-item list-group-item-action">Почеток/Крај на смена за возач</a>
+                <a href="#" data-toggle="modal" data-target="#addScheduledRoute" class="list-group-item list-group-item-action">Закажи возење</a>
                 <a href="#" class="list-group-item list-group-item-action">Гориво</a>
                 <a href="#" class="list-group-item list-group-item-action">Одржување</a>
     </div>

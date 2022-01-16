@@ -13,6 +13,7 @@
     <link href="https://cdn.datatables.net/buttons/2.1.0/css/buttons.dataTables.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="{{asset('css/select2-bootstrap.css')}}">
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
+    <link rel="stylesheet" href="{{asset('css/jquery.datetimepicker.min.css')}}">
 </head>
 <body>
     <div class="container-fluid">
@@ -38,6 +39,7 @@
     <script src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.colVis.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="/js/jquery.datetimepicker.full.min.js"></script>
 
 
         @yield('script')

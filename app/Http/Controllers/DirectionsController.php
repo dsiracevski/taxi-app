@@ -116,7 +116,29 @@ class DirectionsController extends Controller
         } catch (\Exception $e) {
             return redirect(route('viewDirections'))->with('message', ['text' => $e->getMessage(), 'type' => 'danger']);
         }
-        return redirect(route('viewDirections'))->with('message', ['text' => 'Рутата е додадена', 'type' => 'success']);
+        return redirect()->back()->with('message', ['text' => 'Рутата е додадена', 'type' => 'success']);
+        //return redirect(route('viewDirections'))->with('message', ['text' => 'Рутата е додадена', 'type' => 'success']);
+    }
+
+    public function storeScheduledDirections(Request $request)
+    {
+        $user = auth()->user();
+        if (!$user) {
+            redirect(route('login'));
+        }
+
+        try {
+            $direction = new Direction();
+            $direction['scheduled'] = 1;
+            $direction['location_from_id'] = $request->location_from_id;
+            $direction['location_to_id'] = $request->location_to_id;
+            $direction['price'] = $request->price;
+            $direction['company_id'] = $request->company_id;
+            $direction->save();
+        } catch (\Exception $e) {
+            return redirect(route('viewDirections'))->with('message', ['text' => $e->getMessage(), 'type' => 'danger']);
+        }
+        return redirect()->back()->with('message', ['text' => 'Рутата е додадена', 'type' => 'success']);
     }
 
     public function update(Request $request)
@@ -144,7 +166,7 @@ class DirectionsController extends Controller
         } catch (\Exception $e) {
             return redirect(route('viewDirections'))->with('message', ['text' => $e->getMessage(), 'type' => 'danger']);
         }
-        return redirect(route('viewDirections'))->with('message', ['text' => 'Рутата е додадена', 'type' => 'success']);
+        return redirect()->back()->with('message', ['text' => 'Рутата е променета', 'type' => 'success']);
     }
 
 
