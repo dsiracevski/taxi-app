@@ -37,7 +37,10 @@ Route::post('login/', [AuthController::class, 'store'])->name('loginStore');
 
 Route::get('directions/', [DirectionsController::class, 'show'])->name('viewDirections')->middleware('auth');
 Route::post('directions', [DirectionsController::class, 'store'])->name('storeDirections')->middleware('auth');
+Route::put('directions', [DirectionsController::class, 'update'])->name('updateDirections')->middleware('auth');
 Route::post('directions/update', [DirectionsController::class, 'updateIdle'])->name('updateIdle')->middleware('auth');
+Route::get('directions/driver/{driverID}', [DirectionsController::class, 'getDirection'])->name('allDirections')->middleware('auth');
+Route::get('directions/single/{id}', [DirectionsController::class, 'getSingleDirection'])->name('getSingleDirection')->middleware('auth');
 
 
 Route::post('logout/', [AuthController::class, 'destroy'])->name('logout');

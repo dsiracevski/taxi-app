@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCompanyIdOnDirections extends Migration
+class AddColumnNoteInDirectionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,7 @@ class AddCompanyIdOnDirections extends Migration
     public function up()
     {
         Schema::table('directions', function (Blueprint $table) {
-            $table->integer("company_id")->default(0)->nullable();
-
+            $table->text("note")->nullable();
         });
     }
 
@@ -26,8 +25,8 @@ class AddCompanyIdOnDirections extends Migration
      */
     public function down()
     {
-        Schema::table('driver_cars', function($table) {
-            $table->dropColumn('company_id');
+        Schema::table('directions', function (Blueprint $table) {
+            $table->dropColumn('note');
         });
     }
 }

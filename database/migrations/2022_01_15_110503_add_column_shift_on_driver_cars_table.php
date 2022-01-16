@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddDriverIdToCarServices extends Migration
+class AddColumnShiftOnDriverCarsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddDriverIdToCarServices extends Migration
      */
     public function up()
     {
-        Schema::table('car_services', function (Blueprint $table) {
-            $table->integer('driver_id');
+        Schema::table('driver_cars', function (Blueprint $table) {
+            $table->tinyInteger("shift")->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class AddDriverIdToCarServices extends Migration
     public function down()
     {
         Schema::table('driver_cars', function($table) {
-            $table->dropColumn('driver_id');
+            $table->dropColumn('shift');
         });
     }
 }

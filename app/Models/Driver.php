@@ -20,7 +20,7 @@ class Driver extends Model
     {
         return $this->belongsToMany(Car::class, "driver_cars", "driver_id", "car_id")
             //->withPivot('note', 'km','on_work')
-            ->withPivot('on_work', 'km')
+            ->withPivot('on_work', 'km','note','shift')
             ->groupBy('id')
             ->withTimestamps();
     }

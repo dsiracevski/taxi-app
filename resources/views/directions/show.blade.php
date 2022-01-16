@@ -5,6 +5,46 @@
     @include('layouts.user-menu')
     <div class="container-fluid mt-3">
         <div class="row">
+            <div class="col-3">
+                <div class="list-group">
+                <?php foreach ($cars as $car):?>
+                    <a href="/directions/driver/{{$car->onWorkCars[0]->pivot->car_id}}" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">{{$car->name}}</h5>
+                            <small>Смена {{$car->onWorkCars[0]->pivot->shift}}</small>
+                        </div>
+                        <div class="d-flex w-100 justify-content-between">
+                            @if(isset($car->onWorkCars[0]) && !empty($car->onWorkCars[0]))
+                                <small>{{$car->onWorkCars[0]->first_name}} {{$car->onWorkCars[0]->first_name}}</small>
+                            @endif
+                            <small>почетна: {{$car->onWorkCars[0]->pivot->km}} km</small>
+                        </div>
+                        <div class="d-flex w-100 justify-content-between">
+                            <small></small>
+
+                        </div>
+                        {{isset($car->onWorkCars[0]) ? $car->onWorkCars[0]->pivot_note : ''}}
+                        @php
+                       // echo "<pre>";
+                        //print_r($car->onWorkCars[0]->pivot->car_id);
+                       // print_r();
+                       // echo "</pre>";
+                        @endphp
+                        <p class="mb-1">{{$car->onWorkCars[0]->pivot->note}}</p>
+
+                    </a>
+                <?php endforeach;?>
+                    <a href="#" class="list-group-item list-group-item-action">Гориво</a>
+                    <a href="#" class="list-group-item list-group-item-action">Одржување</a>
+                </div>
+            </div>
+            <div class="col-9">
+
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid mt-3">
+        <div class="row">
             <div class="col-12">
                 @if ($errors->any())
                     <div class="alert alert-danger fade in alert-dismissible show">
@@ -182,7 +222,6 @@
                                 <div class="col-7">
                                     <textarea placeholder="Забелешка" class="w-100 form-control"></textarea>
                                 </div>
-
                             </div>
                             <div class="row mt-3">
                                 <div class="col-6 text-center">

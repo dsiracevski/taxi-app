@@ -11,6 +11,16 @@ class Direction extends Model
 
     protected $guarded = [];
 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->timestamps = false;
+            $model->created_at = now();
+        });
+    }
+
     public function company()
     {
         return $this->belongsTo(Companies::class, 'company_id');
