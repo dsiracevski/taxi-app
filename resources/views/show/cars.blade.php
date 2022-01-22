@@ -12,8 +12,9 @@
     <table>
         <thead>
         <tr>
-            <th>Car Name</th>
-            <th>Registration Number</th>
+            <th>Возило</th>
+            <th>Регистрација</th>
+            <th>Статус</th>
         </tr>
         </thead>
 
@@ -23,6 +24,11 @@
             <tr>
                 <td><a href="cars/{{$car->id}}">{{$car->name}}</a></td>
                 <td>{{$car->registration_number}}</td>
+                <td>@if ($car->is_active)
+                        Во употреба
+                    @elseif (!$car->is_active)
+                        Слободно
+                    @endif</td>
             </tr>
         @endforeach
 
@@ -33,6 +39,7 @@
                 <div>
                     <td><input placeholder="Car Name" name="name"></td>
                     <td><input placeholder="Registration Number" name="registration_number"></td>
+{{--                    <td><input name="is_active" value="1" type="checkbox"></td>--}}
                 </div>
 
                 <div>
