@@ -23,7 +23,7 @@ class DirectionsController extends Controller
             redirect(route('login'));
         }
         $allDrivers = Driver::where('is_active', 1)->get();
-        $allCars = Car::whereHas('drivers', function($q) {
+        $allCars = Car::whereHas('drivers', function ($q) {
             $q->where('driver_cars.on_work', 1);
         })->with('onWorkCars')->get();
 
@@ -34,9 +34,9 @@ class DirectionsController extends Controller
         /*        $drivers = Driver::whereHas('cars', function($q) {
                     $q->where('driver_cars.on_work', 0);
                 })->with('cars')->get();*/
-      /*  $drivers = Driver::with('onWorkCars')->whereHas('cars', function ($q) {
-            $q->where('driver_cars.on_work', 1);
-        })->get();*/
+        /*  $drivers = Driver::with('onWorkCars')->whereHas('cars', function ($q) {
+              $q->where('driver_cars.on_work', 1);
+          })->get();*/
 
         $i = 0;
         /*$directions = [];
@@ -58,11 +58,11 @@ class DirectionsController extends Controller
 
         }*/
 
-       /* foreach ($allCars as $key => $car) {
-            if (in_array($car->id, $takenCars)) {
-                unset($allCars[$key]);
-            }
-        }*/
+        /* foreach ($allCars as $key => $car) {
+             if (in_array($car->id, $takenCars)) {
+                 unset($allCars[$key]);
+             }
+         }*/
 
         return view('directions.show', [
             'locations' => Location::all(),
@@ -120,27 +120,6 @@ class DirectionsController extends Controller
         //return redirect(route('viewDirections'))->with('message', ['text' => 'Рутата е додадена', 'type' => 'success']);
     }
 
-    public function storeScheduledDirections(Request $request)
-    {
-        $user = auth()->user();
-        if (!$user) {
-            redirect(route('login'));
-        }
-
-        try {
-            $direction = new Direction();
-            $direction['scheduled'] = 1;
-            $direction['location_from_id'] = $request->location_from_id;
-            $direction['location_to_id'] = $request->location_to_id;
-            $direction['price'] = $request->price;
-            $direction['company_id'] = $request->company_id;
-            $direction->save();
-        } catch (\Exception $e) {
-            return redirect(route('viewDirections'))->with('message', ['text' => $e->getMessage(), 'type' => 'danger']);
-        }
-        return redirect()->back()->with('message', ['text' => 'Рутата е додадена', 'type' => 'success']);
-    }
-
     public function update(Request $request)
     {
         $user = auth()->user();
@@ -149,20 +128,20 @@ class DirectionsController extends Controller
         }
         try {
             Direction::where('driver_id', $request->driver_id)
-                ->where('id',$request->id)
+                ->where('id', $request->id)
                 ->where('user_id', $user->id)
                 ->update([
-                    'location_from_id'=>$request->location_from_id,
-                    'street_number_from'=>$request->street_number_from,
-                    'location_to_id'=>$request->location_to_id,
-                    'street_number_to'=>$request->street_number_to,
-                    'price'=>$request->price,
-                    'price_idle'=>$request->price_idle,
-                    'price_order'=>$request->price_order,
-                    'company_id'=>$request->company_id,
-                    'return'=>isset($request->return) ? 1 : 0,
-                    'note'=>$request->note,
-                    ]);
+                    'location_from_id' => $request->location_from_id,
+                    'street_number_from' => $request->street_number_from,
+                    'location_to_id' => $request->location_to_id,
+                    'street_number_to' => $request->street_number_to,
+                    'price' => $request->price,
+                    'price_idle' => $request->price_idle,
+                    'price_order' => $request->price_order,
+                    'company_id' => $request->company_id,
+                    'return' => isset($request->return) ? 1 : 0,
+                    'note' => $request->note,
+                ]);
         } catch (\Exception $e) {
             return redirect(route('viewDirections'))->with('message', ['text' => $e->getMessage(), 'type' => 'danger']);
         }
@@ -211,7 +190,7 @@ class DirectionsController extends Controller
             ->orderBy('id', 'desc')
             ->get();
 //        $driver = Driver::where('id', $driverID)->with('cars')->where('driver_cars.on_work', 1)->first();
-        $driver = Driver::where('id',$driverID)->whereHas('cars', function($q) {
+        $driver = Driver::where('id', $driverID)->whereHas('cars', function ($q) {
             $q->where('driver_cars.on_work', 1);
         })->with('onWorkCars')->first();
 //        dd($driverID);
@@ -230,7 +209,7 @@ class DirectionsController extends Controller
     public function getSingleDirection($id)
     {
         $user = \auth()->user();
-        $directions = Direction::where('user_id', $user->id)->where('id',$id)->first();
+        $directions = Direction::where('user_id', $user->id)->where('id', $id)->first();
 
         return response()->json([
             'data' => $directions,

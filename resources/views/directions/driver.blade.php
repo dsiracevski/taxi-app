@@ -5,7 +5,9 @@
 
     @include('layouts.user-menu')
     <div class="row">
-        <div class="col-3"><x-menu ></x-menu></div>
+        <div class="col-3">
+            <x-menu></x-menu>
+        </div>
         <div class="col-9">
             <div class="row mb-3 mt-3">
                 <div class="col-4">
@@ -18,7 +20,8 @@
                     {{$driver->first_name}} {{$driver->last_name}}, смена {{$driver->onWorkCars[0]->pivot->shift}}
                 </div>
                 <div class="col-3">
-                    {{$driver->onWorkCars[0]->name}}, {{$driver->onWorkCars[0]->registration_number}}, {{$driver->onWorkCars[0]->pivot->km}} km
+                    {{$driver->onWorkCars[0]->name}}, {{$driver->onWorkCars[0]->registration_number}}
+                    , {{$driver->onWorkCars[0]->pivot->km}} km
                 </div>
                 <div class="col-3">
                     {!! $driver->onWorkCars[0]->pivot->note !!}
@@ -67,7 +70,8 @@
                             @endphp
                             @foreach($directions as $d)
                                 <tr class="directions" data-id="{{$d->id}}">
-                                    <td>{{$d->created_at->format('H:i')}} - {{isset($d->updated_at) ? $d->updated_at->format('H:i') : ''}}</td>
+                                    <td>{{$d->created_at->format('H:i')}}
+                                        - {{isset($d->updated_at) ? $d->updated_at->format('H:i') : ''}}</td>
                                     <td>{{$d->from_street_name . ' ' . $d->street_number_from}}
                                         - {{$d->to_street_name . ' ' . $d->street_number_to}}
                                         @if($d->return == 1)
@@ -113,7 +117,8 @@
                             <h4 class="modal-title">Додади рута</h4>
                         </div>
                         <div class="col-6">
-                            {{$driver->first_name}} {{$driver->last_name}}, смена {{$driver->onWorkCars[0]->pivot->shift}}
+                            {{$driver->first_name}} {{$driver->last_name}},
+                            смена {{$driver->onWorkCars[0]->pivot->shift}}
                         </div>
                         <div class="col-6">
                             {{$driver->onWorkCars[0]->name}}
@@ -158,7 +163,7 @@
                         </div>
                         <div class="row">
                             <div class="col-3 d-flex">
-                                <input type="number" placeholder="Цена"  name="price" class="form-control">
+                                <input type="number" placeholder="Цена" name="price" class="form-control">
                                 <div class="currency-symbol my-auto"> Ден</div>
                             </div>
 
@@ -270,7 +275,7 @@
                 <div class="modal-header">
                     <div class="row">
                         <div class="col-12">
-                            <h4 class="modal-title">Додади Закажано возење</h4>
+                            <h4 class="modal-title">Закажани возило</h4>
                         </div>
                     </div>
 
@@ -279,56 +284,29 @@
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <form action="{{route('storeScheduledDirections')}}" method="POST" id="direction">
+                    <form action="{{route('storeBooking')}}" method="POST" id="direction">
                         @csrf
                         <div class="row">
-                            <div class="form-group col-8">
-                                <select class="from_location location form-control" name="location_from_id"
-                                        required>
-                                    <option value=""></option>
-                                    @foreach($locations as $location)
-                                        <option value="{{$location->id}}">{{$location->street_name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
                             <div class="form-group col-4">
-                                <input type="text" placeholder="Број" name="street_number_from"
-                                       class="form-control">
+                                <input type="text" placeholder="Име" name="name" class="form-control">
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-8">
-                                <select class="from_location location form-control" name="location_to_id">
-                                    <option value=""></option>
-                                    @foreach($locations as $location)
-                                        <option value="{{$location->id}}">{{$location->street_name}}</option>
-                                    @endforeach
+
+                            <div class="col-4">
+                                <select name="frequency" class="form-control" id="">
+                                    <option value="">Закажи</option>
+                                    <option value="once">Еднаш</option>
+                                    <option value="daily">Секојдневно</option>
+                                    <option value="weekends">Викенд</option>
+                                    <option value="monthly">Месечно</option>
                                 </select>
                             </div>
-                            <div class="form-group col-4">
-                                <input type="text" placeholder="Број" name="street_number_to" class="form-control">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-3 d-flex">
-                                <input type="number" placeholder="Цена"  name="price" class="form-control">
-                                <div class="currency-symbol my-auto"> Ден</div>
-                            </div>
-                            <div class="col-3 d-flex">
-                                <select class="company_id company form-control" name="company_id">
-                                    <option value="">Компанија</option>
-                                    @foreach($companies as $company)
-                                        <option value="{{$company->id}}">{{$company->name}}</option>
-                                    @endforeach
-                                </select>
+                            <div class="col-4">
+                                <input type="text" class="form-control" placeholder="Почнува на" name="start_date" id="datetimepicker6">
                             </div>
                         </div>
                         <div class="row mt-3">
-                            <div class="col-7">
+                            <div class="col-8">
                                 <textarea placeholder="Забелешка" class="w-100 form-control" name="note"></textarea>
-                            </div>
-                                    <input type="text" name="date" id="datetimepicker6" >
-
                             </div>
                         </div>
                         <div class="row mt-3">
@@ -357,19 +335,19 @@
                 let id = $(this).data('id');
                 $.ajax({
                     type: 'GET',
-                    url: "/directions/single/"+id,
-                    success: function(data){
+                    url: "/directions/single/" + id,
+                    success: function (data) {
                         for (item in data.data) {
-                            $("[name="+item).val(data.data[item])
+                            $("[name=" + item).val(data.data[item])
                         }
-                        $("#direction").attr('action','/directions');
+                        $("#direction").attr('action', '/directions');
                         $("#direction button[type=submit]").html('Зачувај');
                         $('#direction').append('<input type="hidden" name="_method" value="put" />');
-                        $('#direction').append('<input type="hidden" name="id" value="'+id+'" />');
+                        $('#direction').append('<input type="hidden" name="id" value="' + id + '" />');
                         $("#addRoute").modal();
                         console.log(data.data);
                     },
-                    error: function(xhr){
+                    error: function (xhr) {
                         console.log(xhr.responseText);
                     }
                 });
@@ -382,8 +360,8 @@
             });
 
             $('#datetimepicker6').datetimepicker({
-                lang:'mk',
-                step:5
+                lang: 'mk',
+                step: 5
             });
         });
     </script>

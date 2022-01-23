@@ -18,7 +18,7 @@ class CreateBookingsTable extends Migration
             $table->foreignId('user_id');
             $table->string('name');
             $table->string('note');
-            $table->string('frequency');
+            $table->string('frequency')->default("once");
             $table->boolean('is_active')->default(true);
             $table->timestamp('start_date');
             $table->timestamp('next_date');

@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\BookingsController;
 use App\Http\Controllers\CarsController;
 use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\DirectionsController;
@@ -37,7 +38,7 @@ Route::post('login/', [AuthController::class, 'store'])->name('loginStore');
 
 Route::get('directions/', [DirectionsController::class, 'show'])->name('viewDirections')->middleware('auth');
 Route::post('directions', [DirectionsController::class, 'store'])->name('storeDirections')->middleware('auth');
-Route::post('directions/scheduled', [DirectionsController::class, 'storeScheduledDirections'])->name('storeScheduledDirections')->middleware('auth');
+Route::post('directions/scheduled', [BookingsController::class, 'store'])->name('storeBooking')->middleware('auth');
 Route::put('directions', [DirectionsController::class, 'update'])->name('updateDirections')->middleware('auth');
 Route::post('directions/update', [DirectionsController::class, 'updateIdle'])->name('updateIdle')->middleware('auth');
 Route::get('directions/driver/{driverID}', [DirectionsController::class, 'getDirection'])->name('allDirections')->middleware('auth');
