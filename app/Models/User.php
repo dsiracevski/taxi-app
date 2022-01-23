@@ -44,6 +44,11 @@ class User extends Authenticatable
         return $this->hasMany(Direction::class, "user_id", "id");
     }
 
+    public function bookings()
+    {
+        return $this->hasMany(Bookings::class, 'user_id', 'id');
+    }
+
     public function currentDirections()
     {
         return $this->hasMany(Direction::class, 'user_id', 'id')->whereDate('created_at', Carbon::today());

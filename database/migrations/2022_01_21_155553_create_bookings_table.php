@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateServicesTable extends Migration
+class CreateBookingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,15 @@ class CreateServicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('services', function (Blueprint $table) {
+        Schema::create('bookings', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id');
             $table->string('name');
+            $table->string('note');
+            $table->string('frequency')->default("once");
+            $table->boolean('is_active')->default(true);
+            $table->timestamp('start_date');
+            $table->timestamp('next_date');
             $table->timestamps();
         });
     }
@@ -27,8 +33,6 @@ class CreateServicesTable extends Migration
      */
     public function down()
     {
-        Schema::table('services', function($table) {
-            $table->dropColumn('name');
-        });
+        Schema::dropIfExists('bookings');
     }
 }

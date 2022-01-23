@@ -45,7 +45,8 @@ class CarsController extends Controller
 
         $attributes = request()->validate([
             'name' => 'required',
-            'registration_number' => 'required'
+            'registration_number' => 'required',
+            'is_active'
         ]);
 
         $car->update($attributes);
