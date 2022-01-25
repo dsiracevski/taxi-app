@@ -2,8 +2,9 @@
 
 
 @section('content')
+    @include('components.bookings')
 
-    @include('layouts.user-menu')
+    {{--    @dd($bookings)--}}
     <div class="row">
         <div class="col-3">
             <x-menu></x-menu>
@@ -13,8 +14,6 @@
                 <div class="col-4">
                     <a href="javascript:;" data-toggle="modal" data-target="#addRoute"
                        data-driver-id="{{$driverID}}" class="btn btn-primary driver_name">Додади Рута</a>
-                    <a href="javascript:;" data-toggle="modal" data-target="#addRoute"
-                       data-driver-id="{{$driverID}}" class="btn btn-danger driver_name">Додели Закажано возење</a>
                 </div>
                 <div class="col-2">
                     {{$driver->first_name}} {{$driver->last_name}}, смена {{$driver->onWorkCars[0]->pivot->shift}}
@@ -103,6 +102,7 @@
             </div>
         </div>
     </div>
+
 
 
     <!-- The Modal -->
@@ -296,12 +296,12 @@
                                     <option value="">Закажи</option>
                                     <option value="once">Еднаш</option>
                                     <option value="daily">Секојдневно</option>
-                                    <option value="weekends">Викенд</option>
                                     <option value="monthly">Месечно</option>
                                 </select>
                             </div>
                             <div class="col-4">
-                                <input type="text" class="form-control" placeholder="Почнува на" name="start_date" id="datetimepicker6">
+                                <input type="text" class="form-control" placeholder="Почнува на" name="start_date"
+                                       id="datetimepicker6">
                             </div>
                         </div>
                         <div class="row mt-3">

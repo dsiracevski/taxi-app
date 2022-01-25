@@ -3,6 +3,9 @@
 
 @section('content')
     @include('layouts.user-menu')
+
+    @include('components.bookings')
+
     <div class="container-fluid mt-3">
         <x-menu ></x-menu>
     </div>
@@ -110,7 +113,8 @@
         </div>
 
 
-        <!-- The Modal -->
+
+    <!-- The Modal -->
         <div class="modal" id="addRoute">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -264,7 +268,7 @@
                     <div class="modal-header">
                         <div class="row">
                             <div class="col-12">
-                                <h4 class="modal-title">Закажани возило</h4>
+                                <h4 class="modal-title">Закажи возило</h4>
                             </div>
                         </div>
 

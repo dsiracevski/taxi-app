@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bookings;
 use App\Models\Car;
 use App\Models\Companies;
 use App\Models\Direction;
@@ -27,42 +28,8 @@ class DirectionsController extends Controller
             $q->where('driver_cars.on_work', 1);
         })->with('onWorkCars')->get();
 
-        //        $allCars = Car::where('is_active', 1)->with('drivers')->get();
-//        $allCars = Car::where('is_active', 1)->with('onWorkCars')->get();
-//dd($allCars);
+        $upcomingBookings = Bookings::whereBetween('next_date', [now(), now()->addHours(3)])->orderBy('next_date')->get();
 
-        /*        $drivers = Driver::whereHas('cars', function($q) {
-                    $q->where('driver_cars.on_work', 0);
-                })->with('cars')->get();*/
-        /*  $drivers = Driver::with('onWorkCars')->whereHas('cars', function ($q) {
-              $q->where('driver_cars.on_work', 1);
-          })->get();*/
-
-        $i = 0;
-        /*$directions = [];
-        $takenCars = [];
-        foreach ($drivers as $driver) {
-            $takenCars[] = $driver->onWorkCars[0]->id;
-            $directions[$driver->id]['driver_id'] = $driver->id;
-            $directions[$driver->id]['driver_first_name'] = $driver->first_name;
-            $directions[$driver->id]['driver_last_name'] = $driver->last_name;
-            $directions[$driver->id]['car_name'] = $driver->onWorkCars[0]->name;
-            $directions[$driver->id]['car_id'] = $driver->onWorkCars[0]->id;
-            $directions[$driver->id]['directions'] = Direction::where('user_id', $user->id)
-                ->where('driver_id', $driver->id)
-                ->whereDate('directions.created_at', '=', Carbon::today()->toDateString())
-                ->join('locations as l', 'l.id', '=', 'directions.location_from_id')
-                ->join('locations as lo', 'lo.id', '=', 'directions.location_to_id')
-                ->select('directions.*', 'l.street_name as from_street_name', 'lo.street_name as to_street_name')
-                ->get();
-
-        }*/
-
-        /* foreach ($allCars as $key => $car) {
-             if (in_array($car->id, $takenCars)) {
-                 unset($allCars[$key]);
-             }
-         }*/
 
         return view('directions.show', [
             'locations' => Location::all(),
@@ -70,7 +37,8 @@ class DirectionsController extends Controller
             'user' => $user,
             'directions' => [],
             'cars' => $allCars,
-            'companies' => Companies::all()
+            'companies' => Companies::all(),
+            'bookings' => $upcomingBookings
         ]);
 
     }
@@ -194,6 +162,10 @@ class DirectionsController extends Controller
             $q->where('driver_cars.on_work', 1);
         })->with('onWorkCars')->first();
 //        dd($driverID);
+
+        $upcomingBookings = Bookings::whereBetween('next_date', [now(), now()->addHours(3)])->orderBy('next_date')->get();
+
+
         return view('directions.driver', [
             'locations' => Location::all(),
             'user' => $user,
@@ -202,6 +174,7 @@ class DirectionsController extends Controller
             'allDrivers' => $allDrivers,
             'driverID' => $driverID,
             'driver' => $driver,
+            'bookings' => $upcomingBookings
 
         ]);
     }

@@ -36,9 +36,13 @@ Route::get('/', [AuthController::class, 'create'])->name('login');
 Route::get('login/', [AuthController::class, 'create'])->name('login');
 Route::post('login/', [AuthController::class, 'store'])->name('loginStore');
 
+Route::get('bookings/', [BookingsController::class, 'view'])->name('viewBookings')->middleware('auth');
+Route::get('bookings/{booking_id}', [BookingsController::class, 'viewBooking'])->name('viewBooking')->middleware('auth');
+Route::post('directions/scheduled', [BookingsController::class, 'store'])->name('storeBooking')->middleware('auth');
+
+
 Route::get('directions/', [DirectionsController::class, 'show'])->name('viewDirections')->middleware('auth');
 Route::post('directions', [DirectionsController::class, 'store'])->name('storeDirections')->middleware('auth');
-Route::post('directions/scheduled', [BookingsController::class, 'store'])->name('storeBooking')->middleware('auth');
 Route::put('directions', [DirectionsController::class, 'update'])->name('updateDirections')->middleware('auth');
 Route::post('directions/update', [DirectionsController::class, 'updateIdle'])->name('updateIdle')->middleware('auth');
 Route::get('directions/driver/{driverID}', [DirectionsController::class, 'getDirection'])->name('allDirections')->middleware('auth');

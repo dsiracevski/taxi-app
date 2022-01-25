@@ -9,7 +9,7 @@
                     </div>
                     <div class="d-flex w-100 justify-content-between">
                         @if(isset($car->onWorkCars[0]) && !empty($car->onWorkCars[0]))
-                            <small>{{$car->onWorkCars[0]->first_name}} {{$car->onWorkCars[0]->first_name}}</small>
+                            <small>{{$car->onWorkCars[0]->first_name}} {{$car->onWorkCars[0]->last_name}}</small>
                         @endif
                         <small>почетна: {{$car->onWorkCars[0]->pivot->km}} km</small>
                     </div>
@@ -30,6 +30,7 @@
                 <?php endforeach;?>
                 <a href="{{route('endShiftDriver')}}" class="list-group-item list-group-item-action">Почеток/Крај на смена за возач</a>
                 <a href="#" data-toggle="modal" data-target="#addScheduledRoute" class="list-group-item list-group-item-action">Закажи возило</a>
+                <a href="{{route('viewBookings')}}" class="list-group-item list-group-item-action">Закажани за следните 7 дена</a>
                 <a href="#" class="list-group-item list-group-item-action">Гориво</a>
                 <a href="#" class="list-group-item list-group-item-action">Одржување</a>
     </div>
