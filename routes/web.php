@@ -38,6 +38,9 @@ Route::post('login/', [AuthController::class, 'store'])->name('loginStore');
 
 Route::get('bookings/', [BookingsController::class, 'view'])->name('viewBookings')->middleware('auth');
 Route::get('bookings/{booking_id}', [BookingsController::class, 'viewBooking'])->name('viewBooking')->middleware('auth');
+Route::post('bookings/{booking_id}', [BookingsController::class, 'refreshBooking'])->name('refreshBooking')->middleware('auth');
+Route::put('bookings/{booking_id}', [BookingsController::class, 'updateBooking'])->name('updateBooking')->middleware('auth');
+Route::delete('bookings/{booking}', [BookingsController::class, 'deleteBooking'])->name('deleteBooking')->middleware('auth');
 Route::post('directions/scheduled', [BookingsController::class, 'store'])->name('storeBooking')->middleware('auth');
 
 

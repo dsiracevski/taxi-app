@@ -6,24 +6,6 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav m-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="{{route('viewDirections')}}">Home <span
-                        class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('viewServices')}}">Дополни гориво</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('endShift')}}">Крај на смена</a>
-            </li>
-            <li class="nav-item">
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button type="submit" class="nav-link border-0 bg-light">Излез</button>
-                </form>
-            </li>
-        </ul>
         <span>{{auth()->user()->first_name}} {{auth()->user()->last_name}}</span>
     </div>
 </nav>

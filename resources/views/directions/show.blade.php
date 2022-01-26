@@ -4,8 +4,7 @@
 @section('content')
     @include('layouts.user-menu')
 
-    @include('components.bookings')
-
+{{--@dd($bookings)--}}
     <div class="container-fluid mt-3">
         <x-menu ></x-menu>
     </div>
@@ -111,8 +110,6 @@
                 </div>
             @endforeach
         </div>
-
-
 
     <!-- The Modal -->
         <div class="modal" id="addRoute">
@@ -289,7 +286,6 @@
                                         <option value="">Закажи</option>
                                         <option value="once">Еднаш</option>
                                         <option value="daily">Секојдневно</option>
-                                        <option value="weekends">Викенд</option>
                                         <option value="monthly">Месечно</option>
                                     </select>
                                 </div>
@@ -359,7 +355,36 @@
                     $(".directions tr").on("click", function () {
                         //get id
                         let id = $(this).data('id');
+                        $.ajax({
+                            type: 'GET',
+                            url: "/directions/single/" + id,
+                            success: function (data) {
+                                for (item in data.data) {
+                                    $("[name=" + item).val(data.data[item])
+                                }
+                                $("#direction").attr('action', '/directions');
+                                $("#direction button[type=submit]").html('Зачувај');
+                                $('#direction').append('<input type="hidden" name="_method" value="put" />');
+                                $('#direction').append('<input type="hidden" name="id" value="' + id + '" />');
+                                $("#addRoute").modal();
+                                console.log(data.data);
+                            },
+                            error: function (xhr) {
+                                console.log(xhr.responseText);
+                            }
+                        });
+                        alert(id);
                     })
+                    $('#addRoute').on('hidden.bs.modal', function () {
+                        $('#direction')[0].reset();
+                        $("[name=id]").remove();
+                        $("[name=_method]").remove();
+                    });
+
+                    $('#datetimepicker6').datetimepicker({
+                        lang: 'mk',
+                        step: 5
+                    });
                 });
             </script>
 @stop

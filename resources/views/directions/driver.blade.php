@@ -2,7 +2,7 @@
 
 
 @section('content')
-    @include('components.bookings')
+    @include('components.booking')
 
     {{--    @dd($bookings)--}}
     <div class="row">
@@ -275,7 +275,7 @@
                 <div class="modal-header">
                     <div class="row">
                         <div class="col-12">
-                            <h4 class="modal-title">Закажани возило</h4>
+                            <h4 class="modal-title">Закажи возило</h4>
                         </div>
                     </div>
 

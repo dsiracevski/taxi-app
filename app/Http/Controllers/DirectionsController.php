@@ -28,7 +28,7 @@ class DirectionsController extends Controller
             $q->where('driver_cars.on_work', 1);
         })->with('onWorkCars')->get();
 
-        $upcomingBookings = Bookings::whereBetween('next_date', [now(), now()->addHours(3)])->orderBy('next_date')->get();
+        $upcomingBookings = Bookings::where('is_active', 1)->orderBy('next_date')->get();
 
 
         return view('directions.show', [
@@ -94,6 +94,7 @@ class DirectionsController extends Controller
         if (!$user) {
             redirect(route('login'));
         }
+
         try {
             Direction::where('driver_id', $request->driver_id)
                 ->where('id', $request->id)
@@ -163,7 +164,7 @@ class DirectionsController extends Controller
         })->with('onWorkCars')->first();
 //        dd($driverID);
 
-        $upcomingBookings = Bookings::whereBetween('next_date', [now(), now()->addHours(3)])->orderBy('next_date')->get();
+        $upcomingBookings = Bookings::where('is_active', true)->whereBetween('next_date', [now(), now()->addHours(3)])->orderBy('next_date')->get();
 
 
         return view('directions.driver', [
