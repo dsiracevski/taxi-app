@@ -18,8 +18,9 @@
     <link rel="stylesheet" href="{{asset('css/jquery.datetimepicker.min.css')}}">
 </head>
 <body>
+    @auth()
     <x-booking></x-booking>
-
+    @endauth
     <div class="container-fluid">
 
         @yield('content')

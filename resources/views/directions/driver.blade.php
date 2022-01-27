@@ -66,6 +66,8 @@
                             <tbody>
                             @php
                                 $sum = 0;
+                                $invoice = 0;
+                                $inSum = 0;
                             @endphp
                             @foreach($directions as $d)
                                 <tr class="directions" data-id="{{$d->id}}">
@@ -83,9 +85,18 @@
                                     <td>{{($d->company_id) ? "Да" : "Не"}} </td>
                                     @php
                                         $totalSum = $d->price + $d->price_idle + $d->price_order;
+
+
                                         if(!$d->company_id){
                                             $sum = $sum + $totalSum;
                                         }
+
+                                    if ($d->company_id) {
+                                            $invoice = $invoice + $d->price;
+                                        }
+
+                                        $inSum = $invoice + $sum;
+
                                     @endphp
                                     <td>{{$totalSum}}</td>
                                     <td>{{$d->note}}</td>
@@ -94,7 +105,9 @@
                             </tbody>
                         </table>
                         <div class="text-right p-2 border-top">
-                            <p><strong>Вкупно: {{$sum}} ден.</strong></p>
+                            <p><strong>Вкупно: {{$invoice}} ден.</strong></p>
+                            <p><strong>Фактури: {{$sum}} ден.</strong></p>
+                            <p><strong>Вкупно со фактури: {{$inSum}} ден.</strong></p>
                         </div>
                     </div>
                 </div>
@@ -189,7 +202,7 @@
                             {{--                                </div>--}}
                         </div>
                         <div class="row mt-3">
-                            <div class="col-7">
+                            <div class="col-7 d-flex">
                                 <textarea placeholder="Забелешка" class="w-100 form-control" name="note"></textarea>
                             </div>
                             <div class="col-3 d-flex">
@@ -198,6 +211,8 @@
                                 </label>
                             </div>
                         </div>
+
+
                         <div class="row mt-3">
                             <div class="col-6 text-center">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Откажи</button>

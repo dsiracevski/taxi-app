@@ -1,5 +1,7 @@
 <div>
 
+    <x-book></x-book>
+
     <div class="list-group">
         <?php foreach ($allCars as $car):?>
         <a href="/directions/driver/{{$car->onWorkCars[0]->pivot->driver_id}}"
@@ -36,8 +38,7 @@
             возило</a>
         <a href="{{route('viewBookings')}}" class="list-group-item list-group-item-action">Закажани за следните 7
             дена</a>
-        <a href="{{route('viewServices')}}" class="list-group-item list-group-item-action">Гориво</a>
-        <a href="#" class="list-group-item list-group-item-action">Одржување</a>
+        <a href="{{route('viewServices')}}" class="list-group-item list-group-item-action">Одржување</a>
         <a href="{{route('endShift')}}" class="list-group-item list-group-item-action bg-info">Крај на смена</a>
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
