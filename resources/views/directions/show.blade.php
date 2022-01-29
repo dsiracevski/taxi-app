@@ -2,11 +2,16 @@
 
 
 @section('content')
-    @include('layouts.user-menu')
 
-{{--@dd($bookings)--}}
+    @if (Auth::user()->is_admin)
+        @include('layouts.admin-menu')
+    @else
+        @include('layouts.user-menu')
+    @endif
+
+    {{--@dd($bookings)--}}
     <div class="container-fluid mt-3">
-        <x-menu ></x-menu>
+        <x-menu></x-menu>
     </div>
     <div class="container-fluid mt-3">
         <div class="row">
@@ -111,7 +116,7 @@
             @endforeach
         </div>
 
-    <!-- The Modal -->
+        <!-- The Modal -->
         <div class="modal" id="addRoute">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -290,7 +295,8 @@
                                     </select>
                                 </div>
                                 <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Почнува на" name="start_date" id="datetimepicker6">
+                                    <input type="text" class="form-control" placeholder="Почнува на" name="start_date"
+                                           id="datetimepicker6">
                                 </div>
                             </div>
                             <div class="row mt-3">

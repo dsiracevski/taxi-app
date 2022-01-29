@@ -1,49 +1,46 @@
 @extends('layouts.master')
 
 @section('content')
-    @if (Auth::user()->is_admin)
-        @include('layouts.admin-menu')
-    @else
-        @include('layouts.user-menu')
-    @endif
+    @include('layouts.admin-menu')
 
-    <table id="myTable">
-        <thead>
-        <tr>
-            <th>Име</th>
-            <th>Email</th>
-            <th>Администратор?</th>
+    <div class="row">
+        <div class="container-fluid mt-3 col-3">
+            <x-menu></x-menu>
+        </div>
 
-        </tr>
-        </thead>
+        <div class="container-fluid mt-3 col-9">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-rounded">
 
-        <tbody>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Име</th>
+                                <th>Email</th>
+                                <th>Улога</th>
 
-        @foreach($users as $user)
-            <tr>
-                <td><a href="users/{{$user->id}}">{{$user->full_name}}</a></td>
+                            </tr>
+                            </thead>
 
-                <td>{{$user->email}}</td>
-                @if($user->is_admin)
-                    <td>Da</td>
-                @elseif(!$user->is_admin)
-                    <td>Ne</td>
-                @endif
-            </tr>
-        @endforeach
-        </tbody>
-    </table>
+                            <tbody>
 
-    <div>
-        <a href="/administration/">Go Back</a>
-    </div>
+                            @foreach($users as $user)
+                                <tr>
+                                    <td><a href="users/{{$user->id}}">{{$user->full_name}}</a></td>
 
-@stop
+                                    <td>{{$user->email}}</td>
+                                    @if($user->is_admin)
+                                        <td>Администратор</td>
+                                    @elseif(!$user->is_admin)
+                                        <td>Диспечер</td>
+                                    @endif
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
-@section('script')
-    <script>
-        $(document).ready(function () {
-            $('#myTable').DataTable();
-        });
-    </script>
-@stop
+@endsection

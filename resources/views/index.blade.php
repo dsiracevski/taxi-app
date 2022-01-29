@@ -12,7 +12,7 @@
 
     <div>
         @guest()
-            <a href="login/">Login</a>
+            <a href="{{route('login')}}">Login</a>
         @endguest
         @auth()
             @if (Auth::user()->is_admin)

@@ -40,7 +40,7 @@
                                 <tr>
 
                                     @csrf
-                                    <div >
+                                    <div>
                                         <td><input placeholder="Кола" name="name" class="form-control"></td>
                                         <td><input placeholder="Број на регистрација" name="registration_number" class="form-control"></td>
                                         <td><input name="is_active" value="1" type="checkbox" class="mr-2">Во употреба?</td>

@@ -28,9 +28,9 @@
             <li>
                 <a class="nav-link" href="{{route('viewUsers')}}" class="nav-link">Корисници</a>
             </li>
-            <li>
-                <a class="nav-link" href="{{route('assignDriver')}}" class="nav-link">Кола/Возач</a>
-            </li>
+{{--            <li>--}}
+{{--                <a class="nav-link" href="{{route('assignDriver')}}" class="nav-link">Кола/Возач</a>--}}
+{{--            </li>--}}
             <li>
                 <a class="nav-link" href="{{ route('adminView') }}/" class="nav-link">Рути</a>
             </li>

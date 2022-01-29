@@ -4,6 +4,10 @@
 @section('content')
     @include('components.booking')
 
+    @if (Auth::user()->is_admin)
+        @include('layouts.admin-menu')
+    @endif
+
     {{--    @dd($bookings)--}}
     <div class="row">
         <div class="col-3">

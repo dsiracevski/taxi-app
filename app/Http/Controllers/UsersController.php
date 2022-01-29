@@ -33,18 +33,18 @@ class UsersController extends Controller
 
     }
 
-    public function update(User $user)
+    public function update(Request $request)
     {
-//        dd($user);
 
         $attributes = request()->validate([
-            'name' => 'required',
+            'name' => '',
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => 'required',
             'is_admin' => 'required'
         ]);
 
+        $user = User::where('id', $request->id)->first();
         $user->update($attributes);
 
         return redirect(route('viewUsers'));

@@ -97,22 +97,22 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'admin']], functi
 
     Route::get('users/', [UsersController::class, 'view'])->name('viewUsers');
     Route::get('users/{user}', [UsersController::class, 'show'])->name('viewUser');
-    Route::put('users/{user}', [UsersController::class, 'update']);
+    Route::put('users/{user}', [UsersController::class, 'update'])->name('editUser');
     Route::delete('users/{user}', [UsersController::class, 'destroy'])->name('deleteUser');
 
 
     Route::get('locations/', [LocationsController::class, 'view'])->name('viewLocations');
-    Route::post('locations/', [LocationsController::class, 'create']);
+    Route::post('locations/', [LocationsController::class, 'create'])->name('createLocation');
     Route::get('locations/{location}', [LocationsController::class, 'show'])->name('viewLocation');
-    Route::patch('locations/{location}', [LocationsController::class, 'update']);
-    Route::delete('locations/{location}', [LocationsController::class, 'destroy']);
+    Route::put('locations/{location}', [LocationsController::class, 'update'])->name('updateLocation');
+    Route::delete('locations/{location}', [LocationsController::class, 'destroy'])->name('deleteLocation');
 
 
     Route::get('drivers/', [DriversController::class, 'view'])->name('viewDrivers');
     Route::post('drivers/', [DriversController::class, 'create']);
     Route::get('drivers/{driver}', [DriversController::class, 'show'])->name('viewDriver');
-    Route::patch('drivers/{driver}', [DriversController::class, 'update']);
-    Route::delete('drivers/{driver}', [DriversController::class, 'destroy']);
+    Route::patch('drivers/{driver}', [DriversController::class, 'update'])->name('updateDriver');
+    Route::delete('drivers/{driver}', [DriversController::class, 'destroy'])->name('deleteDriver');
 
     Route::get('companies/', [CompaniesController::class, 'view'])->name('viewCompanies');
     Route::post('companies/', [CompaniesController::class, 'create']);

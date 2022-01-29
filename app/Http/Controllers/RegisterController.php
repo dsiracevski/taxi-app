@@ -13,7 +13,7 @@ class RegisterController extends Controller
 
 
         $attributes = request()->validate([
-            'name' => 'required',
+            'name' => '',
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => 'required',

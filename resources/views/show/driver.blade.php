@@ -1,42 +1,65 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{$driver->first_name}}</title>
-</head>
-<body>
+@extends('layouts.master')
 
-    <table>
-        <thead>
-        <tr>
-            <th>First Name</th>
-            <th>Last name</th>
-        </tr>
-        </thead>
+@section('content')
+    @if (Auth::user()->is_admin)
+        @include('layouts.admin-menu')
+    @endif
 
-        <tbody>
-            <tr>
-                <form method="POST">
-                    @csrf
-                    @method('PATCH')
-                    <div>
-                        <td><input value="{{ $driver->first_name }}" name="first_name"></td>
-                        <td><input value="{{ $driver->last_name }}" name="last_name"></td>
+    <div class="row">
+        <div class="container-fluid mt-3 col-3">
+            <x-menu></x-menu>
+        </div>
+
+        <div class="container-fluid mt-3 col-9">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-rounded">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Име</th>
+                                <th>Презиме</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <form method="POST" action="{{route('updateDriver', $driver->id)}}">
+
+                                    @csrf
+                                    @method('PATCH')
+                                    <div>
+                                        <td><input value="{{ $driver->first_name }}" name="first_name"
+                                                   class="form-control"></td>
+                                        <td><input value="{{ $driver->last_name }}" name="last_name"
+                                                   class="form-control"></td>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary">Промени</button>
+                                        </td>
+                                    </div>
+                                    </form>
+
+                                    <form method="POST" action="{{route('deleteDriver', $driver->id)}}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <div>
+                                            <td>
+                                                <button type="submit" class="btn btn-danger">Избриши</button>
+
+                                            </td>
+                                        </div>
+                                    </form>
+
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-
-                    <div>
-                        <button type="submit">Edit</button>
-                    </div>
-                </form>
-            </tr>
-        </tbody>
-    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div>
-        <a href="/administration/">Go Back</a>
         <form method="POST">
             @csrf
             @method('DELETE')
@@ -44,5 +67,4 @@
         </form>
     </div>
 
-</body>
-</html>
+@endsection

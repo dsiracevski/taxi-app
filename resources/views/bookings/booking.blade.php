@@ -2,7 +2,13 @@
 
 
 @section('content')
-    @include('layouts.user-menu')
+
+    @if (Auth::user()->is_admin)
+        @include('layouts.admin-menu')
+    @else
+        @include('layouts.user-menu')
+    @endif
+
     <div class="row">
         {{--@dd($booking)--}}
         <div class="container-fluid mt-3 col-3">
