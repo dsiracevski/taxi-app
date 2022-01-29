@@ -23,35 +23,29 @@
                 <td>{{$driver->last_name}}</td>
             </tr>
         @endforeach
-
-        <form method="POST">
-            <tr>
-
-                @csrf
-                <div>
-                    <td><input placeholder="First name" name="first_name"></td>
-                    <td><input placeholder="Last Name" name="last_name"></td>
-                </div>
-
-                <div>
-                    <button type="submit">Add</button>
-                </div>
-            </tr>
-        </form>
-
         </tbody>
     </table>
+    <form method="POST">
+        <div class="mt-3">
+            @csrf
+            <div class="flex-row d-flex">
+                <td class="d-inline"><input placeholder="First name" name="first_name" class="form-control ml-5"></td>
+                <td class="d-inline"><input placeholder="Last Name" name="last_name" class="form-control mx-5"></td>
+                <td>
+                    <button type="submit" class="btn btn-primary d-inline">Додади</button>
+                </td>
+            </div>
 
-    <div>
-        <a href="/administration/">Go Back</a>
-    </div>
 
-    @stop
+        </div>
+    </form>
 
-    @section('script')
-        <script>
-            $(document).ready(function () {
-                $('#myTable').DataTable();
-            });
-        </script>
+@stop
+
+@section('script')
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
 @stop

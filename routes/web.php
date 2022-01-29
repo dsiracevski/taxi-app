@@ -80,6 +80,8 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'admin']], functi
 
 
     Route::post('/service/oil/', [ServicesController::class, 'changeOil'])->name('changeOil')->middleware('auth');
+    Route::post('/service/tyre/', [ServicesController::class, 'changeTyre'])->name('changeTyre')->middleware('auth');
+    Route::post('/service/registration/', [ServicesController::class, 'carRegistration'])->name('carRegistration')->middleware('auth');
 
 
     Route::get('administration/directions/', [DirectionsController::class, 'adminView'])->name('adminView');
@@ -95,7 +97,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'admin']], functi
 
     Route::get('users/', [UsersController::class, 'view'])->name('viewUsers');
     Route::get('users/{user}', [UsersController::class, 'show'])->name('viewUser');
-    Route::patch('users/{user}', [UsersController::class, 'update']);
+    Route::put('users/{user}', [UsersController::class, 'update']);
     Route::delete('users/{user}', [UsersController::class, 'destroy'])->name('deleteUser');
 
 

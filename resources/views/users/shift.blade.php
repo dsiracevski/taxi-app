@@ -2,7 +2,7 @@
 
 @section('content')
     @include('layouts.user-menu')
-    {{--        @dd($drivers)--}}
+{{--            @dd($withNoInvoice)--}}
     <div class="container-fluid mt-3">
         <div class="row">
             <div class="col-12">
@@ -13,6 +13,7 @@
                             <tr>
                                 <th>Возач</th>
                                 <th>Поминати километри</th>
+                                <th>Додадено гориво</th>
                                 <th>Основно</th>
                                 <th>Чекање</th>
                                 <th>Порачка</th>
@@ -22,24 +23,49 @@
                             <tbody>
                             @php
                                 $endtotal = 0;
+                                $net = 0;
                             @endphp
                             @foreach($withNoInvoice as $driver)
                                 <tr>
                                         <td>{{$driver->first_name}} {{$driver->last_name}}</td>
                                         <td></td>
-                                        <td>{{$driver->priceBase}}</td>
-                                        <td>{{$driver->priceIdle}}</td>
-                                        <td>{{$driver->priceOrder}}</td>
+                                        <td>@if(!$driver->priceService)
+                                                0 ден.
+                                            @else
+                                                {{$driver->priceService}} ден.
+
+                                            @endif</td>
+                                        <td>@if(!$driver->priceBase)
+                                                0 ден.
+                                            @else
+                                                {{$driver->priceBase}} ден.
+
+                                            @endif</td>
+                                        <td>@if(!$driver->priceIdle)
+                                                0 ден.
+                                            @else
+                                                {{$driver->priceIdle}} ден.
+
+                                            @endif</td>
+                                        <td>@if(!$driver->priceOrder)
+                                                0 ден.
+                                            @else
+                                                {{$driver->priceOrder}} ден.
+
+                                            @endif</td>
                                         @php
                                             $total = $driver->priceBase + $driver->priceIdle + $driver->priceOrder;
+                                            $services = $driver->priceService;
                                             $endtotal  = $endtotal + $total;
+                                            $net = $endtotal - $services;
                                         @endphp
-                                        <td>{{$total}}</td>
+                                        <td>{{$endtotal}} ден.</td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
-                        <div class="text-right pr-5 mr-5"><strong>Вкупно: {{$endtotal}}</strong></div>
+                        <div class="text-right pr-5 mr-5"><strong>Вкупно без гориво: {{$endtotal}}</strong></div>
+                        <div class="text-right pr-5 mr-5"><strong>Вкупно: {{$net}}</strong></div>
                     </div>
                 </div>
             </div>

@@ -9,7 +9,7 @@
     <div>
         <form method="POST">
             @csrf
-            @method('PATCH')
+            @method('PUT')
             <table id="myTable">
                 <thead>
                 <tr>
@@ -23,19 +23,18 @@
 
                 <tbody>
                 <tr>
-                    <div>
-                        <td><input value="{{ $user->first_name }}" name="first_name"></td>
+                        <td><input value="{{$user->first_name}}" name="first_name"></td>
                         <td><input value="{{ $user->last_name }}" name="last_name"></td>
                         <td><input value="{{ $user->email }}" name="email"></td>
                         <input type="hidden" name="is_admin" value="0">
                         <td><input name="is_admin" type="checkbox" {{$user->is_admin ? 'checked' : ''}} value="1"></td>
-                    </div>
+                    <td class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary d-inline">Промени</button>
+                    </td>
                 </tr>
                 </tbody>
             </table>
-            <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-primary d-inline">Промени</button>
-            </div>
+
         </form>
 
         <div class="d-inline">

@@ -14,7 +14,7 @@ class AddDefaultServices extends Migration
     public function up()
     {
         DB::table('services')
-            ->insert([ ['name' => 'Промена на уље'], ['name' => 'Гориво'], ['name' => 'Промена на гуми'] ]);
+            ->insert([ ['name' => 'Промена на уље'], ['name' => 'Гориво'], ['name' => 'Промена на гуми'], ['name' => 'Регистрација'] ]);
     }
 
     /**
