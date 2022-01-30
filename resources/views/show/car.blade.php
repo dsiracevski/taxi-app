@@ -1,50 +1,75 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{$car->name}}</title>
-</head>
-<body>
+@extends('layouts.master')
 
-    <table>
-        <thead>
-        <tr>
-            <th>Car Name</th>
-            <th>Registration Number</th>
-        </tr>
-        </thead>
+@section('content')
+    <div class="row">
 
-        <tbody>
+        <div class="container-fluid mt-3 col-3">
+            <x-menu></x-menu>
+        </div>
 
-        <tr>
+        <div class="container-fluid mt-3 col-9">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-rounded">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Име</th>
+                                <th>Број на регистрација</th>
+                                <th>Во употреба?</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            </thead>
 
-            <form method="POST">
-                @csrf
-                @method('PATCH')
-                <div>
-                    <td><input value="{{ $car->name }}" name="name"></td>
-                    <td><input value="{{ $car->registration_number }}" name="registration_number"></td>
+                            <tbody>
+
+                            <tr>
+
+                                <form method="POST" action="{{route('updateCar', ['car' => $car->id])}}">
+                                    @csrf
+                                    @method('PATCH')
+                                    <div>
+                                        <td><input value="{{ $car->name }}" name="name" class="form-control"></td>
+                                        <td><input value="{{ $car->registration_number }}" name="registration_number" class="form-control">
+                                        <td>
+                                            <input name="is_active" type="hidden" value="0" hidden>
+                                            <label for="active">Да</label>
+                                            <input type="checkbox" name="is_active"
+                                                   @if ($car->is_active) checked="checked" @endif value="1">
+                                        </td>
+                                    </div>
+
+                                    <div>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary">Промени</button>
+
+                                        </td>
+                                    </div>
+                                </form>
+
+                                <form method="POST" action="{{route('deleteCar', ['car' => $car->id])}}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <div>
+                                        <td>
+                                            <button type="submit" class="btn btn-danger">Избриши</button>
+
+                                        </td>
+                                    </div>
+                                </form>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-
-                <div>
-                    <button type="submit">Edit</button>
-                </div>
-            </form>
-        </tr>
-        </tbody>
-    </table>
-
-    <div>
-        <a href="/administration/">Go Back</a>
-        <form method="POST">
-            @csrf
-            @method('DELETE')
-            <button>Delete Car</button>
-        </form>
+            </div>
+        </div>
     </div>
 
-</body>
-</html>
+    <div>
+
+    </div>
+
+@endsection

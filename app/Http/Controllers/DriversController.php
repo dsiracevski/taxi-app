@@ -31,30 +31,44 @@ class DriversController extends Controller
             'last_name' => 'required'
         ]);
 
-        Driver::create($attributes);
 
-        return redirect('drivers/')->with('success', 'Driver added successfully!');
+        try {
+            Driver::create($attributes);
+            return redirect(route('viewDrivers'))->with('message', ['text' => 'Возачот е додаден', 'type' => 'success']);
+        } catch (\Exception $e) {
+            return redirect(route('viewDrivers'))->with('message', ['text' => 'Обидете се повторно', 'type' => 'danger']);
+        }
 
     }
 
-    public function update(Driver $driver)
+    public function update(Request $request)
     {
+
 
         $attributes = request()->validate([
             'first_name' => 'required',
-            'last_name' => 'required'
+            'last_name' => 'required',
+            'is_active' => 'required'
         ]);
 
-        $driver->update($attributes);
+        $driver = Driver::where('id', $request->driver);
 
-        return redirect(route('viewDrivers'));
+        try {
+            $driver->update($attributes);
+            return redirect(route('viewDrivers'))->with('message', ['text' => 'Возачот е едитиран', 'type' => 'success']);
+        } catch (\Exception $e) {
+            return redirect(route('viewDrivers'))->with('message', ['text' => 'Обидете се повторно', 'type' => 'danger']);
+        }
     }
 
     public function destroy(Driver $driver)
     {
 
-        $driver->delete();
-
-        return redirect(route('viewDrivers'));
+        try {
+            $driver->delete();
+            return redirect(route('viewDrivers'))->with('message', ['text' => 'Возачот е избришан', 'type' => 'success']);
+        } catch (\Exception $e) {
+            return redirect(route('viewDrivers'))->with('message', ['text' => 'Обидете се повторно', 'type' => 'danger']);
+        }
     }
 }

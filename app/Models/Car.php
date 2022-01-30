@@ -13,7 +13,7 @@ class Car extends Model
      * The attributes that are mass assignable.
      * @var string[]
      */
-    protected $fillable = ['name','registration_number'];
+    protected $fillable = ['name','registration_number', 'is_active'];
 
     /**
      * The attributes that aren't mass assignable.

@@ -55,14 +55,15 @@ class BookingsController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function refreshBooking(Request $request)
+    public function refreshBooking($booking_id )
     {
         $user = auth()->user();
         if (!$user) {
             redirect(route('login'));
         }
 
-        $booking = Bookings::where('id', $request->booking)->first();
+
+        $booking = Bookings::where('id', $booking_id)->first();
 
         $currentDate = $booking->next_date;
 
@@ -78,18 +79,18 @@ class BookingsController extends Controller
         switch ($booking->frequency) {
             case 'once':
                 try {
-                    Bookings::where('id', $request->booking)->update(['is_active' => false]);
+                    Bookings::where('id', $booking_id)->update(['is_active' => false]);
                 } catch (\Exception $e) {
                     return redirect()->back()->with('message', ['text' => $e->getMessage(), 'type' => 'danger']);
                 }
-                return redirect()->back()->with('message', ['text' => 'Јеееееееееј', 'type' => 'success']);
+                return redirect()->back()->with('message', ['text' => 'Букирањето е завршено', 'type' => 'success']);
             default:
                 try {
-                    Bookings::where('id', $request->booking)->update(['next_date' => $currentDate]);
+                    Bookings::where('id', $booking_id)->update(['next_date' => $currentDate]);
                 } catch (\Exception $e) {
                     return redirect()->back()->with('message', ['text' => $e->getMessage(), 'type' => 'danger']);
                 }
-                return redirect()->back()->with('message', ['text' => 'Јеееееееееј', 'type' => 'success']);
+                return redirect()->back()->with('message', ['text' => 'Следната дата е додадена', 'type' => 'success']);
         }
 
     }

@@ -41,10 +41,10 @@ class ServicesController extends Controller
         $car = Car::where('id', $request->car_id)->with('drivers')->first();
 
         try {
-            $car->services()->attach($request->service_id, ['price' => $request->price, 'km' => $request->km, 'user_id' => $user->id, 'driver_id' => $request->driver_id]);
-            return redirect(route('viewDirections'))->with('message', ['text' => 'Горивото е додадено', 'type' => 'success']);
+            $car->services()->attach($request->service_id, ['price' => $request->price, 'km' => $request->km, 'user_id' => $user->id]);
+            return redirect(route('viewServices'))->with('message', ['text' => 'Горивото е додадено', 'type' => 'success']);
         } catch (\Exception $e) {
-            return redirect(route('viewDirections'))->with('message', ['text' => 'Обидете се повторно!', 'type' => 'danger']);
+            return redirect(route('viewServices'))->with('message', ['text' => 'Обидете се повторно!', 'type' => 'danger']);
         }
 
 
@@ -62,10 +62,10 @@ class ServicesController extends Controller
         $car = Car::where('id', $request->car_id)->with('drivers')->first();
 
         try {
-            $car->services()->attach($request->service_id, ['price' => $request->price, 'km' => $request->km, 'user_id' => $user->id, 'driver_id' => $request->driver_id]);
-            return redirect(route('viewDirections'))->with('message', ['text' => 'Промената на уље е додадена', 'type' => 'success']);
+            $car->services()->attach($request->service_id, ['price' => $request->price, 'km' => $request->km, 'user_id' => $user->id]);
+            return redirect(route('viewServices'))->with('message', ['text' => 'Промената на уље е додадена', 'type' => 'success']);
         } catch (\Exception $e) {
-            return redirect(route('viewDirections'))->with('message', ['text' => 'Обидете се повторно!', 'type' => 'danger']);
+            return redirect(route('viewServices'))->with('message', ['text' => 'Обидете се повторно!', 'type' => 'danger']);
         }
     }
 
@@ -84,10 +84,10 @@ class ServicesController extends Controller
         $car = Car::where('id', $request->car_id)->with('drivers')->first();
 
         try {
-            $car->services()->attach($request->service_id, ['price' => $request->price, 'km' => $request->km, 'user_id' => $user->id, 'driver_id' => $request->driver_id]);
-            return redirect(route('viewDirections'))->with('message', ['text' => 'Промената на гуми е додадена', 'type' => 'success']);
+            $car->services()->attach($request->service_id, ['price' => $request->price, 'km' => $request->km, 'user_id' => $user->id]);
+            return redirect(route('viewServices'))->with('message', ['text' => 'Промената на гуми е додадена', 'type' => 'success']);
         } catch (\Exception $e) {
-            return redirect(route('viewDirections'))->with('message', ['text' => 'Обидете се повторно!', 'type' => 'danger']);
+            return redirect(route('viewServices'))->with('message', ['text' => 'Обидете се повторно!', 'type' => 'danger']);
         }
     }
 
@@ -103,10 +103,10 @@ class ServicesController extends Controller
         $car = Car::where('id', $request->car_id)->with('drivers')->first();
 
         try {
-            $car->services()->attach($request->service_id, ['price' => $request->price, 'km' => $request->km, 'user_id' => $user->id, 'driver_id' => $request->driver_id]);
-            return redirect(route('viewDirections'))->with('message', ['text' => 'Регистрацијата е додадена', 'type' => 'success']);
+            $car->services()->attach($request->service_id, ['price' => $request->price, 'km' => $request->km, 'user_id' => $user->id]);
+            return redirect(route('viewServices'))->with('message', ['text' => 'Регистрацијата е додадена', 'type' => 'success']);
         } catch (\Exception $e) {
-            return redirect(route('viewDirections'))->with('message', ['text' => 'Обидете се повторно!', 'type' => 'danger']);
+            return redirect(route('viewServices'))->with('message', ['text' => 'Обидете се повторно!', 'type' => 'danger']);
         }
     }
 }

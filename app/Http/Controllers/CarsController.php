@@ -26,17 +26,22 @@ class CarsController extends Controller
     }
 
 
-    public function create(Request $request)
+    public function create()
     {
 
         $attributes = request()->validate([
             'name' => 'required',
-            'registration_number' => 'required'
+            'registration_number' => 'required',
+            'is_active' => 'required'
         ]);
 
-        Car::create($attributes);
 
-        return redirect('cars/')->with('success', 'Car added successfully!');
+        try {
+            Car::create($attributes);
+            return redirect(route('viewCars'))->with('message', ['text' => 'Возилото е додадено', 'type' => 'success']);
+        } catch (\Exception $e) {
+            return redirect(route('viewCars'))->with('message', ['text' => 'Обидете се повторно', 'type' => 'danger']);
+        }
 
     }
 
@@ -46,20 +51,29 @@ class CarsController extends Controller
         $attributes = request()->validate([
             'name' => 'required',
             'registration_number' => 'required',
-            'is_active'
+            'is_active' => ''
         ]);
 
-        $car->update($attributes);
 
-        return redirect(route('viewCars'));
+        try {
+            $car->update($attributes);
+            return redirect(route('viewCars'))->with('message', ['text' => 'Возилото е едитирано', 'type' => 'success']);
+        } catch (\Exception $e) {
+            return redirect(route('viewCars'))->with('message', ['text' => 'Обидете се повторно', 'type' => 'danger']);
+        }
     }
 
     public function destroy(Car $car)
     {
 
-        $car->delete();
 
-        return redirect(route('viewCars'));
+        try {
+            $car->delete();
+            return redirect(route('viewCars'))->with('message', ['text' => 'Возилото е избришано', 'type' => 'success']);
+        } catch (\Exception $e) {
+            return redirect(route('viewCars'))->with('message', ['text' => 'Обидете се повторно', 'type' => 'danger']);
+        }
+
     }
 
 
@@ -75,7 +89,7 @@ class CarsController extends Controller
     public function assignDriver(Request $request)
     {
         $user = auth()->user();
-        if(!$user){
+        if (!$user) {
             redirect(route('login'));
         }
         $car = Car::where('id', $request->car)->with('drivers')->first();
@@ -87,12 +101,11 @@ class CarsController extends Controller
 //            ->where('driver_id', $request->driver_id)  // find your user by their email
 //            ->update(array('on_work' => 0));  // update the record in the DB.
 
-        try{
-            $car->drivers()->attach($request->driver_id, ['note'=>$request->note, 'km'=>$request->km, 'on_work'=>1, 'user_id' => $user->id, 'shift' => $request->shift]);
-            return redirect(route('viewDirections'))->with('message', ['text'=>'Driver is assign to car','type'=>'success']);
-        }
-        catch (\Exception $e){
-            return redirect(route('viewDirections'))->with('message', ['text'=>'Error occured','type'=>'danger']);;
+        try {
+            $car->drivers()->attach($request->driver_id, ['note' => $request->note, 'km' => $request->km, 'on_work' => 1, 'user_id' => $user->id, 'shift' => $request->shift]);
+            return redirect(route('viewDirections'))->with('message', ['text' => 'Возачот е додаден', 'type' => 'success']);
+        } catch (\Exception $e) {
+            return redirect(route('viewDirections'))->with('message', ['text' => 'Обидете се повторно', 'type' => 'danger']);
         }
 
     }
