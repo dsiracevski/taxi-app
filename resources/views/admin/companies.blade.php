@@ -1,8 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-    @include('layouts.admin-menu')
-
     <div class="row">
         <div class="container-fluid mt-3 col-3">
             <x-menu></x-menu>

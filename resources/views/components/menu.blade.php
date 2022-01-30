@@ -1,6 +1,6 @@
 <div>
 
-    <x-book></x-book>
+
 
     <div class="list-group">
         <?php foreach ($allCars as $car):?>
@@ -31,7 +31,6 @@
 
         </a>
         <?php endforeach;?>
-        <a href="{{route('viewDirections')}}" class="list-group-item list-group-item-action">Дома</a>
         <a href="{{route('endShiftDriver')}}" class="list-group-item list-group-item-action">Почеток/Крај на смена за
             возач</a>
         <a href="#" data-toggle="modal" data-target="#addScheduledRoute" class="list-group-item list-group-item-action">Закажи

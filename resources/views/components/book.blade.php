@@ -15,15 +15,15 @@
 
             <!-- Modal body -->
             <div class="modal-body">
-                <form action="{{route('storeBooking')}}" method="POST" id="direction">
+                <form action="{{route('storeBooking')}}" method="POST" id="scheduleDirection">
                     @csrf
                     <div class="row">
                         <div class="form-group col-4">
-                            <input type="text" placeholder="Име" name="name" class="form-control">
+                            <input type="text" placeholder="Име" name="name" class="form-control" required>
                         </div>
 
                         <div class="col-4">
-                            <select name="frequency" class="form-control" id="">
+                            <select name="frequency" class="form-control" id="" required>
                                 <option value="">Закажи</option>
                                 <option value="once">Еднаш</option>
                                 <option value="daily">Секојдневно</option>
@@ -32,7 +32,7 @@
                         </div>
                         <div class="col-4">
                             <input type="text" class="form-control" placeholder="Почнува на" name="start_date"
-                                   id="datetimepicker6">
+                                   id="datetimepicker6" required>
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -56,43 +56,3 @@
         </div>
     </div>
 </div>
-
-@section('script')
-    <script>
-        $(document).ready(function () {
-            $(".directions tr").on("click", function () {
-                //get id
-                let id = $(this).data('id');
-                $.ajax({
-                    type: 'GET',
-                    url: "/directions/single/" + id,
-                    success: function (data) {
-                        for (item in data.data) {
-                            $("[name=" + item).val(data.data[item])
-                        }
-                        $("#direction").attr('action', '/directions');
-                        $("#direction button[type=submit]").html('Зачувај');
-                        $('#direction').append('<input type="hidden" name="_method" value="put" />');
-                        $('#direction').append('<input type="hidden" name="id" value="' + id + '" />');
-                        $("#addRoute").modal();
-                        console.log(data.data);
-                    },
-                    error: function (xhr) {
-                        console.log(xhr.responseText);
-                    }
-                });
-                alert(id);
-            });
-            $('#addRoute').on('hidden.bs.modal', function () {
-                $('#direction')[0].reset();
-                $("[name=id]").remove();
-                $("[name=_method]").remove();
-            });
-
-            $('#datetimepicker6').datetimepicker({
-                lang: 'mk',
-                step: 5
-            });
-        });
-    </script>
-@stop

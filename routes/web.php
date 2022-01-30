@@ -37,14 +37,18 @@ Route::get('login/', [AuthController::class, 'create'])->name('login');
 Route::post('login/', [AuthController::class, 'store'])->name('loginStore');
 
 Route::get('bookings/', [BookingsController::class, 'view'])->name('viewBookings')->middleware('auth');
+Route::get('bookings/get/all', [BookingsController::class, 'getBookings'])->name('getBookings')->middleware('auth');
 Route::get('bookings/{booking_id}', [BookingsController::class, 'viewBooking'])->name('viewBooking')->middleware('auth');
 Route::post('bookings/{booking_id}', [BookingsController::class, 'refreshBooking'])->name('refreshBooking')->middleware('auth');
 Route::put('bookings/{booking_id}', [BookingsController::class, 'updateBooking'])->name('updateBooking')->middleware('auth');
 Route::delete('bookings/{booking}', [BookingsController::class, 'deleteBooking'])->name('deleteBooking')->middleware('auth');
+
+
 Route::post('directions/scheduled', [BookingsController::class, 'store'])->name('storeBooking')->middleware('auth');
 
 
-Route::get('directions/', [DirectionsController::class, 'show'])->name('viewDirections')->middleware('auth');
+Route::get('directions/', [DirectionsController::class, 'show'])->name('viewDirections')->middleware('auth');//
+
 Route::post('directions', [DirectionsController::class, 'store'])->name('storeDirections')->middleware('auth');
 Route::put('directions', [DirectionsController::class, 'update'])->name('updateDirections')->middleware('auth');
 Route::post('directions/update', [DirectionsController::class, 'updateIdle'])->name('updateIdle')->middleware('auth');

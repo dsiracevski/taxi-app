@@ -1,11 +1,12 @@
 <div class="bookings bg-white">
-    <p>
+    <div class="d-flex justify-content-between mb-3">
         <a class="btn btn-primary" data-toggle="collapse" href="#collapse" role="button"
            aria-expanded="false" aria-controls="collapse">
             Закажани Возила
         </a>
-    </p>
-    <div class="collapse" id="collapse">
+        <div class="pr-3"><a href="javascript:;" id="snooze"> <img src="{{asset('img/snooze.png')}}"  width="25px"></a></div>
+    </div>
+    <div class="collapse show" id="collapse">
         <table class="table table-striped">
             <thead>
             <tr>
@@ -15,9 +16,8 @@
                 <td></td>
             </tr>
             </thead>
-            <tbody>
+            <tbody class="next-bookings-table">
             @foreach($bookings as $booking)
-
                 <tr>
                     <td>{{$booking->next_date}}</td>
                     <td>{{$booking->name}}</td>

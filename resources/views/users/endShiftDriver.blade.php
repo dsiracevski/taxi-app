@@ -3,12 +3,6 @@
 
 @section('content')
 
-    @if (Auth::user()->is_admin)
-        @include('layouts.admin-menu')
-    @else
-        @include('layouts.user-menu')
-    @endif
-
     <div class="row">
         <div class="col-3">
             <x-menu></x-menu>

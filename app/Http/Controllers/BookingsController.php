@@ -10,16 +10,21 @@ use Illuminate\Http\Request;
 class BookingsController extends Controller
 {
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function view()
     {
-
         $user = auth()->user();
         if (!$user) {
             redirect(route('login'));
         }
 
-        $weeklyBookings = Bookings::where('is_active', 1)->whereBetween('next_date', [now(), now()->addWeek()])->orderBy('next_date')->get();
-
+        $weeklyBookings = Bookings::where('is_active', 1)
+            ->whereBetween('next_date', [
+                now(),
+                now()->addWeek()])
+            ->orderBy('next_date')->get();
 
         return view('bookings.show', [
             'bookings' => $weeklyBookings
@@ -27,15 +32,17 @@ class BookingsController extends Controller
 
     }
 
+    /**
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function viewBooking(Request $request)
     {
-
-//dd($request->booking_id);
         $user = auth()->user();
         if (!$user) {
             redirect(route('login'));
         }
-
 
         return view('bookings.booking', [
             'booking' => Bookings::find($request->booking_id)
@@ -43,9 +50,13 @@ class BookingsController extends Controller
 
     }
 
+    /**
+     * ??
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function refreshBooking(Request $request)
     {
-
         $user = auth()->user();
         if (!$user) {
             redirect(route('login'));
@@ -54,7 +65,6 @@ class BookingsController extends Controller
         $booking = Bookings::where('id', $request->booking)->first();
 
         $currentDate = $booking->next_date;
-
 
         switch ($booking->frequency) {
             case 'daily':
@@ -84,9 +94,13 @@ class BookingsController extends Controller
 
     }
 
+    /**
+     * Update booking
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function updateBooking(Request $request)
     {
-
         $attributes = request()->validate([
             'name' => '',
             'frequency' => '',
@@ -94,7 +108,6 @@ class BookingsController extends Controller
             'note' => '',
             'next_date' => ''
         ]);
-
 
         $booking = Bookings::where('id', $request->id)->first();
 
@@ -106,6 +119,10 @@ class BookingsController extends Controller
 
     }
 
+    /**
+     * delete booking
+     * @param Request $request
+     */
     public function deleteBooking(Request $request)
     {
         dd($request);
@@ -113,10 +130,13 @@ class BookingsController extends Controller
     }
 
 
+    /**
+     * Store data in bookings table
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function store(Request $request)
     {
-
-//        dd($request->all());
         $user = auth()->user();
         if (!$user) {
             redirect(route('login'));
@@ -126,16 +146,52 @@ class BookingsController extends Controller
             'name' => 'required',
             'frequency' => 'required',
             'start_date' => 'required|after:now',
-            'note' => ''
         ]);
 
-
         try {
-            $user->bookings()->create(['name' => $request->name, 'frequency' => $request->frequency,
-                'note' => $request->note, 'start_date' => $request->start_date, 'next_date' => $request->start_date]);
+            $user
+                ->bookings()
+                ->create([
+                    'name' => $request->name,
+                    'frequency' => $request->frequency,
+                    'note' => isset($request->note) ? $request->note : '',
+                    'start_date' => $request->start_date,
+                    'next_date' => $request->start_date
+                ]);
         } catch (\Exception $e) {
-            return redirect(route('viewDirections'))->with('message', ['text' => $e->getMessage(), 'type' => 'danger']);
+            return redirect(
+                route('viewDirections'))
+                ->with('message', [
+                    'text' => $e->getMessage(),
+                    'type' => 'danger'
+                ]);
         }
-        return redirect()->back()->with('message', ['text' => 'Возилото е закажано', 'type' => 'success']);
+        return redirect()->back()->with('message', [
+            'text' => 'Возилото е закажано',
+            'type' => 'success'
+        ]);
+    }
+
+    public function getBookings()
+    {
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json([
+                'error' => true,
+            ], 401);
+        }
+
+        $upcomingBookings = Bookings::where('is_active', true)
+            ->whereBetween('next_date', [
+                now(),
+                now()->addHours(3)])
+            ->orderBy('next_date')
+            ->get();
+
+        return response()->json([
+            'error' => false,
+            'data' => $upcomingBookings
+        ]);
+
     }
 }

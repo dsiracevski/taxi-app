@@ -19,10 +19,15 @@
 </head>
 <body>
     @auth()
-    <x-booking></x-booking>
+        <x-book></x-book>
+        <x-booking></x-booking>
     @endauth
     <div class="container-fluid">
-
+        @if (Auth::user()->is_admin)
+            @include('layouts.admin-menu')
+        @else
+            @include('layouts.user-menu')
+        @endif
         @yield('content')
 
     </div>
@@ -47,10 +52,9 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 
-    <script src=https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-
     <script src="/js/jquery.datetimepicker.full.min.js"></script>
-
+    <script src="/js/main.js"></script>
+    <audio id="alarm" loop src="{{asset('audio/mixkit-bell-notification-933.wav')}}"> </audio>
 
         @yield('script')
 

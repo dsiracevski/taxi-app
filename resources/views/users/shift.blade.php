@@ -2,13 +2,6 @@
 
 @section('content')
 
-    @if (Auth::user()->is_admin)
-        @include('layouts.admin-menu')
-    @else
-        @include('layouts.user-menu')
-    @endif
-
-{{--            @dd($withNoInvoice)--}}
     <div class="container-fluid mt-3">
         <div class="row">
             <div class="col-12">

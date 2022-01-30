@@ -2,8 +2,6 @@
 
 
 @section('content')
-    @include('layouts.admin-menu')
-
     <div class="row">
 
         <div class="col-6">
