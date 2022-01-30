@@ -1,57 +1,59 @@
 @extends('layouts.master')
 
 @section('content')
-    @if (Auth::user()->is_admin)
-        @include('layouts.admin-menu')
-    @else
-        @include('layouts.user-menu')
-    @endif
 
-    <table id="myTable">
-        <thead>
-        <tr>
-            <th>Име</th>
-            <th>Презиме</th>
-        </tr>
-        </thead>
+    @include('layouts.admin-menu')
 
-        <tbody>
 
-        @foreach($drivers as $driver)
-            <tr>
-                <td><a href="drivers/{{$driver->id}}">{{$driver->first_name}}</a></td>
-                <td>{{$driver->last_name}}</td>
-            </tr>
-        @endforeach
+    <div class="row">
+        <div class="container-fluid mt-3 col-3">
+            <x-menu></x-menu>
+        </div>
 
-        <form method="POST">
-            <tr>
+        <div class="container-fluid mt-3 col-9">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-rounded">
 
-                @csrf
-                <div>
-                    <td><input placeholder="First name" name="first_name"></td>
-                    <td><input placeholder="Last Name" name="last_name"></td>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Име</th>
+                                <th>Презиме</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+
+                            @foreach($drivers as $driver)
+                                <tr>
+                                    <td><a href="drivers/{{$driver->id}}">{{$driver->first_name}}</a></td>
+                                    <td>{{$driver->last_name}}</td>
+                                </tr>
+                            @endforeach
+
+                            <form method="POST">
+                                <tr>
+                                    @csrf
+                                    <div>
+                                        <td><input placeholder="Име" name="first_name"
+                                                   class="form-control">
+                                        </td>
+                                        <td><input placeholder="Презиме" name="last_name"
+                                                   class="form-control"></td>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary">Додади нов</button>
+                                        </td>
+                                    </div>
+
+
+                                </tr>
+                            </form>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+            </div>
 
-                <div>
-                    <button type="submit">Add</button>
-                </div>
-            </tr>
-        </form>
-
-        </tbody>
-    </table>
-
-    <div>
-        <a href="/administration/">Go Back</a>
-    </div>
-
-    @stop
-
-    @section('script')
-        <script>
-            $(document).ready(function () {
-                $('#myTable').DataTable();
-            });
-        </script>
 @stop
+

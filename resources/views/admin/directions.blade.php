@@ -12,11 +12,11 @@
                 @csrf
 
                 <label for="dateFrom">
-                    Од: <input type="date" name="dateFrom" id="dateFrom">
+                    Од: <input type="date" name="dateFrom" id="dateFrom" class="form-control">
                 </label>
 
                 <label for="dateTo">
-                    До: <input type="date" name="dateTo" id="dateTo">
+                    До: <input type="date" name="dateTo" id="dateTo" class="form-control">
                 </label>
 
                 <button type="submit" class="btn button">Прикажи</button>
@@ -25,7 +25,7 @@
 
     </div>
 
-    <div>
+    <div class="container-fluid mt-3">
 {{--@dd(request())--}}
         <div>
             <table id="myTable">
@@ -50,12 +50,19 @@
                 @endphp
                 @foreach($directions as $direction)
                     <tr>
+{{--                        @dd($directions);--}}
                         <td>{{$direction->created_at}}</td>
                         <td>{{$direction->users->full_name}}</td>
                         <td>{{$direction->driver->full_name}}</td>
                         <td
                         >{{$direction->locationFrom->street_name . ' ' . $direction->locationFrom->street_number}}
-                            - {{$direction->locationTo->street_name . ' ' . $direction->locationTo->street_number}}</td>
+                            - {{$direction->locationTo->street_name . ' ' . $direction->locationTo->street_number}}
+                        @if ($direction->return)
+                            (ПОВРАТНА)
+                            @else
+
+                        @endif
+                        </td>
                         <td>{{$direction->price}} ден</td>
                         <td>{{$direction->price_idle}} ден</td>
                         <td>{{$direction->price_order}} ден</td>
@@ -76,8 +83,8 @@
                 </tbody>
             </table>
 
-            <div>
-                <div>Вкупно</div>
+            <div class="d-flex flex-row form-control border-primary" >
+                <div>Вкупно за наплата:</div>
                 <div>{{$sum}} ден</div>
             </div>
         </div>

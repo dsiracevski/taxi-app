@@ -2,9 +2,16 @@
 
 
 @section('content')
-    @include('layouts.user-menu')
+
+    @if (Auth::user()->is_admin)
+        @include('layouts.admin-menu')
+    @else
+        @include('layouts.user-menu')
+    @endif
+
+    {{--@dd($bookings)--}}
     <div class="container-fluid mt-3">
-        <x-menu ></x-menu>
+        <x-menu></x-menu>
     </div>
     <div class="container-fluid mt-3">
         <div class="row">
@@ -108,7 +115,6 @@
                 </div>
             @endforeach
         </div>
-
 
         <!-- The Modal -->
         <div class="modal" id="addRoute">
@@ -264,7 +270,7 @@
                     <div class="modal-header">
                         <div class="row">
                             <div class="col-12">
-                                <h4 class="modal-title">Закажани возило</h4>
+                                <h4 class="modal-title">Закажи возило</h4>
                             </div>
                         </div>
 
@@ -285,12 +291,12 @@
                                         <option value="">Закажи</option>
                                         <option value="once">Еднаш</option>
                                         <option value="daily">Секојдневно</option>
-                                        <option value="weekends">Викенд</option>
                                         <option value="monthly">Месечно</option>
                                     </select>
                                 </div>
                                 <div class="col-4">
-                                    <input type="text" class="form-control" placeholder="Почнува на" name="start_date" id="datetimepicker6">
+                                    <input type="text" class="form-control" placeholder="Почнува на" name="start_date"
+                                           id="datetimepicker6">
                                 </div>
                             </div>
                             <div class="row mt-3">
@@ -355,7 +361,36 @@
                     $(".directions tr").on("click", function () {
                         //get id
                         let id = $(this).data('id');
+                        $.ajax({
+                            type: 'GET',
+                            url: "/directions/single/" + id,
+                            success: function (data) {
+                                for (item in data.data) {
+                                    $("[name=" + item).val(data.data[item])
+                                }
+                                $("#direction").attr('action', '/directions');
+                                $("#direction button[type=submit]").html('Зачувај');
+                                $('#direction').append('<input type="hidden" name="_method" value="put" />');
+                                $('#direction').append('<input type="hidden" name="id" value="' + id + '" />');
+                                $("#addRoute").modal();
+                                console.log(data.data);
+                            },
+                            error: function (xhr) {
+                                console.log(xhr.responseText);
+                            }
+                        });
+                        alert(id);
                     })
+                    $('#addRoute').on('hidden.bs.modal', function () {
+                        $('#direction')[0].reset();
+                        $("[name=id]").remove();
+                        $("[name=_method]").remove();
+                    });
+
+                    $('#datetimepicker6').datetimepicker({
+                        lang: 'mk',
+                        step: 5
+                    });
                 });
             </script>
 @stop

@@ -1,58 +1,60 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Taxi</title>
-</head>
-<body>
+@extends('layouts.master')
 
+@section('content')
 
-    <main>
-        <form action="/register" method="POST">
-            @csrf
-            <div>
-                <label for="name">Name</label>
-                <input type="text" name="name" id="name" required>
+    @if (Auth::user()->is_admin)
+        @include('layouts.admin-menu')
+    @endif
+
+    <div class="row">
+        <div class="container-fluid mt-3 col-3">
+            <x-menu></x-menu>
+        </div>
+
+        <div class="container-fluid mt-3 col-9">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-rounded">
+
+                        <form action="{{route('registerUser')}}" method="POST" class="m-3">
+                            @csrf
+
+                            <div class="form-row">
+                                <div class="form-group col-6">
+                                    <label for="first_name">Име</label>
+                                    <input type="text" name="first_name" id="first_name" class="form-control" required>
+                                </div>
+
+                                <div class="form-group col-6">
+                                    <label for="last_name">Презиме</label>
+                                    <input type="text" name="last_name" id="last_name" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="text" name="email" id="email" class="form-control" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">Лозинка</label>
+                                <input type="password" name="password" id="password" class="form-control" required>
+                            </div>
+
+                            <div class="form-check">
+                                <input type="hidden" name="is_admin" value="0">
+                                <input type="checkbox" name="is_admin" id="is_admin" value="1" class="form-check-input">
+                                <label for="is_admin" class="form-check-label">Администратор?</label>
+                            </div>
+
+                            <div>
+                                <button type="submit" class="btn btn-primary">
+                                    Додади
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
 
-            <div>
-                <label for="first_name">First Name</label>
-                <input type="text" name="first_name" id="first_name" required>
-            </div>
-
-            <div>
-                <label for="last_name">Last Name</label>
-                <input type="text" name="last_name" id="last_name" required>
-            </div>
-
-            <div>
-                <label for="email">Email</label>
-                <input type="text" name="email" id="email" required>
-            </div>
-
-            <div>
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password" required>
-            </div>
-
-            <div>
-                <label for="is_admin">Admin User?</label>
-                <input type="hidden" name="is_admin" value="0">
-                <input type="checkbox" name="is_admin" id="is_admin" value="1">
-            </div>
-
-            <div>
-                <button type="submit">
-                    Submit
-                </button>
-            </div>
-        </form>
-        <a href="/">Cancel</a>
-    </main>
-
-
-</body>
-</html>
+@endsection

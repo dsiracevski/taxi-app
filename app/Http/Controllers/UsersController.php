@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Car;
 use App\Models\Direction;
 use App\Models\Driver;
+use App\Models\Services;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -32,17 +33,18 @@ class UsersController extends Controller
 
     }
 
-    public function update(User $user)
+    public function update(Request $request)
     {
 
         $attributes = request()->validate([
-            'name' => 'required',
+            'name' => '',
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => 'required',
             'is_admin' => 'required'
         ]);
 
+        $user = User::where('id', $request->id)->first();
         $user->update($attributes);
 
         return redirect(route('viewUsers'));
@@ -63,7 +65,9 @@ class UsersController extends Controller
         $driverInvoicesWithInvoice = DB::table('drivers')
             ->leftJoin('directions', 'directions.driver_id', '=', 'drivers.id')
             ->leftJoin('companies', 'directions.company_id', '=', 'companies.id')
-            ->select('drivers.*', 'directions.*', 'companies.name as company_name',
+            ->leftJoin('car_services', 'car_services.driver_id', '=', 'drivers.id')
+            ->whereDate('car_services.created_at', '=', today()->toDateString())
+            ->select('drivers.*', 'directions.*', 'companies.name as company_name', 'car_services.price as priceService',
                 DB::raw('SUM(directions.price_order) as priceOrder'),
                 DB::raw('SUM(directions.price) as priceBase'),
                 DB::raw('SUM(directions.price_idle) as priceIdle'))
@@ -75,7 +79,11 @@ class UsersController extends Controller
 
         $driverInvoicesWithNoInvoice = DB::table('drivers')
             ->leftJoin('directions', 'directions.driver_id', '=', 'drivers.id')
+            ->leftJoin('car_services', 'car_services.driver_id', '=', 'drivers.id')
+            ->leftJoin('services', 'services.id', '=', 'car_services.service_id')
+            ->whereDate('car_services.created_at', '=', today()->toDateString())
             ->select('drivers.*', 'directions.*',
+                DB::raw('SUM(car_services.price) as priceService'),
                 DB::raw('SUM(directions.price_order) as priceOrder'),
                 DB::raw('SUM(directions.price) as priceBase'),
                 DB::raw('SUM(directions.price_idle) as priceIdle'))
@@ -86,6 +94,7 @@ class UsersController extends Controller
             ->get();
 
         $drivers = Driver::has('directions')->with('tDirections.company', 'cars')->get();
+
 
         $invoices = Direction::with('driver.cars', 'company')
             ->whereDate('created_at', today())

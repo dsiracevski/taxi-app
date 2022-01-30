@@ -2,8 +2,13 @@
 
 
 @section('content')
+    @include('components.booking')
 
-    @include('layouts.user-menu')
+    @if (Auth::user()->is_admin)
+        @include('layouts.admin-menu')
+    @endif
+
+    {{--    @dd($bookings)--}}
     <div class="row">
         <div class="col-3">
             <x-menu></x-menu>
@@ -13,8 +18,6 @@
                 <div class="col-4">
                     <a href="javascript:;" data-toggle="modal" data-target="#addRoute"
                        data-driver-id="{{$driverID}}" class="btn btn-primary driver_name">Додади Рута</a>
-                    <a href="javascript:;" data-toggle="modal" data-target="#addRoute"
-                       data-driver-id="{{$driverID}}" class="btn btn-danger driver_name">Додели Закажано возење</a>
                 </div>
                 <div class="col-2">
                     {{$driver->first_name}} {{$driver->last_name}}, смена {{$driver->onWorkCars[0]->pivot->shift}}
@@ -67,6 +70,8 @@
                             <tbody>
                             @php
                                 $sum = 0;
+                                $invoice = 0;
+                                $inSum = 0;
                             @endphp
                             @foreach($directions as $d)
                                 <tr class="directions" data-id="{{$d->id}}">
@@ -84,9 +89,18 @@
                                     <td>{{($d->company_id) ? "Да" : "Не"}} </td>
                                     @php
                                         $totalSum = $d->price + $d->price_idle + $d->price_order;
+
+
                                         if(!$d->company_id){
                                             $sum = $sum + $totalSum;
                                         }
+
+                                    if ($d->company_id) {
+                                            $invoice = $invoice + $d->price;
+                                        }
+
+                                        $inSum = $invoice + $sum;
+
                                     @endphp
                                     <td>{{$totalSum}}</td>
                                     <td>{{$d->note}}</td>
@@ -95,7 +109,9 @@
                             </tbody>
                         </table>
                         <div class="text-right p-2 border-top">
-                            <p><strong>Вкупно: {{$sum}} ден.</strong></p>
+                            <p><strong>Вкупно: {{$invoice}} ден.</strong></p>
+                            <p><strong>Фактури: {{$sum}} ден.</strong></p>
+                            <p><strong>Вкупно со фактури: {{$inSum}} ден.</strong></p>
                         </div>
                     </div>
                 </div>
@@ -103,6 +119,7 @@
             </div>
         </div>
     </div>
+
 
 
     <!-- The Modal -->
@@ -189,7 +206,7 @@
                             {{--                                </div>--}}
                         </div>
                         <div class="row mt-3">
-                            <div class="col-7">
+                            <div class="col-7 d-flex">
                                 <textarea placeholder="Забелешка" class="w-100 form-control" name="note"></textarea>
                             </div>
                             <div class="col-3 d-flex">
@@ -198,6 +215,8 @@
                                 </label>
                             </div>
                         </div>
+
+
                         <div class="row mt-3">
                             <div class="col-6 text-center">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Откажи</button>
@@ -275,7 +294,7 @@
                 <div class="modal-header">
                     <div class="row">
                         <div class="col-12">
-                            <h4 class="modal-title">Закажани возило</h4>
+                            <h4 class="modal-title">Закажи возило</h4>
                         </div>
                     </div>
 
@@ -296,12 +315,12 @@
                                     <option value="">Закажи</option>
                                     <option value="once">Еднаш</option>
                                     <option value="daily">Секојдневно</option>
-                                    <option value="weekends">Викенд</option>
                                     <option value="monthly">Месечно</option>
                                 </select>
                             </div>
                             <div class="col-4">
-                                <input type="text" class="form-control" placeholder="Почнува на" name="start_date" id="datetimepicker6">
+                                <input type="text" class="form-control" placeholder="Почнува на" name="start_date"
+                                       id="datetimepicker6">
                             </div>
                         </div>
                         <div class="row mt-3">
