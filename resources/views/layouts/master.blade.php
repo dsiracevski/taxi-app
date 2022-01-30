@@ -22,14 +22,16 @@
         <x-book></x-book>
         <x-booking></x-booking>
     @endauth
+
     <div class="container-fluid">
-        @if (Auth::user()->is_admin)
-            @include('layouts.admin-menu')
-        @else
-            @include('layouts.user-menu')
+        @if(!empty(Auth::user()))
+            @if ( Auth::user()->is_admin)
+                @include('layouts.admin-menu')
+            @else
+                @include('layouts.user-menu')
+            @endif
         @endif
         @yield('content')
-
     </div>
 <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
