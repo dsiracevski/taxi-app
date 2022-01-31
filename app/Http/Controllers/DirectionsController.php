@@ -57,7 +57,7 @@ class DirectionsController extends Controller
         } else
             $endDate = request()->dateTo;
 
-        $directions = Direction::with('driver.cars', 'users', 'locationFrom', 'locationTo', 'company')
+        $directions = Direction::with('driver.currentCar', 'users', 'locationFrom', 'locationTo', 'company')
             ->whereBetween('created_at', [$startDate, $endDate])
             ->get();
 
