@@ -48,6 +48,11 @@ class Driver extends Model
         return $this->cars()->wherePivot('on_work', 1);
     }
 
+    public function currentCar()
+    {
+        return $this->cars()->wherePivot('on_work', 1);
+    }
+
 
     public function getFullNameAttribute()
     {

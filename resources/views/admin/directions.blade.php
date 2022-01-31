@@ -67,9 +67,24 @@
 
                         @endif
                         </td>
-                        <td>{{$direction->price}} ден</td>
-                        <td>{{$direction->price_idle}} ден</td>
-                        <td>{{$direction->price_order}} ден</td>
+                        <td>@if(!$direction->price)
+                                0 ден.
+                            @else
+                                {{$direction->price}} ден.
+
+                            @endif</td>
+                        <td>@if(!$direction->priceIdle)
+                                0 ден.
+                            @else
+                                {{$direction->priceIdle}} ден.
+
+                            @endif</td>
+                        <td>@if(!$direction->priceOrder)
+                                0 ден.
+                            @else
+                                {{$direction->priceOrder}} ден.
+
+                            @endif</td>
 
                         @php
                             $totalSum = $direction->price + $direction->price_idle + $direction->price_order;
@@ -78,7 +93,7 @@
 
                         <td>{{$totalSum}} ден</td>
                         <td>@if ($direction->company_id) {{$direction->company->name}} @else Во Готово @endif</td>
-                        @foreach($direction->driver->cars as $car)
+                        @foreach($direction->driver->currentCar as $car)
                             <td>{{$car->name}}</td>
                         @endforeach
                     </tr>
