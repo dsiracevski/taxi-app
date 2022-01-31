@@ -2,14 +2,14 @@
 
 @section('content')
 
-    {{--    @dd($withInvoice)--}}
+    {{--        @dd($cars)--}}
     <div class="container-fluid mt-3">
         <div class="row">
             <div class="col-12">
                 <div class="row">
                     <div class="col-12">
 
-{{--                        @dd($withInvoice)--}}
+                        {{--                        @dd($withInvoice)--}}
                         <table id="myTable" class="table">
                             <thead>
                             <tr>
@@ -65,6 +65,8 @@
         </div>
     </div>
 
+
+    {{--Invoice Table--}}
     <div class="container-fluid mt-3">
         <div class="row">
             <div class="col-12">
@@ -111,6 +113,52 @@
                             </tbody>
                         </table>
                         <div class="text-right pr-5 mr-5"><strong>Вкупно:{{$endtotal}}</strong></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {{--Car Table--}}
+    <div class="container-fluid mt-3">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row card-header text-center bg-info">
+                            <div class="col-12">Одржување</div>
+                        </div>
+                        <table id="myTable2" class="table">
+                            <thead>
+                            <tr>
+                                <th>Возило</th>
+                                <th>Цена</th>
+                                <th>Додадено</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @php
+                                $total = 0;
+                            @endphp
+                            @foreach($cars as $car)
+                                <tr>
+                                    <td>{{$car->name}}</td>
+
+                                    @foreach($car->tServices as $service)
+                                        <td>{{$service->serviceSum}}</td>
+                                        <td>{{$service->name}}</td>
+                                    @endforeach
+
+                                    @php
+                                        $total = $service->serviceSum;
+                                    @endphp
+
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                        <div class="text-right pr-5 mr-5"><strong>Вкупно:{{$total}}</strong></div>
                     </div>
                 </div>
             </div>

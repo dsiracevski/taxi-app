@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,7 +14,7 @@ class Car extends Model
      * The attributes that are mass assignable.
      * @var string[]
      */
-    protected $fillable = ['name','registration_number', 'is_active'];
+    protected $fillable = ['name', 'registration_number', 'is_active'];
 
     /**
      * The attributes that aren't mass assignable.
@@ -28,12 +29,18 @@ class Car extends Model
     {
         return $this->belongsToMany(Driver::class, "driver_cars", "car_id", "driver_id")
             //->withPivot('note', 'km')
-            ->withPivot('on_work', 'km','note','shift','id')->withTimestamps();
+            ->withPivot('on_work', 'km', 'note', 'shift', 'id')->withTimestamps();
     }
 
     public function services()
     {
         return $this->belongsToMany(Services::class, 'car_services', 'car_id', 'service_id')->withTimestamps();
+    }
+
+    public function tServices()
+    {
+        return $this->services()
+            ->whereDate('car_services.created_at', today())->select('*', \DB::raw('SUM(car_services.price) as serviceSum'));
     }
 
     public function onWorkCars()

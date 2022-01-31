@@ -114,15 +114,14 @@ class UsersController extends Controller
             ->whereNotNull('company_id')
             ->get();
 
-
-//        $d = DB::statement("SELECT * from drivers WHERE is_active = 1 inner_join ")
-//        dd($d);
+        $cars = Car::has('tServices')->with('tServices')->get();
 
         return view('users.shift', [
             'user' => auth()->user(),
             'drivers' => $drivers,
             'withNoInvoice' => $driverInvoicesWithNoInvoice,
-            'withInvoice' => $driverInvoicesWithInvoice
+            'withInvoice' => $driverInvoicesWithInvoice,
+            'cars' => $cars
         ]);
     }
 
