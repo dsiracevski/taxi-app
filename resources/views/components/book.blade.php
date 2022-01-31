@@ -15,7 +15,7 @@
 
             <!-- Modal body -->
             <div class="modal-body">
-                <form action="{{route('storeBooking')}}" method="POST" id="scheduleDirection">
+                <form action="{{route('storeBooking')}}" method="GET" id="scheduleDirection">
                     @csrf
                     <div class="row">
                         <div class="form-group col-4">
@@ -30,10 +30,12 @@
                                 <option value="monthly">Месечно</option>
                             </select>
                         </div>
+
                         <div class="col-4">
                             <input type="text" class="form-control" placeholder="Почнува на" name="start_date"
                                    id="datetimepicker6" required>
                         </div>
+
                     </div>
                     <div class="row mt-3">
                         <div class="col-8">
@@ -56,3 +58,14 @@
         </div>
     </div>
 </div>
+
+@section('script')
+    <script>
+        $(document).ready(function () {
+            $('#datetimepicker6').datetimepicker({
+                lang: 'mk',
+                step: 5
+            });
+        });
+    </script>
+@stop

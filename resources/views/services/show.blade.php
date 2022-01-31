@@ -27,20 +27,6 @@
                                 </div>
                             </div>
 
-                            <div class="form-group mt-1 mx-2 row">
-                                <label for="driver_id" class="col-form-label">Возач</label>
-
-                                <div class="col">
-                                    <select name="driver_id" id="driver_id" class="form-control" required>
-                                        <option value=""></option>
-                                        @foreach($drivers as $driver)
-                                            <option
-                                                value="{{$driver->id}}">{{$driver->first_name . ' ' . $driver->last_name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
                             <label for="service_id">
                                 <input type="hidden" id="service_id" name="service_id" value="{{$gas->id}}"
                                        required>
@@ -93,19 +79,6 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group mt-1 mx-2 row">
-                                    <label for="driver_id" class="col-form-label">Возач</label>
-
-                                    <div class="col">
-                                        <select name="driver_id" id="driver_id" class="form-control" required>
-                                            <option value=""></option>
-                                            @foreach($drivers as $driver)
-                                                <option
-                                                    value="{{$driver->id}}">{{$driver->first_name . ' ' . $driver->last_name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
 
                                 <label for="service_id">
                                     <input type="hidden" id="service_id" name="service_id" value="{{$oil_change->id}}"
@@ -159,19 +132,6 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group mt-1 mx-2 row">
-                                    <label for="driver_id" class="col-form-label">Возач</label>
-
-                                    <div class="col">
-                                        <select name="driver_id" id="driver_id" class="form-control" required>
-                                            <option value=""></option>
-                                            @foreach($drivers as $driver)
-                                                <option
-                                                    value="{{$driver->id}}">{{$driver->first_name . ' ' . $driver->last_name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
 
                                 <label for="service_id">
                                     <input type="hidden" id="service_id" name="service_id" value="{{$tyre_change->id}}"
@@ -225,19 +185,6 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group mt-1 mx-2 row">
-                                    <label for="driver_id" class="col-form-label">Возач</label>
-
-                                    <div class="col">
-                                        <select name="driver_id" id="driver_id" class="form-control" required>
-                                            <option value=""></option>
-                                            @foreach($drivers as $driver)
-                                                <option
-                                                    value="{{$driver->id}}">{{$driver->first_name . ' ' . $driver->last_name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
 
                                 <label for="service_id">
                                     <input type="hidden" id="service_id" name="service_id" value="{{$car_registration->id}}"

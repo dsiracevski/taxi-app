@@ -51,25 +51,25 @@
                 @if($cars->isNotEmpty())
                     <div class="col-12"><h3>Додади смена</h3></div>
                     <div class="col-12">
-                        <h4>Слободни коли:</h4>
+                        <h4>Слободни возила:</h4>
                     </div>
                     <div class="col-12">
                         <ul>
                             @foreach($cars as $car)
                                 <li>{{$car->name}}
-                                    <a href="#" class="shift_driver"
+                                    <button type="submit" href="#" class="shift_driver btn btn-primary"
                                        data-toggle="modal"
                                        data-target="#shiftDriver"
                                        data-driver-id=""
                                        data-car-name="{{$car->name}}"
                                        data-car-id="{{$car->id}}">
                                         Додади
-                                    </a></li>
+                                    </button></li>
                             @endforeach
                         </ul>
                     </div>
                 @else
-                    <div class="col-12"><h3>Нема слободни коли</h3></div>
+                    <div class="col-12"><h3>Нема слободни возила</h3></div>
                 @endif
             </div>
         </div>
@@ -91,13 +91,14 @@
                 <div class="modal-body">
                     <form action="{{route('assignDriver')}}" method="POST">
                         @csrf
-                        <p>Кола: <strong id="carNameToAssign"></strong></p>
+                        <p>Кола: <strong id="carNameToAssign">{{$car->name}}</strong></p>
                         <input type="hidden" value="" name="car" id="carToAssign">
                         <div class="row">
                             <div class="form-group col-8">
-                                <select class="from_location location form-control" name="driver_id" required>
+                                <label for="driver">Возач: </label>
+                                <select class="from_location location form-control" name="driver_id" id="driver" required>
                                     <option value=""></option>
-                                    @foreach($allAvilibledrivers as $driver)
+                                    @foreach($allAvailableDrivers as $driver)
                                         <option
                                             value="{{$driver->id}}">{{$driver->first_name}} {{$driver->last_name}}</option>
                                     @endforeach
@@ -114,10 +115,10 @@
                         </div>
                         <div class="row">
                             <div class="form-group col-6">
-                                <textarea placeholder="Note" class="w-100" name="note"></textarea>
+                                <textarea placeholder="Note" class="w-100 form-control" name="note"></textarea>
                             </div>
                             <div class="form-group col-6">
-                                <input type="number" placeholder="km" class="w-100" name="km" required>
+                                <input type="number" placeholder="km" class="w-100 form-control" name="km" required>
                             </div>
                         </div>
                         <div class="row">

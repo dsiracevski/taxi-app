@@ -17,7 +17,7 @@
                 <a class="nav-link" href="{{route('viewCars')}}" class="nav-link">Возила</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{route('viewServices')}}">Гориво/Уље</a>
+                <a class="nav-link" href="{{route('viewServices')}}">Одржување</a>
             </li>
             <li>
                 <a class="nav-link" href="{{route('viewLocations')}}" class="nav-link">Локации</a>

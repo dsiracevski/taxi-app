@@ -39,12 +39,12 @@ Route::post('login/', [AuthController::class, 'store'])->name('loginStore');
 Route::get('bookings/', [BookingsController::class, 'view'])->name('viewBookings')->middleware('auth');
 Route::get('bookings/get/all', [BookingsController::class, 'getBookings'])->name('getBookings')->middleware('auth');
 Route::get('bookings/{booking_id}', [BookingsController::class, 'viewBooking'])->name('viewBooking')->middleware('auth');
-Route::post('bookings/{booking_id}', [BookingsController::class, 'refreshBooking'])->name('refreshBooking')->middleware('auth');
+Route::get('bookings/update/{booking_id}', [BookingsController::class, 'refreshBooking'])->name('refreshBooking')->middleware('auth');
 Route::put('bookings/{booking_id}', [BookingsController::class, 'updateBooking'])->name('updateBooking')->middleware('auth');
 Route::delete('bookings/{booking}', [BookingsController::class, 'deleteBooking'])->name('deleteBooking')->middleware('auth');
 
 
-Route::post('directions/scheduled', [BookingsController::class, 'store'])->name('storeBooking')->middleware('auth');
+Route::get('directions/scheduled', [BookingsController::class, 'store'])->name('storeBooking')->middleware('auth');
 
 
 Route::get('directions/', [DirectionsController::class, 'show'])->name('viewDirections')->middleware('auth');//
@@ -93,9 +93,9 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'admin']], functi
 
 
     Route::get('cars/', [CarsController::class, 'view'])->name('viewCars');
-    Route::post('cars/', [CarsController::class, 'create']);
+    Route::post('cars/', [CarsController::class, 'create'])->name('addCar');
     Route::get('cars/{car}', [CarsController::class, 'show'])->name('viewCar');
-    Route::patch('cars/{car}', [CarsController::class, 'update']);
+    Route::patch('cars/{car}', [CarsController::class, 'update'])->name('updateCar');
     Route::delete('cars/{car}', [CarsController::class, 'destroy'])->name('deleteCar');
 
 
@@ -113,13 +113,13 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'admin']], functi
 
 
     Route::get('drivers/', [DriversController::class, 'view'])->name('viewDrivers');
-    Route::post('drivers/', [DriversController::class, 'create']);
+    Route::post('drivers/', [DriversController::class, 'create'])->name('addDriver');
     Route::get('drivers/{driver}', [DriversController::class, 'show'])->name('viewDriver');
-    Route::patch('drivers/{driver}', [DriversController::class, 'update'])->name('updateDriver');
+    Route::put('drivers/{driver}', [DriversController::class, 'update'])->name('updateDriver');
     Route::delete('drivers/{driver}', [DriversController::class, 'destroy'])->name('deleteDriver');
 
     Route::get('companies/', [CompaniesController::class, 'view'])->name('viewCompanies');
-    Route::post('companies/', [CompaniesController::class, 'create']);
+    Route::post('companies/', [CompaniesController::class, 'create'])->name('addCompany');
     Route::get('companies/{company}', [CompaniesController::class, 'show'])->name('viewCompany');
     Route::patch('companies/{company}', [CompaniesController::class, 'update'])->name('updateCompany');
     Route::delete('companies/{company}', [CompaniesController::class, 'destroy'])->name('deleteCompany');

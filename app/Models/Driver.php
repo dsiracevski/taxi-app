@@ -48,6 +48,7 @@ class Driver extends Model
         return $this->cars()->wherePivot('on_work', 1);
     }
 
+
     public function getFullNameAttribute()
     {
         return $this->first_name . " " . $this->last_name;

@@ -2,6 +2,25 @@
 
 @section('content')
     <div class="row">
+        <div class="col-12">
+            @if ($errors->any())
+                <div class="alert alert-danger fade in alert-dismissible show">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            @if(Session::has('message'))
+                <div class="alert alert-{{session('message')['type']}} fade in alert-dismissible show">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true" style="font-size:20px">×</span>
+                    </button>
+                    {{session('message')['text']}}
+                </div>
+            @endif
+        </div>
         <div class="container-fluid mt-3 col-3">
             <x-menu></x-menu>
         </div>

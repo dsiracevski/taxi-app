@@ -21,11 +21,14 @@ class RegisterController extends Controller
             'is_admin' => 'required'
         ]);
 
+
+
+        try {
             User::create($attributes);
-
-
-
-        return redirect(route('adminView'))->with('success', 'User created successfully!');
+            return redirect(route('viewUsers'))->with('message', ['text' => 'Корисникот е додаден', 'type' => 'success']);
+        } catch (\Exception $e) {
+            return redirect(route('viewUsers'))->with('message', ['text' => 'Обидете се повторно', 'type' => 'danger']);
+        }
 
     }
 }

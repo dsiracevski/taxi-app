@@ -103,8 +103,8 @@
                             </tbody>
                         </table>
                         <div class="text-right p-2 border-top">
-                            <p><strong>Вкупно: {{$invoice}} ден.</strong></p>
-                            <p><strong>Фактури: {{$sum}} ден.</strong></p>
+                            <p><strong>Фактури: {{$invoice}} ден.</strong></p>
+                            <p><strong>Вкупно без фактури: {{$sum}} ден.</strong></p>
                             <p><strong>Вкупно со фактури: {{$inSum}} ден.</strong></p>
                         </div>
                     </div>
@@ -305,7 +305,7 @@
                         console.log(xhr.responseText);
                     }
                 });
-                alert(id);
+
             });
             $('#addRoute').on('hidden.bs.modal', function () {
                 $('#direction')[0].reset();

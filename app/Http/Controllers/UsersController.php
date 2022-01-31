@@ -45,45 +45,58 @@ class UsersController extends Controller
         ]);
 
         $user = User::where('id', $request->id)->first();
-        $user->update($attributes);
 
-        return redirect(route('viewUsers'));
+        try {
+            $user->update($attributes);
+            return redirect(route('viewUsers'))->with('message', ['text' => 'Корисникот е едитиран', 'type' => 'success']);
+        } catch (\Exception $e) {
+            return redirect(route('viewUsers'))->with('message', ['text' => 'Обидете се повторно', 'type' => 'danger']);
+        }
 
     }
 
 
     public function destroy(User $user)
     {
-        $user->delete();
 
-        return redirect(route('viewUsers'));
+        try {
+            $user->delete();
+
+            return redirect(route('viewUsers'))->with('message', ['text' => 'Корисникот е избришан', 'type' => 'success']);
+        } catch (\Exception $e) {
+            return redirect(route('viewUsers'))->with('message', ['text' => 'Обидете се повторно', 'type' => 'danger']);
+        }
     }
 
     public function endShift()
     {
-        $user = $user = \auth()->user();
+        $user = \auth()->user();
+        $today = Carbon::today()->toDateString();
+
         $driverInvoicesWithInvoice = DB::table('drivers')
             ->leftJoin('directions', 'directions.driver_id', '=', 'drivers.id')
             ->leftJoin('companies', 'directions.company_id', '=', 'companies.id')
-            ->leftJoin('car_services', 'car_services.driver_id', '=', 'drivers.id')
-            ->whereDate('car_services.created_at', '=', today()->toDateString())
-            ->select('drivers.*', 'directions.*', 'companies.name as company_name', 'car_services.price as priceService',
+//            ->leftJoin('car_services', function ($query) use ($today) {
+//                $query->on('car_services.driver_id', '=', 'drivers.id')->whereDate('car_services.created_at', $today);
+//            })
+            ->select('drivers.*', 'directions.*', 'companies.name as company_name',
                 DB::raw('SUM(directions.price_order) as priceOrder'),
+//                DB::raw('SUM(car_services.price) as priceService'),
                 DB::raw('SUM(directions.price) as priceBase'),
                 DB::raw('SUM(directions.price_idle) as priceIdle'))
             ->whereDate('directions.created_at', '=', Carbon::today()->toDateString())
             ->where('directions.user_id', $user->id)
             ->where('company_id', '<>', null)
-            ->groupBy('drivers.id')
+            ->groupBy('companies.id')
             ->get();
 
         $driverInvoicesWithNoInvoice = DB::table('drivers')
             ->leftJoin('directions', 'directions.driver_id', '=', 'drivers.id')
-            ->leftJoin('car_services', 'car_services.driver_id', '=', 'drivers.id')
-            ->leftJoin('services', 'services.id', '=', 'car_services.service_id')
-            ->whereDate('car_services.created_at', '=', today()->toDateString())
+//            ->leftJoin('car_services', function ($query) use ($today) {
+//                $query->on('car_services.driver_id', '=', 'drivers.id')->whereDate('car_services.created_at', $today);
+//            })
             ->select('drivers.*', 'directions.*',
-                DB::raw('SUM(car_services.price) as priceService'),
+//                DB::raw('SUM(car_services.price) as priceService'),
                 DB::raw('SUM(directions.price_order) as priceOrder'),
                 DB::raw('SUM(directions.price) as priceBase'),
                 DB::raw('SUM(directions.price_idle) as priceIdle'))
@@ -101,15 +114,14 @@ class UsersController extends Controller
             ->whereNotNull('company_id')
             ->get();
 
-
-//        $d = DB::statement("SELECT * from drivers WHERE is_active = 1 inner_join ")
-//        dd($d);
+        $cars = Car::has('tServices')->with('tServices')->get();
 
         return view('users.shift', [
             'user' => auth()->user(),
             'drivers' => $drivers,
             'withNoInvoice' => $driverInvoicesWithNoInvoice,
-            'withInvoice' => $driverInvoicesWithInvoice
+            'withInvoice' => $driverInvoicesWithInvoice,
+            'cars' => $cars
         ]);
     }
 
@@ -133,7 +145,7 @@ class UsersController extends Controller
         }
         return view('users.endShiftDriver', [
             'drivers' => $drivers,
-            'allAvilibledrivers' => $allAvilibledrivers,
+            'allAvailableDrivers' => $allAvilibledrivers,
             'cars' => $allCars
         ]);
     }
