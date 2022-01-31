@@ -53,8 +53,14 @@
                         <td>{{$direction->users->full_name}}</td>
                         <td>{{$direction->driver->full_name}}</td>
                         <td
-                        >{{$direction->locationFrom->street_name . ' ' . $direction->locationFrom->street_number}}
-                            - {{$direction->locationTo->street_name . ' ' . $direction->locationTo->street_number}}
+                        >
+                            @if ($direction->locationFrom)
+                                {{$direction->locationFrom->street_name . ' ' . $direction->locationFrom->street_number}}
+                            @endif
+                            -
+                            @if ($direction->locationTo)
+                                {{$direction->locationTo->street_name . ' ' . $direction->locationTo->street_number}}
+                            @endif
                         @if ($direction->return)
                             (ПОВРАТНА)
                             @else
