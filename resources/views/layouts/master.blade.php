@@ -13,6 +13,7 @@
     <link href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel="stylesheet"/>
     <link href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel="stylesheet"/>
     <link href="https://cdn.datatables.net/buttons/2.1.0/css/buttons.dataTables.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="//jonthornton.github.io/jquery-timepicker/jquery.timepicker.css">
     <link rel="stylesheet" href="{{asset('css/select2-bootstrap.css')}}">
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <link rel="stylesheet" href="{{asset('css/jquery.datetimepicker.min.css')}}">
@@ -33,8 +34,9 @@
         @endif
         @yield('content')
     </div>
-<!-- jQuery library -->
+    <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
 
     <!-- Popper JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -56,9 +58,10 @@
 
     <script src="/js/jquery.datetimepicker.full.min.js"></script>
     <script src="/js/main.js"></script>
-    <audio id="alarm" loop src="{{asset('audio/mixkit-bell-notification-933.wav')}}"> </audio>
+    <audio id="alarm" loop src="{{asset('audio/mixkit-bell-notification-933.wav')}}"></audio>
+    <script src="//jonthornton.github.io/jquery-timepicker/jquery.timepicker.js"></script>
 
-        @yield('script')
+    @yield('script')
 
 
 </body>

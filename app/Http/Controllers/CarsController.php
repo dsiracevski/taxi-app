@@ -88,6 +88,9 @@ class CarsController extends Controller
 
     public function assignDriver(Request $request)
     {
+
+//        dd($request->all());
+
         $user = auth()->user();
         if (!$user) {
             redirect(route('login'));
@@ -102,7 +105,12 @@ class CarsController extends Controller
 //            ->update(array('on_work' => 0));  // update the record in the DB.
 
         try {
-            $car->drivers()->attach($request->driver_id, ['note' => $request->note, 'km' => $request->km, 'on_work' => 1, 'user_id' => $user->id, 'shift' => $request->shift]);
+            $car->drivers()->attach($request->driver_id, [
+                'note' => $request->note,
+                'km' => $request->km,
+                'on_work' => 1, 'user_id' => $user->id,
+                'shift' => $request->shift,
+                'shift_start' => $request->shift_start]);
             return redirect(route('viewDirections'))->with('message', ['text' => 'Возачот е додаден', 'type' => 'success']);
         } catch (\Exception $e) {
             return redirect(route('viewDirections'))->with('message', ['text' => 'Обидете се повторно', 'type' => 'danger']);
