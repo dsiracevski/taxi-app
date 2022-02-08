@@ -29,9 +29,11 @@ class CarsController extends Controller
     public function create()
     {
 
+
         $attributes = request()->validate([
             'name' => 'required',
             'registration_number' => 'required',
+            'gas_type' => 'required',
             'is_active' => 'required'
         ]);
 
@@ -48,9 +50,11 @@ class CarsController extends Controller
     public function update(Car $car)
     {
 
+
         $attributes = request()->validate([
             'name' => 'required',
             'registration_number' => 'required',
+            'gas_type' => 'required',
             'is_active' => ''
         ]);
 
@@ -110,7 +114,7 @@ class CarsController extends Controller
                 'km' => $request->km,
                 'on_work' => 1, 'user_id' => $user->id,
                 'shift' => $request->shift,
-                'shift_start' => $request->shift_start]);
+                'shift_start' => $request->shift_start . ":00"]);
             return redirect(route('viewDirections'))->with('message', ['text' => 'Возачот е додаден', 'type' => 'success']);
         } catch (\Exception $e) {
             return redirect(route('viewDirections'))->with('message', ['text' => 'Обидете се повторно', 'type' => 'danger']);

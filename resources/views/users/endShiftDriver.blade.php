@@ -40,8 +40,8 @@
                                        autocomplete="off" class="form-control">
                                 <input type="hidden" value="{{$driver->id}}" name="driver_id">
                                 <input type="hidden" value="{{$driver->onWorkCars[0]->pivot->id}}" name="id">
-                                <input type="text" id="timepicker" name="shift_end"
-                                       class="form-control mx-3" placeholder="Време" required>
+                                <input type="text" name="shift_end"
+                                       class="form-control mx-3 timepicker" placeholder="Време" required>
                                 {{--                                    <label for="timepicker">Време</label>--}}
                                 <button type="submit" class="btn btn-primary">Заврши смена</button>
 
@@ -61,14 +61,14 @@
                         <ul>
                             @foreach($cars as $car)
                                 <li class="my-2">{{$car->name}}
-                                    <button type="submit" href="#" class="shift_driver btn btn-primary"
+                                    <a type="submit" href="#" class="shift_driver btn btn-primary"
                                             data-toggle="modal"
                                             data-target="#shiftDriver"
                                             data-driver-id=""
                                             data-car-name="{{$car->name}}"
                                             data-car-id="{{$car->id}}">
                                         Додади
-                                    </button>
+                                    </a>
                                 </li>
                             @endforeach
                         </ul>
@@ -112,9 +112,8 @@
                             </div>
 
                             <div class="form-group col-4">
-                                <label for="timepicker1">Време: </label>
-                                <input type="text" id="timepicker1" name="shift_start"
-                                       class="form-control" required>
+                                <input type="text" name="shift_start"
+                                       class="form-control timepicker" placeholder="Време" required>
                             </div>
                             <div class="col-4">
                                 <label for="shift_1"> Смена 1
@@ -125,6 +124,7 @@
                                 </label>
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="form-group col-6">
                                 <textarea placeholder="Забелешка" class="w-100 form-control" name="note"></textarea>
@@ -168,7 +168,6 @@
                 $(this).alert('close');
             });
 
-
             $("a.shift_driver").on('click', function (e) {
                 e.preventDefault();
                 let car_id = $(this).attr('data-car-id');
@@ -182,21 +181,21 @@
                 //get id
                 let id = $(this).data('id');
             })
-        });
 
-        $(document).ready(function () {
 
-            $('#timepicker').timepicker({
-                'timeFormat': 'H:i:s',
-                'step': 5
+            var today = new Date();
+            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+            $('.timepicker').timepicker({
+                'timeFormat': 'H:i',
+                'step': 1,
+                'minTime': time
 
             });
 
-            $('#timepicker1').timepicker({
-                'timeFormat': 'H:i:s',
-                'step': 5
-            });
+
         });
+
 
     </script>
 @stop

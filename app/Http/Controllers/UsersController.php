@@ -175,7 +175,7 @@ class UsersController extends Controller
 //        Carbon::parse($shiftEnd);
 
 
-        $result =  DB::statement("UPDATE `driver_cars` SET `on_work` = 0,  `km_end` = {$km}, `shift_end` = '{$shiftEnd}' WHERE `id` = {$id} AND `driver_id` = {$driver_id} ");
+        $result =  DB::statement("UPDATE `driver_cars` SET `on_work` = 0,  `km_end` = {$km}, `shift_end` = '{$shiftEnd}:00' WHERE `id` = {$id} AND `driver_id` = {$driver_id} ");
         return redirect()->back();
     }
 

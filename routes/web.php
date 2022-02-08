@@ -83,9 +83,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'admin']], functi
     })->name('adminView');
 
 
-    Route::post('/service/oil/', [ServicesController::class, 'changeOil'])->name('changeOil')->middleware('auth');
-    Route::post('/service/tyre/', [ServicesController::class, 'changeTyre'])->name('changeTyre')->middleware('auth');
-    Route::post('/service/registration/', [ServicesController::class, 'carRegistration'])->name('carRegistration')->middleware('auth');
+    Route::post('/services/add', [ServicesController::class, 'addService'])->name('addService')->middleware('auth');
 
 
     Route::get('administration/directions/', [DirectionsController::class, 'adminView'])->name('adminView');

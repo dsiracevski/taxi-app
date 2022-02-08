@@ -35,6 +35,7 @@
                             <tr>
                                 <th>Возило</th>
                                 <th>Број на регистрација</th>
+                                <th>Вид на гориво</th>
                                 <th>Статус</th>
                                 <th></th>
                             </tr>
@@ -46,6 +47,7 @@
                                 <tr>
                                     <td><a href="cars/{{$car->id}}">{{$car->name}}</a></td>
                                     <td>{{$car->registration_number}}</td>
+                                    <td>{{$car->gas_type}}</td>
                                     <td>@if ($car->is_active)
                                             Во употреба
                                         @elseif (!$car->is_active)
@@ -59,16 +61,22 @@
 
                                     @csrf
                                     <div>
-                                        <td><input placeholder="Кола" name="name" class="form-control"></td>
+                                        <td><input placeholder="Модел" name="name" class="form-control"></td>
                                         <td><input placeholder="Број на регистрација" name="registration_number"
                                                    class="form-control"></td>
+                                        <td><select name="gas_type" class="form-control" required>
+                                                <option value="Бензин">Бензин</option>
+                                                <option value="Дизел">Дизел</option>
+                                                <option value="Плин">Плин</option>
+                                            </select>
+                                        </td>
                                         <td>
                                             <input type="hidden" name="is_active" value="0" hidden>
                                             <label for="check">Во употреба?</label>
                                             <input name="is_active" value="1" type="checkbox" class="mr-2" id="check">
                                         </td>
                                         <td>
-                                            <button type="submit" class="btn btn-primary">Додади</button>
+                                            <button type="submit" class="btn btn-primary">Додади ново</button>
                                         </td>
 
                                     </div>
