@@ -96,6 +96,7 @@
         $(document).ready(function () {
             $('#myTable').DataTable({
                 dom: 'Bfrtip',
+                pageLength: 10,
                 buttons: [
                     'columnsToggle',
 

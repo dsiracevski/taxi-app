@@ -115,9 +115,9 @@ class CarsController extends Controller
                 'on_work' => 1, 'user_id' => $user->id,
                 'shift' => $request->shift,
                 'shift_start' => $request->shift_start . ":00"]);
-            return redirect(route('viewDirections'))->with('message', ['text' => 'Возачот е додаден', 'type' => 'success']);
+            return redirect(route('endShiftDriver'))->with('message', ['text' => 'Возачот е додаден', 'type' => 'success']);
         } catch (\Exception $e) {
-            return redirect(route('viewDirections'))->with('message', ['text' => 'Обидете се повторно', 'type' => 'danger']);
+            return redirect(route('endShiftDriver'))->with('message', ['text' => 'Обидете се повторно', 'type' => 'danger']);
         }
 
     }
