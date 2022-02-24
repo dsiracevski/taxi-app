@@ -9,8 +9,6 @@
         </div>
 
         <div class="container-fluid mt-3 col-9 card card-rounded">
-            @if (auth()->user()->is_admin)
-
 {{--                add service form --}}
                 <div class="row">
                     <div class="col-12">
@@ -66,7 +64,6 @@
                         </form>
                     </div>
                 </div>
-            @endif
 
 
             {{--  add gas form--}}
