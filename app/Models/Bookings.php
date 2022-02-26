@@ -11,6 +11,10 @@ class Bookings extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'next_date' => 'datetime',
+    ];
+
     public function users()
     {
         return $this->belongsTo(User::class, 'user_id');

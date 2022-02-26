@@ -47,7 +47,7 @@ Route::delete('bookings/{booking}', [BookingsController::class, 'deleteBooking']
 Route::get('directions/scheduled', [BookingsController::class, 'store'])->name('storeBooking')->middleware('auth');
 
 
-Route::get('directions/', [DirectionsController::class, 'show'])->name('viewDirections')->middleware('auth');//
+Route::get('directions/', [DirectionsController::class, 'show'])->name('viewDirections')->middleware('auth');
 
 Route::post('directions', [DirectionsController::class, 'store'])->name('storeDirections')->middleware('auth');
 Route::put('directions', [DirectionsController::class, 'update'])->name('updateDirections')->middleware('auth');
@@ -83,10 +83,10 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'admin']], functi
     })->name('adminView');
 
 
-    Route::post('/service/oil/', [ServicesController::class, 'changeOil'])->name('changeOil')->middleware('auth');
-    Route::post('/service/tyre/', [ServicesController::class, 'changeTyre'])->name('changeTyre')->middleware('auth');
-    Route::post('/service/registration/', [ServicesController::class, 'carRegistration'])->name('carRegistration')->middleware('auth');
+    Route::post('/services/add', [ServicesController::class, 'addService'])->name('addService')->middleware('auth');
 
+    Route::get('administration/shifts', [DriversController::class, 'viewShifts'])->name('viewShifts');
+    Route::post('administration/shifts', [DriversController::class, 'viewShifts'])->name('viewShifts');
 
     Route::get('administration/directions/', [DirectionsController::class, 'adminView'])->name('adminView');
     Route::post('administration/directions/', [DirectionsController::class, 'adminView'])->name('adminView');

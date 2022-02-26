@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddIsActiveOnCarsTable extends Migration
+class AddAdditionalServices extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AddIsActiveOnCarsTable extends Migration
      */
     public function up()
     {
-        Schema::table('cars', function($table) {
-            $table->integer('is_active')->default(0);
-        });
+        DB::table('services')
+            ->insert([ ['name' => 'Сервис'], ['name' => 'Осигурување'], ['name' => 'Технички преглед'] ]);
     }
 
     /**
@@ -25,8 +24,8 @@ class AddIsActiveOnCarsTable extends Migration
      */
     public function down()
     {
-        Schema::table('cars', function($table) {
-            $table->dropColumn('is_active');
+        Schema::table('services', function($table) {
+            $table->dropColumn('name');
         });
     }
 }

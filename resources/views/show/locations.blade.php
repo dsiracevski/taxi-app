@@ -16,8 +16,10 @@
                             <thead>
                             <tr>
                                 <th>Улица</th>
+                                <th>Зона</th>
                                 <th>Град</th>
                                 <th>Држава</th>
+                                <th></th>
                             </tr>
                             </thead>
 
@@ -26,6 +28,7 @@
                             @foreach($locations as $location)
                                 <tr>
                                     <td><a href="locations/{{$location->id}}">{{$location->street_name}}</a></td>
+                                    <td>{{$location->zone}}</td>
                                     <td>{{$location->city}}</td>
                                     <td>{{$location->country}}</td>
                                 </tr>
@@ -38,6 +41,13 @@
                                     @csrf
                                     <div class="form-group">
                                         <td><input placeholder="Внесете име на улица" name="street_name" class="form-control"></td>
+                                        <td><select name="zone" class="form-control" required>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                            </select>
+                                        </td>
                                         <td><input placeholder="Внесете град" name="city" class="form-control"></td>
                                         <td><input value="Македонија" name="country" class="form-control" hidden></td>
                                     </div>

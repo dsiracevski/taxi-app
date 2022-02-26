@@ -14,9 +14,9 @@
                             <thead>
                             <tr>
                                 <th>Улица</th>
+                                <th>Зона</th>
                                 <th>Град</th>
                                 <th>Држава</th>
-                                <th></th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -30,6 +30,13 @@
                                     <div class="form-row">
                                         <div class="form-group">
                                             <td><input value="{{ $location->street_name }}" name="street_name"></td>
+                                            <td><select name="zone" class="form-control" required>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                </select>
+                                            </td>
                                             <td><input value="{{ $location->city }}" name="city"></td>
                                             <td><input value="{{ $location->country }}" name="country"></td>
                                         </div>

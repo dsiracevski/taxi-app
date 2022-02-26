@@ -40,8 +40,12 @@
                                        autocomplete="off" class="form-control">
                                 <input type="hidden" value="{{$driver->id}}" name="driver_id">
                                 <input type="hidden" value="{{$driver->onWorkCars[0]->pivot->id}}" name="id">
+                                <input type="text" name="shift_end"
+                                       class="form-control mx-3 timepicker" placeholder="Време" required>
+                                {{--                                    <label for="timepicker">Време</label>--}}
+                                <button type="submit" class="btn btn-primary">Заврши смена</button>
+
                             </div>
-                                <button type="submit" class="btn btn-primary mx-3">Заврши смена</button>
 
                         </form>
                     </div>
@@ -56,15 +60,16 @@
                     <div class="col-12">
                         <ul>
                             @foreach($cars as $car)
-                                <li>{{$car->name}}
-                                    <button type="submit" href="#" class="shift_driver btn btn-primary"
-                                       data-toggle="modal"
-                                       data-target="#shiftDriver"
-                                       data-driver-id=""
-                                       data-car-name="{{$car->name}}"
-                                       data-car-id="{{$car->id}}">
+                                <li class="my-2">{{$car->name}}
+                                    <a type="submit" href="#" class="shift_driver btn btn-primary"
+                                            data-toggle="modal"
+                                            data-target="#shiftDriver"
+                                            data-driver-id=""
+                                            data-car-name="{{$car->name}}"
+                                            data-car-id="{{$car->id}}">
                                         Додади
-                                    </button></li>
+                                    </a>
+                                </li>
                             @endforeach
                         </ul>
                     </div>
@@ -94,15 +99,21 @@
                         <p>Кола: <strong id="carNameToAssign">{{$car->name}}</strong></p>
                         <input type="hidden" value="" name="car" id="carToAssign">
                         <div class="row">
-                            <div class="form-group col-8">
+                            <div class="form-group col-4">
                                 <label for="driver">Возач: </label>
-                                <select class="from_location location form-control" name="driver_id" id="driver" required>
+                                <select class="from_location location form-control" name="driver_id" id="driver"
+                                        required>
                                     <option value=""></option>
                                     @foreach($allAvailableDrivers as $driver)
                                         <option
                                             value="{{$driver->id}}">{{$driver->first_name}} {{$driver->last_name}}</option>
                                     @endforeach
                                 </select>
+                            </div>
+
+                            <div class="form-group col-4">
+                                <input type="text" name="shift_start"
+                                       class="form-control timepicker" placeholder="Време" required>
                             </div>
                             <div class="col-4">
                                 <label for="shift_1"> Смена 1
@@ -113,12 +124,13 @@
                                 </label>
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="form-group col-6">
-                                <textarea placeholder="Note" class="w-100 form-control" name="note"></textarea>
+                                <textarea placeholder="Забелешка" class="w-100 form-control" name="note"></textarea>
                             </div>
                             <div class="form-group col-6">
-                                <input type="number" placeholder="km" class="w-100 form-control" name="km" required>
+                                <input type="number" placeholder="Километри" class="w-100 form-control" name="km" required>
                             </div>
                         </div>
                         <div class="row">
@@ -142,6 +154,7 @@
 @section('script')
     <script>
         $(document).ready(function () {
+
             $("form.end_shift").on('submit', function (e) {
                 // e.preventDefault();
                 // return window.confirm("Дали си сигурен?");
@@ -154,7 +167,6 @@
             $(".alert").delay(4000).slideUp(200, function () {
                 $(this).alert('close');
             });
-
 
             $("a.shift_driver").on('click', function (e) {
                 e.preventDefault();
@@ -169,6 +181,21 @@
                 //get id
                 let id = $(this).data('id');
             })
+
+
+            var today = new Date();
+            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+            $('.timepicker').timepicker({
+                'timeFormat': 'H:i',
+                'step': 1,
+                'minTime': time
+
+            });
+
+
         });
+
+
     </script>
 @stop

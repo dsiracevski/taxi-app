@@ -28,6 +28,7 @@ class LocationsController extends Controller
 
         $attributes = request()->validate([
             'street_name' => 'required',
+            'zone' => 'required',
             'city' => 'required',
             'country' => 'required'
         ]);
@@ -43,6 +44,7 @@ class LocationsController extends Controller
 
         $attributes = request()->validate([
             'street_name' => 'required',
+            'zone' => 'required',
             'city' => 'required',
             'country' => 'required'
         ]);

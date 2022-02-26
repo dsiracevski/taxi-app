@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Driver;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DriversController extends Controller
 {
+
     public function view()
     {
 
@@ -22,9 +25,36 @@ class DriversController extends Controller
         ]);
     }
 
-    public function create(Request $request)
+
+    public function viewShifts()
     {
 
+        if (!request('dateFrom')) {
+            $startDate = Carbon::now()->startOfDay();
+        } else
+            $startDate = request()->dateFrom;
+
+
+        if (!request('dateTo')) {
+            $endDate = Carbon::now()->endOfDay();
+        } else
+            $endDate = request()->dateTo;
+
+        $allShifts = DB::table('drivers')
+            ->rightJoin('driver_cars', 'drivers.id', '=', 'driver_cars.driver_id')
+            ->leftJoin('cars', 'cars.id', '=', 'driver_cars.car_id')
+            ->select('drivers.first_name', 'drivers.last_name', 'drivers.is_active', 'driver_cars.*', 'cars.name as car_name')
+            ->where('on_work', 0)
+            ->whereBetween('driver_cars.created_at', [$startDate, $endDate])
+            ->get();
+
+        return view('admin.shifts', [
+            'shifts' => $allShifts
+        ]);
+    }
+
+    public function create(Request $request)
+    {
 
         $attributes = request()->validate([
             'first_name' => 'required',

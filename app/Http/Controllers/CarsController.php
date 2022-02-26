@@ -29,9 +29,11 @@ class CarsController extends Controller
     public function create()
     {
 
+
         $attributes = request()->validate([
             'name' => 'required',
             'registration_number' => 'required',
+            'gas_type' => 'required',
             'is_active' => 'required'
         ]);
 
@@ -48,9 +50,11 @@ class CarsController extends Controller
     public function update(Car $car)
     {
 
+
         $attributes = request()->validate([
             'name' => 'required',
             'registration_number' => 'required',
+            'gas_type' => 'required',
             'is_active' => ''
         ]);
 
@@ -88,6 +92,9 @@ class CarsController extends Controller
 
     public function assignDriver(Request $request)
     {
+
+//        dd($request->all());
+
         $user = auth()->user();
         if (!$user) {
             redirect(route('login'));
@@ -102,10 +109,15 @@ class CarsController extends Controller
 //            ->update(array('on_work' => 0));  // update the record in the DB.
 
         try {
-            $car->drivers()->attach($request->driver_id, ['note' => $request->note, 'km' => $request->km, 'on_work' => 1, 'user_id' => $user->id, 'shift' => $request->shift]);
-            return redirect(route('viewDirections'))->with('message', ['text' => 'Возачот е додаден', 'type' => 'success']);
+            $car->drivers()->attach($request->driver_id, [
+                'note' => $request->note,
+                'km' => $request->km,
+                'on_work' => 1, 'user_id' => $user->id,
+                'shift' => $request->shift,
+                'shift_start' => $request->shift_start . ":00"]);
+            return redirect(route('endShiftDriver'))->with('message', ['text' => 'Возачот е додаден', 'type' => 'success']);
         } catch (\Exception $e) {
-            return redirect(route('viewDirections'))->with('message', ['text' => 'Обидете се повторно', 'type' => 'danger']);
+            return redirect(route('endShiftDriver'))->with('message', ['text' => 'Обидете се повторно', 'type' => 'danger']);
         }
 
     }

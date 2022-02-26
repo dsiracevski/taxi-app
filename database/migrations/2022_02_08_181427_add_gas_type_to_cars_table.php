@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddIsActiveOnCarsTable extends Migration
+class AddGasTypeToCarsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddIsActiveOnCarsTable extends Migration
     public function up()
     {
         Schema::table('cars', function($table) {
-            $table->integer('is_active')->default(0);
+            $table->string('gas_type');
         });
     }
 
@@ -25,8 +25,9 @@ class AddIsActiveOnCarsTable extends Migration
      */
     public function down()
     {
-        Schema::table('cars', function($table) {
-            $table->dropColumn('is_active');
+        Schema::table('cars', function (Blueprint $table) {
+            $table->dropColumn('gas_type');
+
         });
     }
 }

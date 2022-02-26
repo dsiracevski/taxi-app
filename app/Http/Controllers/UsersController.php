@@ -127,17 +127,23 @@ class UsersController extends Controller
 
     public function endShiftDriver()
     {
+
+
         $drivers = Driver::where('is_active',1)->whereHas('cars', function($q) {
             $q->where('driver_cars.on_work', 1);
         })->with('onWorkCars')->get();
+
         $allAvilibledrivers = Driver::where('is_active',1)->whereHas('cars', function($q) {
             $q->where('driver_cars.on_work', 0);
         })->with('onWorkCars')->get();
 
         $allCars = Car::where('is_active', 1)->get();
+
         $busyCars = Car::where('is_active', 1)->whereHas('drivers', function($q) {
             $q->where('driver_cars.on_work', 1);
             })->with('drivers')->pluck('id')->toArray();
+
+
         foreach ($allCars as $key => $car){
             if(in_array($car->id, $busyCars)){
                 unset($allCars[$key]);
@@ -151,14 +157,30 @@ class UsersController extends Controller
     }
     public function endShiftForDriver(Request $request)
     {
+//        dd($request->all());
+
+     request()->validate([
+         'id' => 'required',
+         'km' => 'required',
+         'shift_end' => 'required',
+         'driver_id' => 'required'
+     ]);
+
         //need validation
         $user = \auth()->user();
         $user_id = $user->id;
         $driver_id = $request->driver_id;
         $id = $request->id;
         $km = $request->km;
-        $result =  DB::statement("UPDATE `driver_cars` SET `on_work` = 0,  `km_end` = {$km} WHERE `id` = {$id} AND `driver_id` = {$driver_id} ");
-        return redirect()->back();
+
+        $shiftEnd = $request->shift_end;
+
+//        dd($shiftEnd);
+//        Carbon::parse($shiftEnd);
+
+
+        $result =  DB::statement("UPDATE `driver_cars` SET `on_work` = 0,  `km_end` = {$km}, `shift_end` = '{$shiftEnd}:00' WHERE `id` = {$id} AND `driver_id` = {$driver_id} ");
+        return redirect()->route('endShiftDriver');
     }
 
 

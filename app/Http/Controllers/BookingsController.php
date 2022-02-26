@@ -67,6 +67,8 @@ class BookingsController extends Controller
 
         $currentDate = $booking->next_date;
 
+//        dd($currentDate->dayOfWeek);
+
         switch ($booking->frequency) {
             case 'daily':
                 $currentDate = Carbon::parse($currentDate)->addDay();

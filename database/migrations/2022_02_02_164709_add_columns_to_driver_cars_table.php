@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddIsActiveOnCarsTable extends Migration
+class AddColumnsToDriverCarsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class AddIsActiveOnCarsTable extends Migration
      */
     public function up()
     {
-        Schema::table('cars', function($table) {
-            $table->integer('is_active')->default(0);
+        Schema::table('driver_cars', function (Blueprint $table) {
+            $table->time('shift_start');
+            $table->time('shift_end');
         });
     }
 
@@ -25,8 +26,6 @@ class AddIsActiveOnCarsTable extends Migration
      */
     public function down()
     {
-        Schema::table('cars', function($table) {
-            $table->dropColumn('is_active');
-        });
+        Schema::dropIfExists('driver_cars');
     }
 }
