@@ -1,7 +1,5 @@
 <div>
 
-
-
     <div class="list-group">
         <?php foreach ($allCars as $car):?>
         <a href="/directions/driver/{{$car->onWorkCars[0]->pivot->driver_id}}"
@@ -15,6 +13,7 @@
                     <small>{{$car->onWorkCars[0]->first_name}} {{$car->onWorkCars[0]->last_name}}</small>
                 @endif
                 <small>почетна: {{$car->onWorkCars[0]->pivot->km}} km</small>
+                <small>почеток на смена: {{$car->onWorkCars[0]->pivot->created_at}}</small>
             </div>
             <div class="d-flex w-100 justify-content-between">
                 <small></small>
