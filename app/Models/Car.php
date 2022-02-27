@@ -47,4 +47,9 @@ class Car extends Model
     {
         return $this->drivers()->wherePivot('on_work', true);
     }
+
+    public function directions()
+    {
+        return $this->hasMany(Direction::class);
+    }
 }

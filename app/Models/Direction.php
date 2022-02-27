@@ -45,4 +45,9 @@ class Direction extends Model
     {
         return $this->belongsTo(Location::class, "location_to_id");
     }
+
+    public function car()
+    {
+        return $this->belongsTo(Car::class);
+    }
 }

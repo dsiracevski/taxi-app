@@ -24,7 +24,7 @@
     </div>
 
     <div class="container-fluid mt-3">
-{{--@dd(request())--}}
+        {{--@dd(request())--}}
         <div>
             <table id="myTable">
                 <thead>
@@ -48,7 +48,7 @@
                 @endphp
                 @foreach($directions as $direction)
                     <tr>
-{{--                        @dd($directions);--}}
+                        {{--                        @dd($directions);--}}
                         <td>{{$direction->created_at}}</td>
                         <td>{{$direction->users->full_name}}</td>
                         <td>{{$direction->driver->full_name}}</td>
@@ -61,11 +61,11 @@
                             @if ($direction->locationTo)
                                 {{$direction->locationTo->street_name . ' ' . $direction->locationTo->street_number}}
                             @endif
-                        @if ($direction->return)
-                            (ПОВРАТНА)
+                            @if ($direction->return)
+                                (ПОВРАТНА)
                             @else
 
-                        @endif
+                            @endif
                         </td>
                         <td>@if(!$direction->price)
                                 0 ден.
@@ -93,16 +93,16 @@
 
                         <td>{{$totalSum}} ден</td>
                         <td>@if ($direction->company_id) {{$direction->company->name}} @else Во Готово @endif</td>
-                        @foreach($direction->driver->currentCar as $car)
-                            <td>{{$car->name}}</td>
-                        @endforeach
+                        @if(isset($direction->car->name))
+                            <td>{{$direction->car->name}}</td>
+                        @endif
                     </tr>
                 @endforeach
 
                 </tbody>
             </table>
 
-            <div class="d-flex flex-row form-control border-primary" >
+            <div class="d-flex flex-row form-control border-primary">
                 <div>Вкупно за наплата:</div>
                 <div>{{$sum}} ден</div>
             </div>
@@ -128,14 +128,14 @@
             $('#myTable').DataTable({
                 dom: 'Bfrtip',
                 buttons: [
-                        'columnsToggle',
+                    'columnsToggle',
 
                     {
                         extend: 'excelHtml5',
                         text: 'Export во Excel',
                         title: 'Рути од {{$startDate}} до {{$endDate}}',
                         className: 'btn btn-primary',
-                        init: function(api, node, config) {
+                        init: function (api, node, config) {
                             $(node).removeClass('dt-button buttons-excel buttons-html5')
                         }
                     }

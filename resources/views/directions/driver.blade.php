@@ -158,6 +158,10 @@
                                 <input type="text" placeholder="Број" name="street_number_from"
                                        class="form-control">
                             </div>
+
+                            <input type="hidden" name="car_id" value="{{$driver->onWorkCars[0]->id}}">
+
+
                         </div>
                         <div class="row">
                             <div class="form-group col-8">

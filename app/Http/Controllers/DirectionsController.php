@@ -57,7 +57,7 @@ class DirectionsController extends Controller
         } else
             $endDate = request()->dateTo;
 
-        $directions = Direction::with('driver', 'users', 'locationFrom', 'locationTo', 'company')
+        $directions = Direction::with('driver', 'car', 'users', 'locationFrom', 'locationTo', 'company')
             ->whereBetween('created_at', [$startDate, $endDate])
             ->get();
 
@@ -71,6 +71,8 @@ class DirectionsController extends Controller
 
     public function store(Request $request)
     {
+
+
         $user = auth()->user();
         if (!$user) {
             redirect(route('login'));
@@ -111,6 +113,7 @@ class DirectionsController extends Controller
                     'company_id' => $request->company_id,
                     'return' => isset($request->return) ? 1 : 0,
                     'note' => $request->note,
+                    'car_id' => $request->car_id
                 ]);
         } catch (\Exception $e) {
             return redirect(route('viewDirections'))->with('message', ['text' => $e->getMessage(), 'type' => 'danger']);
@@ -131,7 +134,8 @@ class DirectionsController extends Controller
             'street_number_from ' => '',
             'price_idle' => 'required',
             'price_order' => '',
-            'invoice' => ''
+            'invoice' => '',
+            'car_id' => ''
         ]);
 
         $direction = $request->direction_id;
