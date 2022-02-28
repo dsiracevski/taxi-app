@@ -45,16 +45,6 @@ class Car extends Model
             ->withTimestamps();
     }
 
-
-
-
-
-    public function tServices()
-    {
-        return $this->services()
-            ->whereDate('car_services.created_at', today())->select('*', \DB::raw('SUM(car_services.price) as serviceSum'));
-    }
-
     public function onWorkCars()
     {
         return $this->drivers()->wherePivot('on_work', true);
