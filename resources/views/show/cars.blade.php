@@ -38,6 +38,7 @@
                                 <th>Вид на гориво</th>
                                 <th>Статус</th>
                                 <th></th>
+                                <th></th>
                             </tr>
                             </thead>
 
@@ -52,7 +53,9 @@
                                             Во употреба
                                         @elseif (!$car->is_active)
                                             Не е во употреба
-                                        @endif</td>
+                                        @endif
+                                    </td>
+                                    <td ><a class="btn btn-warning" href="cars/{{$car->id}}/services">Сервиси</a></td>
                                 </tr>
                             @endforeach
 

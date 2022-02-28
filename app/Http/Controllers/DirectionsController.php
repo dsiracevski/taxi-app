@@ -47,13 +47,13 @@ class DirectionsController extends Controller
     {
 
         if (!request('dateFrom')) {
-            $startDate = Carbon::now()->startOfDay();
+            $startDate = Carbon::today()->startOfDay();
         } else
             $startDate = request()->dateFrom;
 
 
         if (!request('dateTo')) {
-            $endDate = Carbon::now()->endOfDay();
+            $endDate = Carbon::today()->endOfDay();
         } else
             $endDate = request()->dateTo;
 

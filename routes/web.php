@@ -92,6 +92,8 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'admin']], functi
     Route::post('administration/directions/', [DirectionsController::class, 'adminView'])->name('adminView');
 
 
+    Route::get('cars/{car}/services', [CarsController::class, 'showServices'])->name('showServices')->middleware('auth');
+    Route::post('cars/{car}/services', [CarsController::class, 'showServices'])->name('showServices')->middleware('auth');
     Route::get('cars/', [CarsController::class, 'view'])->name('viewCars');
     Route::post('cars/', [CarsController::class, 'create'])->name('addCar');
     Route::get('cars/{car}', [CarsController::class, 'show'])->name('viewCar');

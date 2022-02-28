@@ -37,6 +37,18 @@ class Car extends Model
         return $this->belongsToMany(Services::class, 'car_services', 'car_id', 'service_id')->withTimestamps();
     }
 
+    public function qServices($startDate, $endDate)
+    {
+        return $this->services()
+            ->withPivot('price', 'km')
+            ->whereBetween('car_services.created_at', [$startDate, $endDate])
+            ->withTimestamps();
+    }
+
+
+
+
+
     public function tServices()
     {
         return $this->services()

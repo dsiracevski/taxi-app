@@ -20,6 +20,7 @@
                                 <th>Во употреба?</th>
                                 <th></th>
                                 <th></th>
+                                <th></th>
                             </tr>
                             </thead>
 
@@ -32,11 +33,19 @@
                                     @method('PATCH')
                                     <div>
                                         <td><input value="{{ $car->name }}" name="name" class="form-control"></td>
-                                        <td><input value="{{ $car->registration_number }}" name="registration_number" class="form-control">
+                                        <td><input value="{{ $car->registration_number }}" name="registration_number"
+                                                   class="form-control">
                                         <td><select name="gas_type" class="form-control" required>
-                                                <option value="Бензин" {{ $car->gas_type == 'Бензин' ? 'selected' : '' }}>Бензин</option>
-                                                <option value="Дизел" {{ $car->gas_type == 'Дизел' ? 'selected' : '' }}>Дизел</option>
-                                                <option value="Плин" {{ $car->gas_type == 'Плин' ? 'selected' : '' }}>Плин</option>
+                                                <option
+                                                    value="Бензин" {{ $car->gas_type == 'Бензин' ? 'selected' : '' }}>
+                                                    Бензин
+                                                </option>
+                                                <option value="Дизел" {{ $car->gas_type == 'Дизел' ? 'selected' : '' }}>
+                                                    Дизел
+                                                </option>
+                                                <option value="Плин" {{ $car->gas_type == 'Плин' ? 'selected' : '' }}>
+                                                    Плин
+                                                </option>
                                             </select>
                                         </td>
                                         <td>
@@ -44,6 +53,8 @@
                                             <label for="active">Да</label>
                                             <input type="checkbox" name="is_active"
                                                    @if ($car->is_active) checked="checked" @endif value="1">
+                                        </td>
+                                        <td><a class="btn btn-warning" href="cars/{{$car->id}}/services">Сервиси</a>
                                         </td>
 
                                     </div>

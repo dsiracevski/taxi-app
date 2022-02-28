@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Car;
 use App\Models\Driver;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class CarsController extends Controller
 {
@@ -17,6 +17,7 @@ class CarsController extends Controller
             'cars' => Car::all()
         ]);
     }
+
 
     public function show(Car $car)
     {
@@ -101,13 +102,6 @@ class CarsController extends Controller
         }
         $car = Car::where('id', $request->car)->with('drivers')->first();
 
-//        DB::table('driver_cars')
-//            ->where('car_id', $request->car)  // find your user by their email
-//            ->update(array('on_work' => 0));  // update the record in the DB.
-//        DB::table('driver_cars')
-//            ->where('driver_id', $request->driver_id)  // find your user by their email
-//            ->update(array('on_work' => 0));  // update the record in the DB.
-
         try {
             $car->drivers()->attach($request->driver_id, [
                 'note' => $request->note,
@@ -120,5 +114,30 @@ class CarsController extends Controller
             return redirect(route('endShiftDriver'))->with('message', ['text' => 'Обидете се повторно', 'type' => 'danger']);
         }
 
+    }
+
+    public function showServices(Car $car)
+    {
+        $user = auth()->user();
+        if (!$user) {
+            redirect(route('login'));
+        }
+
+        if (!request('dateFrom')) {
+            $startDate = Carbon::today()->startOfDay();
+        } else
+            $startDate = request()->dateFrom;
+
+
+        if (!request('dateTo')) {
+            $endDate = Carbon::today()->endOfDay();
+        } else
+            $endDate = request()->dateTo;
+
+
+        return view('cars.services', [
+            'services' => $car->qServices($startDate, $endDate)->get(),
+            'car' => $car
+        ]);
     }
 }
