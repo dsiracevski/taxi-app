@@ -37,14 +37,21 @@ class Car extends Model
         return $this->belongsToMany(Services::class, 'car_services', 'car_id', 'service_id')->withTimestamps();
     }
 
-    public function tServices()
+    public function qServices($startDate, $endDate)
     {
         return $this->services()
-            ->whereDate('car_services.created_at', today())->select('*', \DB::raw('SUM(car_services.price) as serviceSum'));
+            ->withPivot('price', 'km')
+            ->whereBetween('car_services.created_at', [$startDate, $endDate])
+            ->withTimestamps();
     }
 
     public function onWorkCars()
     {
         return $this->drivers()->wherePivot('on_work', true);
+    }
+
+    public function directions()
+    {
+        return $this->hasMany(Direction::class);
     }
 }
