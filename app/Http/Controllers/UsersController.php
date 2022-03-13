@@ -114,14 +114,17 @@ class UsersController extends Controller
             ->whereNotNull('company_id')
             ->get();
 
-        $cars = Car::has('tServices')->with('tServices')->get();
+//        $cars = Car::has('services')->with('services')->get();
+
+        $services = Services::has('cars')->with(('cars'))->get();
 
         return view('users.shift', [
             'user' => auth()->user(),
             'drivers' => $drivers,
             'withNoInvoice' => $driverInvoicesWithNoInvoice,
             'withInvoice' => $driverInvoicesWithInvoice,
-            'cars' => $cars
+//            'cars' => $cars,
+            'services' => $services
         ]);
     }
 
@@ -133,11 +136,9 @@ class UsersController extends Controller
             $q->where('driver_cars.on_work', 1);
         })->with('onWorkCars')->get();
 
-        $allAvilibledrivers = Driver::where('is_active',1)->whereHas('cars', function($q) {
-            $q->where('driver_cars.on_work', 0);
-        })->with('onWorkCars')->get();
+        $allAvilibledrivers = Driver::all()->where('is_active', 0);
 
-        $allCars = Car::where('is_active', 1)->get();
+        $allCars = Car::all()->whereIn('is_active', 1);
 
         $busyCars = Car::where('is_active', 1)->whereHas('drivers', function($q) {
             $q->where('driver_cars.on_work', 1);
@@ -175,11 +176,15 @@ class UsersController extends Controller
 
         $shiftEnd = $request->shift_end;
 
+        $driver = Driver::find($driver_id);
+
 //        dd($shiftEnd);
 //        Carbon::parse($shiftEnd);
 
 
         $result =  DB::statement("UPDATE `driver_cars` SET `on_work` = 0,  `km_end` = {$km}, `shift_end` = '{$shiftEnd}:00' WHERE `id` = {$id} AND `driver_id` = {$driver_id} ");
+        $driver->update(['is_active' => 0]);
+
         return redirect()->route('endShiftDriver');
     }
 

@@ -14,7 +14,7 @@ class Services extends Model
     public function cars()
     {
         return $this->belongsToMany(Car::class, 'car_services', 'service_id', 'car_id')
-            ->withPivot('created_at')
+            ->withPivot('created_at', 'price')
             ->withTimestamps();
     }
 }

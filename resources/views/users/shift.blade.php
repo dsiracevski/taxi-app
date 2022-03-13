@@ -132,26 +132,26 @@
                         <table id="myTable2" class="table">
                             <thead>
                             <tr>
-                                <th>Возило</th>
+                                <th>Сервис</th>
                                 <th>Цена</th>
-                                <th>Додадено</th>
+                                <th>Возило</th>
                             </tr>
                             </thead>
                             <tbody>
                             @php
                                 $total = 0;
                             @endphp
-                            @foreach($cars as $car)
+                            @foreach($services as $service)
                                 <tr>
-                                    <td>{{$car->name}}</td>
+                                    <td>{{$service->name}}</td>
 
-                                    @foreach($car->tServices as $service)
-                                        <td>{{$service->serviceSum}}</td>
-                                        <td>{{$service->name}}</td>
+                                    @foreach($service->cars as $car)
+                                        <td>{{$car->pivot->price}}</td>
+                                        <td>{{$car->name}}</td>
                                     @endforeach
 
                                     @php
-                                        $total = $service->serviceSum;
+                                        $total = $total + $car->pivot->price;
                                     @endphp
 
                                 </tr>

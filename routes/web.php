@@ -67,6 +67,7 @@ Route::post('shift/driver/end', [UsersController::class, 'endShiftForDriver'])->
 
 Route::get('services/', [ServicesController::class, 'view'])->name('viewServices')->middleware('auth');
 Route::post('service/fuel/', [ServicesController::class, 'addFuel'])->name('addFuel')->middleware('auth');
+Route::post('/services/add', [ServicesController::class, 'addService'])->name('addService')->middleware('auth');
 
 Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'admin']], function () {
 
@@ -81,9 +82,6 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'admin']], functi
     Route::get('administration/', function () {
         return view('admin.view');
     })->name('adminView');
-
-
-    Route::post('/services/add', [ServicesController::class, 'addService'])->name('addService')->middleware('auth');
 
     Route::get('administration/shifts', [DriversController::class, 'viewShifts'])->name('viewShifts');
     Route::post('administration/shifts', [DriversController::class, 'viewShifts'])->name('viewShifts');

@@ -102,6 +102,8 @@ class CarsController extends Controller
         }
         $car = Car::where('id', $request->car)->with('drivers')->first();
 
+        $driver = Driver::find(request()->driver_id);
+
         try {
             $car->drivers()->attach($request->driver_id, [
                 'note' => $request->note,
@@ -109,6 +111,8 @@ class CarsController extends Controller
                 'on_work' => 1, 'user_id' => $user->id,
                 'shift' => $request->shift,
                 'shift_start' => $request->shift_start . ":00"]);
+
+            $driver->update(['is_active' => 1]);
             return redirect(route('endShiftDriver'))->with('message', ['text' => 'Возачот е додаден', 'type' => 'success']);
         } catch (\Exception $e) {
             return redirect(route('endShiftDriver'))->with('message', ['text' => 'Обидете се повторно', 'type' => 'danger']);
