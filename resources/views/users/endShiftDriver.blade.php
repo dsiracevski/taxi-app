@@ -31,7 +31,7 @@
             </div>
             @foreach($drivers as $driver)
                 <div class="row mb-3">
-                    <div class="col-2">{{$driver->first_name}} {{$driver->first_name}}</div>
+                    <div class="col-2">{{$driver->first_name}} {{$driver->last_name}}</div>
                     <div class="col-4">
                         <form method="post" action="{{route('endShiftForDriver')}}" class="end_shift form-inline">
                             @csrf
