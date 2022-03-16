@@ -82,19 +82,18 @@ class CarsController extends Controller
     }
 
 
-    public function assignView()
-    {
-        return view('cars.assign', [
-            'drivers' => Driver::all()->where('is_active', 1),
-            'user' => auth()->user(),
-            'cars' => Car::all()->where('is_active', 1)
-        ]);
-    }
+//    public function assignView()
+//    {
+//        return view('cars.assign', [
+//            'drivers' => Driver::all()->whereIn('is_active', 1),
+//            'user' => auth()->user(),
+//            'cars' => Car::all()->where('is_active', 1)
+//        ]);
+//    }
 
     public function assignDriver(Request $request)
     {
 
-//        dd($request->all());
 
         $user = auth()->user();
         if (!$user) {

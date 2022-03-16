@@ -17,7 +17,7 @@ class CreateTableDrivers extends Migration
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
-            $table->boolean('is_active')->default(1);
+            $table->boolean('is_active')->default(0);
             $table->timestamps();
         });
     }
