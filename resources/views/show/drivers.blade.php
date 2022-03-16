@@ -35,7 +35,7 @@
                             <tr>
                                 <th>Име</th>
                                 <th>Презиме</th>
-                                <th>Активен?</th>
+                                <th>На смена?</th>
                             </tr>
                             </thead>
 
@@ -65,11 +65,8 @@
                                         </td>
                                         <td><input placeholder="Презиме" name="last_name"
                                                    class="form-control"></td>
-
                                         <td>
-                                            <input name="is_active" type="checkbox" value="1" id="active">
-                                            <label for="active">Да</label>
-                                            <input name="is_active" type="hidden" value="0">
+
                                         </td>
                                         <td>
                                             <button type="submit" class="btn btn-primary">Додади нов</button>

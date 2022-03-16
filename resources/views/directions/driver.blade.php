@@ -77,7 +77,7 @@
                                             <i>Повратна</i>
                                         @endif
                                     </td>
-                                    <td>{{$d->price}} </td>
+                                    <td>{{$d->price}}</td>
                                     <td>{{$d->price_idle}} </td>
                                     <td>{{$d->price_order}} </td>
                                     <td>{{($d->company_id) ? "Да" : "Не"}} </td>
@@ -90,11 +90,9 @@
                                         }
 
                                     if ($d->company_id) {
-                                            $invoice = $invoice + $d->price;
+                                            $invoice = $invoice + $d->price + $totalSum;
                                         }
-
                                         $inSum = $invoice + $sum;
-
                                     @endphp
                                     <td>{{$totalSum}}</td>
                                     <td>{{$d->note}}</td>

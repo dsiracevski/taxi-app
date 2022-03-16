@@ -2,19 +2,16 @@
 
 @section('content')
 
-    {{--        @dd($cars)--}}
     <div class="container-fluid mt-3">
         <div class="row">
             <div class="col-12">
                 <div class="row">
                     <div class="col-12">
 
-                        {{--                        @dd($withInvoice)--}}
                         <table id="myTable" class="table">
                             <thead>
                             <tr>
                                 <th>Возач</th>
-                                <th>Поминати километри</th>
                                 <th>Основно</th>
                                 <th>Чекање</th>
                                 <th>Порачка</th>
@@ -29,7 +26,6 @@
                             @foreach($withNoInvoice as $driver)
                                 <tr>
                                     <td>{{$driver->first_name}} {{$driver->last_name}}</td>
-                                    <td></td>
                                     <td>@if(!$driver->priceBase)
                                             0 ден.
                                         @else
@@ -120,7 +116,7 @@
     </div>
 
 
-    {{--Car Table--}}
+    {{--Services Table--}}
     <div class="container-fluid mt-3">
         <div class="row">
             <div class="col-12">
@@ -137,6 +133,7 @@
                                 <th>Возило</th>
                             </tr>
                             </thead>
+
                             <tbody>
                             @php
                                 $total = 0;
@@ -144,12 +141,17 @@
                             @foreach($services as $service)
                                 <tr>
                                     <td>{{$service->name}}</td>
+                                    <td>
+                                        @foreach($service->cars as $car)
+                                            {{$car->pivot->price}}<br>
+                                        @endforeach
+                                    </td>
 
-                                    @foreach($service->cars as $car)
-                                        <td>{{$car->pivot->price}}</td>
-                                        <td>{{$car->name}}</td>
-                                    @endforeach
-
+                                    <td>
+                                        @foreach($service->cars as $car)
+                                            {{$car->name}}<br>
+                                        @endforeach
+                                    </td>
                                     @php
                                         $total = $total + $car->pivot->price;
                                     @endphp

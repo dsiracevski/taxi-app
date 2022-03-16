@@ -40,15 +40,18 @@
                                     @csrf
                                     @csrf
                                     <div class="form-group">
-                                        <td><input placeholder="Внесете име на улица" name="street_name" class="form-control"></td>
+                                        <td><input placeholder="Внесете име на улица" name="street_name"
+                                                   class="form-control"></td>
                                         <td><select name="zone" class="form-control" required>
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
                                                 <option value="4">4</option>
+                                                <option value="5">5</option>
                                             </select>
                                         </td>
                                         <td><input placeholder="Внесете град" name="city" class="form-control"></td>
+                                        <td><input value="Берово" name="city" class="form-control" hidden></td>
                                         <td><input value="Македонија" name="country" class="form-control" hidden></td>
                                     </div>
                                     <div class="form-group">
@@ -63,6 +66,7 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="mt-3">{{ $locations->links() }}</div>
                 </div>
             </div>
 

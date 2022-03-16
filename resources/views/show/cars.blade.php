@@ -74,9 +74,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <input type="hidden" name="is_active" value="0" hidden>
-                                            <label for="check">Во употреба?</label>
-                                            <input name="is_active" value="1" type="checkbox" class="mr-2" id="check">
+
                                         </td>
                                         <td>
                                             <button type="submit" class="btn btn-primary">Додади ново</button>

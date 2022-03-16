@@ -11,7 +11,7 @@ class LocationsController extends Controller
     {
 
         return view('show.locations', [
-            'locations' => Location::all()
+            'locations' => Location::simplePaginate(10)
         ]);
     }
 

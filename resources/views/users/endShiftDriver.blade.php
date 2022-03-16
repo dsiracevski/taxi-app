@@ -96,7 +96,7 @@
                 <div class="modal-body">
                     <form action="{{route('assignDriver')}}" method="POST">
                         @csrf
-                        <p>Кола: <strong id="carNameToAssign">{{$car->name}}</strong></p>
+                        <p>Кола: <strong id="carNameToAssign">{{$car->name ?? ' '}}</strong></p>
                         <input type="hidden" value="" name="car" id="carToAssign">
                         <div class="row">
                             <div class="form-group col-4">
