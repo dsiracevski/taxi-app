@@ -136,7 +136,7 @@ class UsersController extends Controller
             $q->where('driver_cars.on_work', 1);
         })->with('onWorkCars')->get();
 
-        $allAvilibledrivers = Driver::all()->where('is_active', 1);
+        $allAvilibledrivers = Driver::all()->where('is_active', 0);
 
         $allCars = Car::all()->whereIn('is_active', 1);
 

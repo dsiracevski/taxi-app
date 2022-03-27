@@ -102,7 +102,7 @@
                 </tbody>
             </table>
 
-            <div class="d-flex flex-row form-control border-primary">
+            <div class="d-flex flex-row form-control border-primary text-right">
                 <div>Вкупно за наплата:</div>
                 <div>{{$sum}} ден</div>
             </div>

@@ -81,6 +81,7 @@
                                     <td>{{$d->price_idle}} </td>
                                     <td>{{$d->price_order}} </td>
                                     <td>{{($d->company_id) ? "Да" : "Не"}} </td>
+
                                     @php
                                         $totalSum = $d->price + $d->price_idle + $d->price_order;
 
@@ -90,10 +91,11 @@
                                         }
 
                                     if ($d->company_id) {
-                                            $invoice = $invoice + $d->price + $totalSum;
+                                            $invoice = $invoice + $totalSum;
                                         }
                                         $inSum = $invoice + $sum;
                                     @endphp
+
                                     <td>{{$totalSum}}</td>
                                     <td>{{$d->note}}</td>
                                 </tr>
@@ -197,9 +199,6 @@
                                     @endforeach
                                 </select>
                             </div>
-                            {{--                                <div class="col-3">--}}
-                            {{--                                    <label for="invoice"><input type="checkbox" name="invoice" id="invoice" value="1"> Фактура?</label>--}}
-                            {{--                                </div>--}}
                         </div>
                         <div class="row mt-3">
                             <div class="col-7 d-flex">
