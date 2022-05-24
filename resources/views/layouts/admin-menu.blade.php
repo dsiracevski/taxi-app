@@ -32,7 +32,7 @@
 {{--                <a class="nav-link" href="{{route('assignDriver')}}" class="nav-link">Кола/Возач</a>--}}
 {{--            </li>--}}
             <li>
-                <a class="nav-link" href="{{ route('adminView') }}" class="nav-link">Рути</a>
+                <a class="nav-link" href="{{ route('adminView') }}" class="nav-link">Извештаи</a>
             </li>
 
             <li>

@@ -11,6 +11,8 @@ class Services extends Model
 
     protected $guarded = [];
 
+    protected $with = ['cars'];
+
     public function cars()
     {
         return $this->belongsToMany(Car::class, 'car_services', 'service_id', 'car_id')

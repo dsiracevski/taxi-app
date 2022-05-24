@@ -6,6 +6,7 @@ use App\Models\Car;
 use App\Models\Driver;
 use App\Models\Services;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class ServicesController extends Controller
 {
@@ -29,6 +30,13 @@ class ServicesController extends Controller
         ]);
     }
 
+    public function show(Services $services)
+    {
+        return view('services.view', [
+            'service' => $services->cars()->first()
+        ]);
+    }
+
 
     public function addService(Request $request)
     {
@@ -48,6 +56,23 @@ class ServicesController extends Controller
         }
 
 
+    }
+
+    public function updateService()
+    {
+        $user = auth()->user();
+
+        if (!$user) {
+            redirect(route('login'));
+        }
+        $car = Car::where('id', $request->car_id)->with('drivers')->first();
+
+        try {
+            $car->services()->update($request->service_id, ['price' => $request->price, 'km' => $request->km, 'user_id' => $user->id]);
+            return redirect(route('viewServices'))->with('message', ['text' => 'Горивото е додадено', 'type' => 'success']);
+        } catch (\Exception $e) {
+            return redirect(route('viewServices'))->with('message', ['text' => 'Обидете се повторно!', 'type' => 'danger']);
+        }
     }
 
     public function addFuel(Request $request)

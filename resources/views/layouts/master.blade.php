@@ -10,12 +10,14 @@
     <title>Такси Шливка</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
     <link href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel="stylesheet"/>
     <link href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel="stylesheet"/>
     <link href="https://cdn.datatables.net/buttons/2.1.0/css/buttons.dataTables.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="//jonthornton.github.io/jquery-timepicker/jquery.timepicker.css">
-    <link rel="stylesheet" href="{{asset('css/select2-bootstrap.css')}}">
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
+    <link rel="stylesheet" href="{{asset('css/select2-bootstrap.css')}}">
     <link rel="stylesheet" href="{{asset('css/jquery.datetimepicker.min.css')}}">
 </head>
 <body>
@@ -63,6 +65,13 @@
 
     @yield('script')
 
+    <script>
+        $(document).ready(function () {
+            $('select').select2({
+                theme: 'bootstrap4',
+            });
+        });
+    </script>
 
 </body>
 </html>
