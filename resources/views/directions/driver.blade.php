@@ -67,39 +67,41 @@
                                 $invoice = 0;
                                 $inSum = 0;
                             @endphp
-                            @foreach($directions as $d)
-                                <tr class="directions" data-id="{{$d->id}}">
-                                    <td>{{$d->created_at->format('H:i')}}
-                                        - {{isset($d->updated_at) ? $d->updated_at->format('H:i') : ''}}</td>
-                                    <td>{{$d->from_street_name . ' ' . $d->street_number_from}}
-                                        - {{$d->to_street_name . ' ' . $d->street_number_to}}
-                                        @if($d->return == 1)
-                                            <i>Повратна</i>
-                                        @endif
-                                    </td>
-                                    <td>{{$d->price}}</td>
-                                    <td>{{$d->price_idle}} </td>
-                                    <td>{{$d->price_order}} </td>
-                                    <td>{{($d->company_id) ? "Да" : "Не"}} </td>
+                            @isset($d)
+                                @foreach($directions as $d)
+                                    <tr class="directions" data-id="{{$d->id}}">
+                                        <td>{{$d->created_at->format('H:i')}}
+                                            - {{isset($d->updated_at) ? $d->updated_at->format('H:i') : ''}}</td>
+                                        <td>{{$d->from_street_name . ' ' . $d->street_number_from}}
+                                            - {{$d->to_street_name . ' ' . $d->street_number_to}}
+                                            @if($d->return == 1)
+                                                <i>Повратна</i>
+                                            @endif
+                                        </td>
+                                        <td>{{$d->price}}</td>
+                                        <td>{{$d->price_idle}} </td>
+                                        <td>{{$d->price_order}} </td>
+                                        <td>{{($d->company_id) ? "Да" : "Не"}} </td>
 
-                                    @php
-                                        $totalSum = $d->price + $d->price_idle + $d->price_order;
+                                        @php
+                                            $totalSum = $d->price + $d->price_idle + $d->price_order;
 
 
-                                        if(!$d->company_id){
-                                            $sum = $sum + $totalSum;
-                                        }
+                                            if(!$d->company_id){
+                                                $sum = $sum + $totalSum;
+                                            }
 
-                                    if ($d->company_id) {
-                                            $invoice = $invoice + $totalSum;
-                                        }
-                                        $inSum = $invoice + $sum;
-                                    @endphp
+                                        if ($d->company_id) {
+                                                $invoice = $invoice + $totalSum;
+                                            }
+                                            $inSum = $invoice + $sum;
+                                        @endphp
 
-                                    <td>{{$totalSum}}</td>
-                                    <td>{{$d->note}}</td>
-                                </tr>
-                            @endforeach
+                                        <td>{{$totalSum}}</td>
+                                        <td>{{$d->is_archived ? "Архивирано" : "$d->note"}}</td>
+                                    </tr>
+                                @endforeach
+                            @endisset
                             </tbody>
                         </table>
                         <div class="text-right p-2 border-top">
@@ -201,27 +203,57 @@
                             </div>
                         </div>
                         <div class="row mt-3">
-                            <div class="col-7 d-flex">
+                            <div class="col-6 d-flex">
                                 <textarea placeholder="Забелешка" class="w-100 form-control" name="note"></textarea>
                             </div>
-                            <div class="col-3 d-flex">
+                            <div class="col-2 d-flex">
                                 <label for="return">
                                     <input type="checkbox" name="return" id="return" value="1"> Повратна
                                 </label>
                             </div>
-                        </div>
 
+                            <div class="col-2 d-flex">
 
-                        <div class="row mt-3">
-                            <div class="col-6 text-center">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Откажи</button>
+                                <div class="col-2 text-center">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Откажи</button>
+                                </div>
                             </div>
-                            <div class="col-6 text-center">
-                                <button type="submit" class="btn btn-primary">Додади</button>
+
+                            <div class="col-2 d-flex">
+                                <div class="col-2 text-center">
+                                    <button type="submit" class="btn btn-primary">Додади</button>
+                                </div>
                             </div>
                         </div>
 
                     </form>
+                    @isset($d)
+
+                        <div class="row mt-3">
+
+                            <div class="col-3 text-center">
+
+                                <form action="{{route('lockDirection', ['direction' => $d])}}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+
+                                    <button type="submit" class="btn btn-warning">Заклучи</button>
+
+                                </form>
+                            </div>
+                            <div class="col-3 text-center">
+
+                                <form action="{{route('archiveDirection', ['direction' => $d])}}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+
+                                    <button type="submit" class="btn btn-info">Архивирај</button>
+
+                                </form>
+                            </div>
+
+                        </div>
+                    @endisset
 
                 </div>
 

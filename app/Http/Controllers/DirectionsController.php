@@ -100,26 +100,32 @@ class DirectionsController extends Controller
             redirect(route('login'));
         }
 
-        try {
-            Direction::where('driver_id', $request->driver_id)
-                ->where('id', $request->id)
-                ->where('user_id', $user->id)
-                ->update([
-                    'location_from_id' => $request->location_from_id,
-                    'street_number_from' => $request->street_number_from,
-                    'location_to_id' => $request->location_to_id,
-                    'street_number_to' => $request->street_number_to,
-                    'price' => $request->price,
-                    'price_idle' => $request->price_idle,
-                    'price_order' => $request->price_order,
-                    'company_id' => $request->company_id,
-                    'return' => isset($request->return) ? 1 : 0,
-                    'note' => $request->note,
-                    'car_id' => $request->car_id
-                ]);
-        } catch (\Exception $e) {
-            return redirect(route('viewDirections'))->with('message', ['text' => $e->getMessage(), 'type' => 'danger']);
-        }
+        $direction = Direction::find($request->id);
+
+        if ($direction->is_locked)
+            return redirect()->back()->with('message', ['text' => 'Рутата е заклучена', 'type' => 'danger']);
+        else
+
+            try {
+                Direction::where('driver_id', $request->driver_id)
+                    ->where('id', $request->id)
+                    ->where('user_id', $user->id)
+                    ->update([
+                        'location_from_id' => $request->location_from_id,
+                        'street_number_from' => $request->street_number_from,
+                        'location_to_id' => $request->location_to_id,
+                        'street_number_to' => $request->street_number_to,
+                        'price' => $request->price,
+                        'price_idle' => $request->price_idle,
+                        'price_order' => $request->price_order,
+                        'company_id' => $request->company_id,
+                        'return' => isset($request->return) ? 1 : 0,
+                        'note' => $request->note,
+                        'car_id' => $request->car_id
+                    ]);
+            } catch (\Exception $e) {
+                return redirect(route('viewDirections'))->with('message', ['text' => $e->getMessage(), 'type' => 'danger']);
+            }
         return redirect()->back()->with('message', ['text' => 'Рутата е променета', 'type' => 'success']);
     }
 
@@ -140,16 +146,20 @@ class DirectionsController extends Controller
             'car_id' => ''
         ]);
 
-        $direction = $request->direction_id;
+        $direction = Direction::find($request->id);
 
-        try {
-            Direction::where('id', $direction)
-                ->where('user_id', auth()->user()->id)
-                ->update($attributes);
-        } catch (\Exception $e) {
-            return redirect(route('viewDirections'))->with('message', ['text' => $e->getMessage(), 'type' => 'danger']);
-        }
-        return redirect(route('viewDirections'))->with('message', ['text' => 'Price is changed', 'type' => 'success']);;
+        if ($direction->is_locked)
+            return redirect()->back()->with('message', ['text' => 'Рутата е заклучена', 'type' => 'danger']);
+        else
+
+            try {
+                Direction::where('id', $direction)
+                    ->where('user_id', auth()->user()->id)
+                    ->update($attributes);
+            } catch (\Exception $e) {
+                return redirect(route('viewDirections'))->with('message', ['text' => $e->getMessage(), 'type' => 'danger']);
+            }
+        return redirect(route('viewDirections'))->with('message', ['text' => 'Price is changed', 'type' => 'success']);
 
     }
 
@@ -195,5 +205,43 @@ class DirectionsController extends Controller
         return response()->json([
             'data' => $directions,
         ]);
+    }
+
+    public function archive(Direction $direction)
+    {
+
+        try {
+
+            $direction->where('id', $direction->id)
+                ->where('user_id', auth()->user()->id)
+                ->update([
+                    'price' => 0,
+                    'price_idle' => 0,
+                    'price_order' => 0,
+                    'is_archived' => true]);
+        } catch (\Exception $e) {
+            return redirect(route('viewDirections'))->with('message', ['text' => $e->getMessage(), 'type' => 'danger']);
+        }
+        return redirect(route('viewDirections'))->with('message', ['text' => 'Рутата е архивирана', 'type' => 'success']);
+
+
+    }
+
+
+    public function lock(Direction $direction)
+    {
+
+        try {
+
+            $direction->where('id', $direction->id)
+                ->where('user_id', auth()->user()->id)
+                ->update([
+                    'is_locked' => true]);
+        } catch (\Exception $e) {
+            return redirect(route('viewDirections'))->with('message', ['text' => $e->getMessage(), 'type' => 'danger']);
+        }
+        return redirect(route('viewDirections'))->with('message', ['text' => 'Рутата е архивирана', 'type' => 'success']);
+
+
     }
 }

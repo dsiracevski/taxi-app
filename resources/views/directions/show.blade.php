@@ -59,9 +59,11 @@
                             </tr>
                             </thead>
                             <tbody>
+
                             @php
                                 $sum = 0;
                             @endphp
+
                             @foreach($direction['directions'] as $d)
                                 <tr class="directions" data-id="{{$d->id}}">
                                     <td>{{$d->created_at->format('H:i')}}</td>
