@@ -24,6 +24,7 @@
                                 $net = 0;
                             @endphp
                             @foreach($withNoInvoice as $driver)
+{{--                                @dump($driver)--}}
                                 <tr>
                                     <td>{{$driver->first_name}} {{$driver->last_name}}</td>
                                     <td>@if(!$driver->priceBase)
@@ -49,7 +50,7 @@
                                         $endtotal  = $endtotal + $total;
 
                                     @endphp
-                                    <td>{{$endtotal}} ден.</td>
+                                    <td>{{$total}} ден.</td>
                                 </tr>
                             @endforeach
                             </tbody>

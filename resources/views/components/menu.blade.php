@@ -20,12 +20,6 @@
 
             </div>
             {{isset($car->onWorkCars[0]) ? $car->onWorkCars[0]->pivot_note : ''}}
-            @php
-                // echo "<pre>";
-                 //print_r($car->onWorkCars[0]->pivot->car_id);
-                // print_r();
-                // echo "</pre>";
-            @endphp
             <p class="mb-1">{{$car->onWorkCars[0]->pivot->note}}</p>
 
         </a>
@@ -38,11 +32,10 @@
             дена</a>
         <a href="{{route('viewServices')}}" class="list-group-item list-group-item-action">Одржување</a>
         <a href="{{route('endShift')}}" class="list-group-item list-group-item-action bg-info">Крај на смена</a>
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button type="submit" class="list-group-item list-group-item-action bg-warning">Излез</button>
-            </form>
-
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit" class="list-group-item list-group-item-action bg-warning">Излез</button>
+        </form>
 
 
     </div>

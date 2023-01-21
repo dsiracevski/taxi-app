@@ -2,7 +2,7 @@
 
 
 @section('content')
-    {{--    @dd($bookings)--}}
+
     <div class="row">
         <div class="col-3">
             <x-menu></x-menu>
@@ -67,7 +67,7 @@
                                 $invoice = 0;
                                 $inSum = 0;
                             @endphp
-                            @isset($d)
+{{--                            @isset($d)--}}
                                 @foreach($directions as $d)
                                     <tr class="directions" data-id="{{$d->id}}">
                                         <td>{{$d->created_at->format('H:i')}}
@@ -101,7 +101,7 @@
                                         <td>{{$d->is_archived ? "Архивирано" : "$d->note"}}</td>
                                     </tr>
                                 @endforeach
-                            @endisset
+{{--                            @endisset--}}
                             </tbody>
                         </table>
                         <div class="text-right p-2 border-top">

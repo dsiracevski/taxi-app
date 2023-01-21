@@ -49,7 +49,7 @@ class ServicesController extends Controller
         $car = Car::where('id', $request->car_id)->with('drivers')->first();
 
         try {
-            $car->services()->attach($request->service_id, ['price' => $request->price, 'km' => $request->km, 'user_id' => $user->id]);
+            $car->services()->attach($request->service_id, ['price' => $request->price, 'amount' => $request->amount, 'user_id' => $user->id]);
             return redirect(route('viewServices'))->with('message', ['text' => 'Горивото е додадено', 'type' => 'success']);
         } catch (\Exception $e) {
             return redirect(route('viewServices'))->with('message', ['text' => 'Обидете се повторно!', 'type' => 'danger']);

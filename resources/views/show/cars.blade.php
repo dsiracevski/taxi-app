@@ -55,7 +55,7 @@
                                             Не е во употреба
                                         @endif
                                     </td>
-                                    <td ><a class="btn btn-warning" href="cars/{{$car->id}}/services">Сервиси</a></td>
+                                    <td><a class="btn btn-warning" href="cars/{{$car->id}}/services">Сервиси</a></td>
                                 </tr>
                             @endforeach
 
@@ -74,7 +74,7 @@
                                             </select>
                                         </td>
                                         <td>
-
+                                            <input type="checkbox" name="is_active" value="1">
                                         </td>
                                         <td>
                                             <button type="submit" class="btn btn-primary">Додади ново</button>

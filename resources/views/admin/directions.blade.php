@@ -47,6 +47,7 @@
                     $sum = 0;
                 @endphp
                 @foreach($directions as $direction)
+{{--                    @dump($direction->price_idle)--}}
                     <tr>
                         {{--                        @dd($directions);--}}
                         <td>{{$direction->created_at}}</td>
@@ -68,21 +69,21 @@
                             @endif
                         </td>
                         <td>@if(!$direction->price)
-                                0 ден.
+                                0
                             @else
-                                {{$direction->price}} ден.
+                                {{$direction->price}}
 
                             @endif</td>
-                        <td>@if(!$direction->priceIdle)
-                                0 ден.
+                        <td>@if(!$direction->price_idle)
+                                0
                             @else
-                                {{$direction->priceIdle}} ден.
+                                {{$direction->price_idle}}
 
                             @endif</td>
-                        <td>@if(!$direction->priceOrder)
-                                0 ден.
+                        <td>@if(!$direction->price_order)
+                                0
                             @else
-                                {{$direction->priceOrder}} ден.
+                                {{$direction->price_order}}
 
                             @endif</td>
 
@@ -91,7 +92,7 @@
                              if (!$direction->invoice) $sum += $totalSum;
                         @endphp
 
-                        <td>{{$totalSum}} ден</td>
+                        <td>{{$totalSum}}</td>
                         <td>@if ($direction->company_id) {{$direction->company->name}} @else Во Готово @endif</td>
                         @if(isset($direction->car->name))
                             <td>{{$direction->car->name}}</td>
@@ -104,7 +105,7 @@
 
             <div class="d-flex flex-row form-control border-primary text-right">
                 <div>Вкупно за наплата:</div>
-                <div>{{$sum}} ден</div>
+                <div>{{$sum}}</div>
             </div>
         </div>
     </div>

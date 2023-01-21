@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Car extends Model
 {
@@ -22,25 +23,27 @@ class Car extends Model
      */
     protected $guarded = ['id'];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function drivers()
+
+    public function drivers(): BelongsToMany
     {
         return $this->belongsToMany(Driver::class, "driver_cars", "car_id", "driver_id")
-            //->withPivot('note', 'km')
             ->withPivot('on_work', 'km', 'note', 'shift', 'id')->withTimestamps();
     }
 
     public function services()
     {
-        return $this->belongsToMany(Services::class, 'car_services', 'car_id', 'service_id')->withTimestamps();
+        return $this->belongsToMany(
+            Services::class,
+            'car_services',
+            'car_id',
+            'service_id'
+        )->withTimestamps();
     }
 
     public function qServices($startDate, $endDate)
     {
         return $this->services()
-            ->withPivot('price', 'km')
+            ->withPivot('price', 'amount', 'km')
             ->whereBetween('car_services.created_at', [$startDate, $endDate])
             ->withTimestamps();
     }

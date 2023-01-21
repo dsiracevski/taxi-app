@@ -35,7 +35,7 @@
                 <tr>
                     <th>Вид</th>
                     <th>Цена</th>
-                    <th>Километри</th>
+                    <th>Количина</th>
                     <th>Дата</th>
                 </tr>
                 </thead>
@@ -48,7 +48,7 @@
                     <tr>
                         <td>{{$service->name}}</td>
                         <td>{{$service->pivot->price}} ден.</td>
-                        <td>{{$service->pivot->km}} км</td>
+                        <td>{{$service->pivot->amount}}</td>
                         <td>{{$service->pivot->created_at}}</td>
                     </tr>
 

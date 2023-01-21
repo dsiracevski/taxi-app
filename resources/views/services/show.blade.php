@@ -47,11 +47,19 @@
                                     </div>
                                 </div>
 
+{{--                                <div class="form-group mt-1 mx-2 row">--}}
+{{--                                    <label for="km" class="col-form-label">Километри</label>--}}
+
+{{--                                    <div class="col">--}}
+{{--                                        <input type="number" id="km" name="km" class="form-control" required>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+
                                 <div class="form-group mt-1 mx-2 row">
-                                    <label for="km" class="col-form-label">Километри</label>
+                                    <label for="amount" class="col-form-label">Количина</label>
 
                                     <div class="col">
-                                        <input type="number" id="km" name="km" class="form-control" required>
+                                        <input type="number" id="amount" name="amount" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="form-group mt-1 mx-2 row">

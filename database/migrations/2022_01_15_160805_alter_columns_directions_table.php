@@ -14,7 +14,7 @@ class AlterColumnsDirectionsTable extends Migration
     public function up()
     {
         Schema::table('directions', function (Blueprint $table) {
-            \Illuminate\Support\Facades\DB::statement("ALTER TABLE `taxi_shlivka`.`directions`
+            \Illuminate\Support\Facades\DB::statement("ALTER TABLE `taxi-shlivka`.`directions`
                 CHANGE `price` `price` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '',
                 CHANGE `price_idle` `price_idle` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '0' COMMENT '',
                 CHANGE `location_to_id` `location_to_id` int(11) NULL COMMENT '',

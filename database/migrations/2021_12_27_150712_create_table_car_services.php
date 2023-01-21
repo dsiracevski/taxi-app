@@ -21,6 +21,7 @@ class CreateTableCarServices extends Migration
             $table->integer('gas_price')->nullable();
             $table->enum('gas_type', ['diesel', 'petrol'])->nullable();
             $table->string('km');
+            $table->string('amount')->nullable();
             $table->integer('user_id')->default(0);
             $table->timestamps();
         });

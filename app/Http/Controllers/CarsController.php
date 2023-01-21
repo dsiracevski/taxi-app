@@ -12,7 +12,6 @@ class CarsController extends Controller
 
     public function view()
     {
-
         return view('show.cars', [
             'cars' => Car::all()
         ]);
@@ -29,8 +28,6 @@ class CarsController extends Controller
 
     public function create()
     {
-
-
         $attributes = request()->validate([
             'name' => 'required',
             'registration_number' => 'required',
@@ -45,13 +42,10 @@ class CarsController extends Controller
         } catch (\Exception $e) {
             return redirect(route('viewCars'))->with('message', ['text' => 'Обидете се повторно', 'type' => 'danger']);
         }
-
     }
 
     public function update(Car $car)
     {
-
-
         $attributes = request()->validate([
             'name' => 'required',
             'registration_number' => 'required',
@@ -62,7 +56,8 @@ class CarsController extends Controller
 
         try {
             $car->update($attributes);
-            return redirect(route('viewCars'))->with('message', ['text' => 'Возилото е едитирано', 'type' => 'success']);
+            return redirect(route('viewCars'))->with('message',
+                ['text' => 'Возилото е едитирано', 'type' => 'success']);
         } catch (\Exception $e) {
             return redirect(route('viewCars'))->with('message', ['text' => 'Обидете се повторно', 'type' => 'danger']);
         }
@@ -70,15 +65,13 @@ class CarsController extends Controller
 
     public function destroy(Car $car)
     {
-
-
         try {
             $car->delete();
-            return redirect(route('viewCars'))->with('message', ['text' => 'Возилото е избришано', 'type' => 'success']);
+            return redirect(route('viewCars'))->with('message',
+                ['text' => 'Возилото е избришано', 'type' => 'success']);
         } catch (\Exception $e) {
             return redirect(route('viewCars'))->with('message', ['text' => 'Обидете се повторно', 'type' => 'danger']);
         }
-
     }
 
 
@@ -93,12 +86,11 @@ class CarsController extends Controller
 
     public function assignDriver(Request $request)
     {
-
-
         $user = auth()->user();
         if (!$user) {
             redirect(route('login'));
         }
+
         $car = Car::where('id', $request->car)->with('drivers')->first();
 
         $driver = Driver::find(request()->driver_id);
@@ -109,14 +101,16 @@ class CarsController extends Controller
                 'km' => $request->km,
                 'on_work' => 1, 'user_id' => $user->id,
                 'shift' => $request->shift,
-                'shift_start' => $request->shift_start . ":00"]);
+                'shift_start' => $request->shift_start.":00"
+            ]);
 
             $driver->update(['is_active' => 1]);
-            return redirect(route('endShiftDriver'))->with('message', ['text' => 'Возачот е додаден', 'type' => 'success']);
+            return redirect(route('endShiftDriver'))->with('message',
+                ['text' => 'Возачот е додаден', 'type' => 'success']);
         } catch (\Exception $e) {
-            return redirect(route('endShiftDriver'))->with('message', ['text' => 'Обидете се повторно', 'type' => 'danger']);
+            return redirect(route('endShiftDriver'))->with('message',
+                ['text' => 'Обидете се повторно', 'type' => 'danger']);
         }
-
     }
 
     public function showServices(Car $car)
@@ -128,14 +122,16 @@ class CarsController extends Controller
 
         if (!request('dateFrom')) {
             $startDate = Carbon::today()->startOfDay();
-        } else
+        } else {
             $startDate = request()->dateFrom;
+        }
 
 
         if (!request('dateTo')) {
             $endDate = Carbon::today()->endOfDay();
-        } else
+        } else {
             $endDate = request()->dateTo;
+        }
 
 
         return view('cars.services', [

@@ -62,7 +62,6 @@ class DirectionsController extends Controller
             ->whereBetween('created_at', [$startDate, $endDate])
             ->get();
 
-//        dd($directions);
         return view('admin.directions', [
             'user' => auth()->user(),
             'companies' => Companies::all(),
@@ -232,7 +231,6 @@ class DirectionsController extends Controller
     {
 
         try {
-
             $direction->where('id', $direction->id)
                 ->where('user_id', auth()->user()->id)
                 ->update([
